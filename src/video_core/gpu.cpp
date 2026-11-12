@@ -429,8 +429,10 @@ struct GPU::Impl {
         gpu_thread.SubmitList(channel, std::move(entries), is_async);
     }
 
+    // Queued without waiting, also with synchronous GPU: callers hold nx2:gpu locks that the GPU
+    // back thread takes while running the map (flushes write back into sparse regions).
     void RunInOrder(std::function<void()>&& func) {
-        gpu_thread.Run(std::move(func), is_async);
+        gpu_thread.Run(std::move(func), true);
     }
 
     void MapInOrder(GPUVAddr gpu_addr, u64 size, std::function<void()>&& func) {
@@ -440,7 +442,7 @@ struct GPU::Impl {
                 func();
                 pending_maps.Remove(id);
             },
-            is_async, true);
+            true, true); // not waited for, as in RunInOrder
     }
 
     bool IsMapPending(GPUVAddr gpu_addr, u64 size) const {
