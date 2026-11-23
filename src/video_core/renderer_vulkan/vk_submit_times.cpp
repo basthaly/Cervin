@@ -476,7 +476,7 @@ void SlowGpu::Process(const Entry& entry, u64 start_raw, u64 end_raw, u64 sequen
     }
     const bool follows = previous_sequence != ~u64{0} && previous_sequence + 1 == sequence;
     const double gap_ms = follows ? (start_ns - previous_end_ns) / 1e6 : 0.0;
-    previous_end_ns = end_ns;
+    previous_end_ns = static_cast<u64>(end_ns);
     previous_sequence = sequence;
 
     ++window_timed;

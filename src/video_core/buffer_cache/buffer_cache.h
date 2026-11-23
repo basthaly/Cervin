@@ -9529,6 +9529,8 @@ void BufferCache<P>::DeleteBuffer(BufferId buffer_id, bool do_not_mark) {
 #endif
         delayed_destruction_ring.Push(std::move(slot_buffers[buffer_id]), [this] {
             if constexpr (IS_OPENGL) {
+                // OpenGL never reads 'this' here; MSVC 2026 rejects an unused capture (C5233).
+                static_cast<void>(this);
                 return u64{0};
             } else {
                 return runtime.CurrentTick();
