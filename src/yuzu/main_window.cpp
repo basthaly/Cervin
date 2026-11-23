@@ -10,6 +10,8 @@
 
 #include <filesystem>
 #include <fstream>
+#include <optional>
+#include <string>
 #include <boost/algorithm/string/split.hpp>
 #include "common/fs/path_util.h"
 #include "common/game_presets.h"
@@ -6591,23 +6593,47 @@ void MainWindow::UpdateUITheme() {
 #endif
 }
 
+namespace {
+/// Cervin's interface language ("" = the system's), apart from qt-config.ini (shared with
+/// Fritchii): config/cervin-language.txt.
+std::filesystem::path CervinLanguageFile() {
+    return Common::FS::GetEdenPath(Common::FS::EdenPath::ConfigDir) / "cervin-language.txt";
+}
+
+std::optional<std::string> ReadCervinLanguage() {
+    std::ifstream file{CervinLanguageFile()};
+    if (!file) {
+        return std::nullopt;
+    }
+    std::string language;
+    std::getline(file, language);
+    while (!language.empty() && (language.back() == '\r' || language.back() == ' ')) {
+        language.pop_back();
+    }
+    return language;
+}
+
+void WriteCervinLanguage(const std::string& language) {
+    std::error_code ec;
+    std::filesystem::create_directories(CervinLanguageFile().parent_path(), ec);
+    std::ofstream{CervinLanguageFile()} << language << '\n';
+}
+} // namespace
+
 void MainWindow::LoadTranslation() {
     bool loaded;
 
-    // Cervin: Fritchii shipped no translations, so its loader failed and saved "en" in the shared
-    // profile on every start. Once, on Cervin's first start, that inherited "en" goes back to the
-    // system language (French on a French Windows). A later choice of English is kept.
-    {
-        const auto marker =
-            Common::FS::GetEdenPath(Common::FS::EdenPath::ConfigDir) / "cervin-language-v1";
-        std::error_code ec;
-        if (!std::filesystem::exists(marker, ec)) {
-            if (UISettings::values.language.GetValue() == "en") {
-                UISettings::values.language = std::string{};
-            }
-            std::filesystem::create_directories(marker.parent_path(), ec);
-            std::ofstream{marker} << "Cervin: the inherited UI language was reset once.\n";
+    // Cervin keeps its interface language in its own file: the profile folder is shared with
+    // Fritchii, which ships no translations and saves "en" in qt-config.ini on every start
+    // (2026-11-23: Cervin went back to English after Fritchii v6.5 ran). Empty means the system
+    // language. The first time, an "en" in qt-config.ini counts as Fritchii's, not a choice.
+    if (const auto saved = ReadCervinLanguage()) {
+        UISettings::values.language = *saved;
+    } else {
+        if (UISettings::values.language.GetValue() == "en") {
+            UISettings::values.language = std::string{};
         }
+        WriteCervinLanguage(UISettings::values.language.GetValue());
     }
 
     if (UISettings::values.language.GetValue().empty()) {
@@ -6638,6 +6664,7 @@ void MainWindow::OnLanguageChanged(const QString& locale) {
     }
 
     UISettings::values.language = locale.toStdString();
+    WriteCervinLanguage(UISettings::values.language.GetValue()); // Cervin: its own file
     LoadTranslation();
     ui->retranslateUi(this);
     multiplayer_state->retranslateUi();
