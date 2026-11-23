@@ -557,7 +557,7 @@ void CopyDataFromOldFolder(QMainWindow& window) {
     if (IsPortableMode()) {
         QMessageBox::information(&window, QStringLiteral("Cervin"),
                                  QObject::tr("This Cervin keeps its data in the user folder next to "
-                                    "fritchii.exe."));
+                                    "Cervin.exe."));
         return;
     }
     const bool any = std::ranges::any_of(

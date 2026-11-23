@@ -286,7 +286,9 @@ add_executable(yuzu
 # starts it, for v5.x updaters (they require and restart lichii.exe) and old shortcuts. Linux keeps
 # bin/lichii for now (the AppImage packaging and its updater name it).
 if (WIN32)
-    set_target_properties(yuzu PROPERTIES OUTPUT_NAME "fritchii")
+    # Cervin: Cervin.exe (Fritchii's fritchii.exe). lichii.exe is still built for Fritchii's own
+    # updaters but Cervin's release zip leaves it out (tools/cervin-package.ps1).
+    set_target_properties(yuzu PROPERTIES OUTPUT_NAME "Cervin")
 else()
     set_target_properties(yuzu PROPERTIES OUTPUT_NAME "lichii")
 endif()

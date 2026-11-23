@@ -12928,8 +12928,8 @@ Fermez tout émulateur ou programme qui l'utilise, puis relancez Cervin.</transl
         </message>
         <message>
             <location line="+143" />
-            <source>This Cervin keeps its data in the user folder next to fritchii.exe.</source>
-            <translation>Ce Cervin garde ses données dans le dossier user à côté de fritchii.exe.</translation>
+            <source>This Cervin keeps its data in the user folder next to Cervin.exe.</source>
+            <translation>Ce Cervin garde ses données dans le dossier user à côté de Cervin.exe.</translation>
         </message>
         <message>
             <location line="+9" />
