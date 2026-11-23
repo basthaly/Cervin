@@ -1933,6 +1933,11 @@ private:
     u64 modification_tick = 0;
     u64 frame_tick = 0;
 
+    /// Cervin: staging that RefreshSparseLayers took this frame (see there).
+    static constexpr u64 SparseLayerFrameBudget = 512ULL << 20;
+    u64 sparse_layer_frame = ~u64{0};
+    u64 sparse_layer_bytes = 0;
+
     Common::ThreadWorker texture_decode_worker{1, "TextureDecoder", {},
                                                Common::ThreadPlacement::Efficiency};
     std::vector<std::unique_ptr<AsyncDecodeContext>> async_decodes;

@@ -5893,13 +5893,57 @@ void TextureCache<P>::RefreshSparseLayers(Image& image) {
             }
         }
         image.dirty_layers.clear();
+
+        // Cervin: at most SparseLayerFrameBudget of staging a frame. Staging buffers carry the
+        // packet that took them and come back only once that packet is done on the GPU, so one
+        // draw uploading a whole array keeps all of it: Mario Kart World's lightmap arrays
+        // (8192x8192 BC6H, 128 MiB of staging a layer, over a hundred layers) held 15 GiB and
+        // ran the PC out of RAM. The layers past the budget stay dirty for the next frames.
+        const auto requeue = [&](std::span<const u32> later) {
+            if (later.empty()) {
+                return;
+            }
+            image.dirty_layers.assign(Common::DivCeil(num_layers, 64U), 0);
+            for (const u32 layer : later) {
+                image.dirty_layers[layer / 64] |= u64{1} << (layer % 64);
+            }
+            image.flags |= ImageFlagBits::CpuModified;
+        };
+        if (sparse_layer_frame != frame_tick) {
+            sparse_layer_frame = frame_tick;
+            sparse_layer_bytes = 0;
+        }
+        const u64 layer_cost = std::bit_ceil((std::max<u64>)(stride, 1));
+        size_t take = 0;
+        while (take < layers.size() &&
+               (sparse_layer_bytes + layer_cost <= SparseLayerFrameBudget ||
+                (take == 0 && sparse_layer_bytes == 0))) {
+            sparse_layer_bytes += layer_cost;
+            ++take;
+        }
+        const std::vector<u32> later(layers.begin() + take, layers.end());
+        layers.resize(take);
+
         const std::vector<u32> bound =
             layers.empty() ? std::vector<u32>{} : BindSparseLayers(image, layers);
         if (bound.empty()) {
+            requeue(later);
             runtime.TransitionImageLayout(image);
             return;
         }
-        UploadLayers(image, bound);
+        try {
+            UploadLayers(image, bound);
+        } catch (const std::exception& error) {
+            // No staging memory left all the same: try these layers again in a later frame.
+            LOG_WARNING(HW_GPU, "Layer upload of image 0x{:x} put off ({}): out of memory",
+                        image.gpu_addr, error.what());
+            std::vector<u32> again(bound.begin(), bound.end());
+            again.insert(again.end(), later.begin(), later.end());
+            requeue(again);
+            sparse_layer_bytes = SparseLayerFrameBudget;
+            return;
+        }
+        requeue(later);
         runtime.InsertUploadMemoryBarrier();
     }
 }
@@ -5928,38 +5972,9 @@ void TextureCache<P>::UploadLayers(Image& image, std::span<const u32> layers) {
         const size_t chunk_layers = static_cast<size_t>(
             (std::max<u64>)(1, ChunkBytes / (std::max<u64>)(image.info.layer_stride, 1)));
         if (layers.size() > chunk_layers) {
-            // Cervin: staging buffers only come back once the GPU has run their copies. Mario Kart
-            // World's lightmap arrays (8192x8192 BC6H, a 128 MiB staging buffer per layer) held
-            // 15 GiB of them within one draw and ran the PC out of RAM. Wait for the GPU every
-            // GiB so the next layers reuse the same buffers.
-            constexpr u64 InFlightLimit = 1_GiB;
-            const u64 chunk_bytes =
-                (std::max<u64>)(u64{image.info.layer_stride} * chunk_layers, 1);
-            u64 in_flight = 0;
             for (size_t first = 0; first < layers.size(); first += chunk_layers) {
-                if (in_flight >= InFlightLimit) {
-                    runtime.Finish();
-                    in_flight = 0;
-                }
-                const auto chunk =
-                    layers.subspan(first, (std::min)(chunk_layers, layers.size() - first));
-                try {
-                    UploadLayers(image, chunk);
-                } catch (const std::exception& error) {
-                    // Out of staging memory all the same: give every buffer back and retry once.
-                    runtime.Finish();
-                    try {
-                        UploadLayers(image, chunk);
-                    } catch (const std::exception&) {
-                        LOG_WARNING(HW_GPU,
-                                    "Layer upload of image 0x{:x} stopped at layer {} of {} ({}): "
-                                    "out of memory",
-                                    image.gpu_addr, chunk.front(), layers.size(), error.what());
-                        return;
-                    }
-                    in_flight = 0;
-                }
-                in_flight += chunk_bytes;
+                UploadLayers(image, layers.subspan(first, (std::min)(chunk_layers,
+                                                                     layers.size() - first)));
             }
             return;
         }
