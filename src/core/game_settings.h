@@ -57,4 +57,10 @@ EnvironmentInfo DetectEnvironment(const VideoCore::RendererBase& renderer);
 
 void LoadOverrides(std::uint64_t program_id, const VideoCore::RendererBase& renderer);
 
+/// From Trudy (joshpack): defaults for Switch 2 titles that have no tuning of their own (not Mario
+/// Kart World's preset, not Fritchii's Ocarina of Time settings). Only where the user changed
+/// neither the game's value nor the global one. CERVIN_SWITCH2_DEFAULTS=0 (or Trudy's
+/// TRUDY_SWITCH2_DEFAULTS=0) turns it off.
+void ApplySwitch2Defaults(std::uint64_t program_id, bool is_switch2);
+
 } // namespace Core::GameSettings

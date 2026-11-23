@@ -6,6 +6,8 @@
 #include <thread>
 
 #include <algorithm>
+#include <chrono>
+#include <cstdlib>
 #include <ranges>
 #include <fmt/format.h>
 #include "common/lowend_sim.h"
@@ -161,6 +163,27 @@ void MasterSemaphore::Wait(u64 tick) {
 
     if (IsFree(tick)) {
         return;
+    }
+
+    // From Trudy (joshpack): EDEN_NX2_GPU_WAIT_SPIN_US=<microseconds> polls that long before the
+    // driver's wait. Titles that read GPU-written command lists wait here over a thousand times a
+    // second, often for work that ends within microseconds, and a sleep in the driver wakes up
+    // late. 50 us by default on CPUs with 12+ threads, which have cores to spare for it; 0 turns
+    // it off.
+    static const auto spin = std::chrono::microseconds{[] {
+        const char* value = std::getenv("EDEN_NX2_GPU_WAIT_SPIN_US");
+        return value != nullptr ? std::atoi(value)
+                                : (std::thread::hardware_concurrency() >= 12 ? 50 : 0);
+    }()};
+    if (spin.count() > 0) {
+        const auto end = std::chrono::steady_clock::now() + spin;
+        do {
+            std::this_thread::yield();
+            Refresh();
+            if (IsFree(tick)) {
+                return;
+            }
+        } while (std::chrono::steady_clock::now() < end);
     }
 
     // If none of the above is hit, fallback to a regular wait

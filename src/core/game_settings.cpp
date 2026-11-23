@@ -5,7 +5,10 @@
 
 #include <algorithm>
 #include <cctype>
+#include <cstdlib>
+#include <string>
 
+#include "common/game_presets.h"
 #include "common/logging.h"
 #include "common/settings.h"
 #include "video_core/renderer_base.h"
@@ -117,6 +120,59 @@ EnvironmentInfo DetectEnvironment(const VideoCore::RendererBase& renderer) {
     env.vendor_string = renderer.GetDeviceVendor();
     env.vendor = GetGPU(env.vendor_string);
     return env;
+}
+
+// A default only where the user changed neither the game's own value nor the global one.
+template <typename T, bool ranged>
+static bool OverrideIfUntouched(Settings::SwitchableSetting<T, ranged>& setting, T value) {
+    if (!setting.UsingGlobal() || setting.GetValue(true) != setting.GetDefault() ||
+        setting.GetDefault() == value) {
+        return false;
+    }
+    setting.SetGlobal(false);
+    setting.SetValue(value);
+    return true;
+}
+
+// From Trudy (joshpack), adapted to Fritchii's defaults. Trudy's Switch 2 defaults are GPU accuracy
+// Low (lets the GPU thread split run), Balanced fences with it (Mario Tennis Fever and Hyrule
+// Warriors needed them under Low so occlusion queries do not hide objects), asynchronous shaders
+// and reactive flushing off (Switch 2 titles have read traps instead, which protect only the pages
+// the GPU wrote; with reactive flushing on, every guest read of a GPU-cached page took the slow
+// path). Fritchii already defaults to Low and asynchronous shaders, so in practice this turns
+// reactive flushing off. Mario Kart World (its preset) and Ocarina of Time (Fritchii's own
+// recommended settings) are left alone.
+void ApplySwitch2Defaults(std::uint64_t program_id, bool is_switch2) {
+    constexpr std::uint64_t OcarinaOfTime = 0x0400486024DEC000ULL;
+    if (!is_switch2 || program_id == Settings::MarioKartWorldProgramId ||
+        program_id == OcarinaOfTime) {
+        return;
+    }
+    for (const char* name : {"CERVIN_SWITCH2_DEFAULTS", "TRUDY_SWITCH2_DEFAULTS"}) {
+        if (const char* value = std::getenv(name); value != nullptr && value[0] == '0') {
+            return;
+        }
+    }
+    std::string applied;
+    if (OverrideIfUntouched(Settings::values.gpu_accuracy, Settings::GpuAccuracy::Low)) {
+        applied += " GPU accuracy Low,";
+        // Balanced fences only make sense with the accuracy they were chosen for.
+        if (OverrideIfUntouched(Settings::values.gpu_fence_behavior,
+                                Settings::GpuFenceBehavior::Balanced)) {
+            applied += " Balanced fences,";
+        }
+    }
+    if (OverrideIfUntouched(Settings::values.use_asynchronous_shaders, true)) {
+        applied += " asynchronous shaders,";
+    }
+    if (OverrideIfUntouched(Settings::values.use_reactive_flushing, false)) {
+        applied += " reactive flushing off,";
+    }
+    if (!applied.empty()) {
+        applied.pop_back();
+        LOG_INFO(Core, "Switch 2 defaults (from Trudy) for {:016X}:{} (CERVIN_SWITCH2_DEFAULTS=0 to skip)",
+                 program_id, applied);
+    }
 }
 
 void LoadOverrides(std::uint64_t program_id, const VideoCore::RendererBase& renderer) {

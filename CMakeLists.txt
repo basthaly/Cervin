@@ -298,9 +298,13 @@ if (CXX_GCC OR CXX_CLANG)
         # See https://gcc.gnu.org/onlinedocs/gcc/x86-Options.html
         # Generic supports Pentium Pro instruction set and above
         # TODO: if a value is unknown, pass that as march and mtune
-        set(YUZU_BUILD_PRESET "custom" CACHE STRING "Build preset to use. One of: custom, generic, v3, zen2, zen4, native")
+        set(YUZU_BUILD_PRESET "custom" CACHE STRING "Build preset to use. One of: custom, generic, v3, zen2, zen4, zen5, native")
 
-        if (${YUZU_BUILD_PRESET} STREQUAL "generic")
+        if (${YUZU_BUILD_PRESET} STREQUAL "zen5")
+            # From Trudy: Ryzen 9000 / 9000X3D (9800X3D, 9950X3D...). Needs clang 19+ or GCC 14+.
+            set(march znver5)
+            set(mtune znver5)
+        elseif (${YUZU_BUILD_PRESET} STREQUAL "generic")
             set(march x86-64)
             set(mtune generic)
         elseif (${YUZU_BUILD_PRESET} STREQUAL "v3")
@@ -334,6 +338,15 @@ if (CXX_GCC OR CXX_CLANG)
     if (DEFINED march AND DEFINED mtune)
         set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -march=${march} -mtune=${mtune}")
         set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -march=${march} -mtune=${mtune}")
+    endif()
+elseif (MSVC AND ARCHITECTURE_x86_64)
+    # From Trudy: MSVC has no -march; map the presets to the closest /arch level. The default
+    # (custom) keeps MSVC's baseline, so a build still runs on any x86-64 CPU.
+    set(YUZU_BUILD_PRESET "custom" CACHE STRING "Build preset to use. One of: custom, v3, zen2, zen4, zen5")
+    if (YUZU_BUILD_PRESET MATCHES "^(zen4|zen5)$")
+        add_compile_options($<$<COMPILE_LANGUAGE:C,CXX>:/arch:AVX512>)
+    elseif (YUZU_BUILD_PRESET MATCHES "^(v3|zen2)$")
+        add_compile_options($<$<COMPILE_LANGUAGE:C,CXX>:/arch:AVX2>)
     endif()
 endif()
 

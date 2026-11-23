@@ -601,6 +601,9 @@ struct System::Impl {
             LOG_ERROR(Core, "Failed to find program id for ROM");
         }
 
+        if (const auto* app_process = kernel.ApplicationProcess(); app_process != nullptr) {
+            GameSettings::ApplySwitch2Defaults(program_id, app_process->IsSwitch2());
+        }
         GameSettings::LoadOverrides(program_id, gpu_core->Renderer());
         if (auto room_member = Network::GetRoomMember().lock()) {
             Network::GameInfo game_info;
