@@ -2600,19 +2600,13 @@ void MainWindow::BootGame(const QString& filename, Service::AM::FrontendAppletPa
                                          VkDeviceInfo::RunsDlss(vk_device_records[card]));
     }
 
-    if (title_id == Settings::MarioKartWorldProgramId && !asked_recommended_mkw_settings) {
-        asked_recommended_mkw_settings = true;
-        use_recommended_mkw_settings =
-            QMessageBox::question(
-                this, tr("Recommended Mario Kart World settings"),
-                tr("Use the recommended settings for Mario Kart World?\n\n"
-                   "Vulkan, 1x resolution, GPU Fast, asynchronous shaders, BC3, conservative VRAM, "
-                   "reactive flushing off, FIFO Relaxed VSync, handheld mode, ScaleForce, and "
-                   "FXAA.\n\n"
-                   "They apply to Mario Kart World until Cervin is closed. Your saved settings "
-                   "are not changed."),
-                QMessageBox::Yes | QMessageBox::No, QMessageBox::No) == QMessageBox::Yes;
-        LOG_INFO(Config, "MKW recommended settings accepted: {}", use_recommended_mkw_settings);
+    // Cervin: no question at every start. The recommended settings are chosen once, in the game's
+    // own settings (its banner sets mkw_recommended, per game, loaded by now).
+    use_recommended_mkw_settings = title_id == Settings::MarioKartWorldProgramId &&
+                                   Settings::values.mkw_recommended.GetValue();
+    if (title_id == Settings::MarioKartWorldProgramId) {
+        LOG_INFO(Config, "MKW recommended settings chosen in its game settings: {}",
+                 use_recommended_mkw_settings);
     }
     if (Settings::ApplyMarioKartWorldPreset(Settings::values, title_id,
                                           use_recommended_mkw_settings)) {

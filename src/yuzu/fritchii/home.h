@@ -8,6 +8,8 @@
 #include "common/common_types.h"
 
 class QBoxLayout;
+class QFrame;
+class QGridLayout;
 class QHBoxLayout;
 class QLabel;
 class QMainWindow;
@@ -16,6 +18,7 @@ class QPushButton;
 class QStandardItemModel;
 class QTimer;
 class QToolButton;
+class QVBoxLayout;
 
 namespace FritchiiUi {
 
@@ -35,12 +38,16 @@ struct HomeHooks {
     QStandardItemModel* model = nullptr;
     QMenu* help_menu = nullptr;
     QList<QMenu*> classic_menus;  ///< File, Game, View, Tools, Help behind the rail's menu button
+    /// Cervin: runs `change` with the game's own settings (its per-game config) loaded into
+    /// Settings::values, and saves them when it returns true. Does nothing while a game runs.
+    std::function<void(u64 program_id, const std::function<bool()>& change)> with_game_settings;
 };
 
-/// The Fritchii main screen: a left icon rail (Library, Settings, Help, and the classic menus
-/// behind a button) and a home page with one big card for Ocarina of Time (or the first game)
-/// and the other games in a small row. The classic game list stays one click away
-/// ("All games"); the main window keeps managing it as before.
+/// The main screen: a left icon rail (Library, Settings, Help, and the classic menus behind a
+/// button) and a home page. Cervin: every game as a card in a grid (cover, name, Play and its
+/// settings), and beside it the selected game's quick settings (DLSS priority and model, console
+/// mode, speed limit), written to that game's own settings. The classic game list stays one click
+/// away ("All games"); the main window keeps managing it as before.
 class Home : public QObject {
     Q_OBJECT
 public:
@@ -58,6 +65,8 @@ private:
     void ShowList();
     void Restore();
     void Refresh();
+    /// The quick settings beside the grid, for the selected game.
+    void RefreshPanel();
 
     QWidget* MakeRail();
     QWidget* MakePage();
@@ -71,15 +80,15 @@ private:
     QWidget* rail = nullptr;
     QWidget* page = nullptr;
     QToolButton* library_button = nullptr;
-    QLabel* cover = nullptr;
-    QLabel* title = nullptr;
-    QPushButton* play = nullptr;
-    QHBoxLayout* row = nullptr;
-    QWidget* row_box = nullptr;
+    QWidget* grid_box = nullptr;      ///< The game cards
+    QGridLayout* grid = nullptr;
+    QFrame* panel = nullptr;          ///< The selected game's quick settings
+    QVBoxLayout* panel_layout = nullptr;
     QTimer* refresh_timer = nullptr;
 
     bool list_mode = false;
-    QString hero_path;
+    QString hero_path;                ///< The selected game
+    QString hero_title;
     u64 hero_id = 0;
 };
 

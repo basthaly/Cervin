@@ -472,6 +472,11 @@ struct Values {
     // FRITCHII_OOT_RENDER_STEPS). A built-in patch of the game's render scale: every pass of the
     // game, compute ones too, runs at that size. Global only; takes effect when the game starts.
     Setting<u32> oot_render_height{linkage, 0, "oot_render_height", Category::Renderer};
+    // Cervin: Mario Kart World's recommended settings (Settings::SetMarioKartWorldRecommended
+    // Settings) chosen in its game settings, applied at each start of the game. Per game; no row
+    // of its own (the game settings' banner sets it). Replaces the question at every start.
+    SwitchableSetting<bool> mkw_recommended{linkage, false, "mkw_recommended",
+                                            Category::Renderer};
     // The title screen's and cutscenes' videos (AV1 1080p60): the game's own upscaler (removes
     // banding, 1080p -> 1440p; tensor operations) or a bilinear copy. Automatic: the game's where
     // the GPU runs tensor operations natively (RTX), the copy elsewhere (its emulated matrices

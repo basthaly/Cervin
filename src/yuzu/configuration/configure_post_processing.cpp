@@ -3,6 +3,7 @@
 
 #include <array>
 #include <cmath>
+#include <filesystem>
 #include <string>
 
 #include <QAction>
@@ -59,6 +60,28 @@ QString SlotLabel(const VideoCore::FxEffectDesc& effect, const std::string& tech
         return name;
     }
     return name + QStringLiteral(" · ") + QString::fromStdString(technique);
+}
+
+/// Cervin: the family an effect file belongs to in the "Add Effect" menu: 0 sharpness, 1 colors,
+/// 2 mood, 3 retro, 4 anything else (a player's own .fx files).
+size_t EffectFamily(const std::string& file) {
+    const std::string stem = std::filesystem::path(file).stem().string();
+    static constexpr std::array<std::array<const char*, 8>, 4> names{{
+        {"Sharpen", "AMDBoost", "Deband", "Denoise", nullptr, nullptr, nullptr, nullptr},
+        {"ColorGrade", "NaturalColors", "Levels", "WhiteBalance", "SplitToning", "FilmicCurve",
+         nullptr, nullptr},
+        {"Bloom", "Vignette", "FilmGrain", "ChromaticAberration", "LensDistortion", "MotionBlur",
+         "Reflections", "Blur"},
+        {"CRT", "Scanlines", "Cartoon", "CartoonSoft", "CelShading", nullptr, nullptr, nullptr},
+    }};
+    for (size_t family = 0; family < names.size(); ++family) {
+        for (const char* name : names[family]) {
+            if (name != nullptr && stem == name) {
+                return family;
+            }
+        }
+    }
+    return 4;
 }
 
 } // Anonymous namespace
@@ -154,12 +177,21 @@ ConfigurePostProcessing::ConfigurePostProcessing(QWidget* parent) : QDialog(pare
 
     auto* add_button = new QPushButton(tr("Add Effect"), this);
     auto* add_menu = new QMenu(add_button);
+    // Cervin: the effects by family, not one long list. Each costs some FPS.
+    const std::array<QMenu*, 5> families{
+        add_menu->addMenu(tr("Sharpness and clarity")),
+        add_menu->addMenu(tr("Colors")),
+        add_menu->addMenu(tr("Mood (glow, grain, blur...)")),
+        add_menu->addMenu(tr("Retro and drawn")),
+        add_menu->addMenu(tr("Other")),
+    };
     for (const auto& effect : VideoCore::GetFxCatalog()) {
         if (!effect.Valid()) {
             continue;
         }
+        QMenu* const family = families[EffectFamily(effect.file)];
         for (const auto& technique : effect.techniques) {
-            QAction* action = add_menu->addAction(SlotLabel(effect, technique));
+            QAction* action = family->addAction(SlotLabel(effect, technique));
             action->setToolTip(QString::fromStdString(effect.description));
             const std::string file = effect.file;
             const std::string name = technique;
@@ -168,6 +200,9 @@ ConfigurePostProcessing::ConfigurePostProcessing(QWidget* parent) : QDialog(pare
                 ApplyStructuralChange();
             });
         }
+    }
+    for (QMenu* const family : families) {
+        family->menuAction()->setVisible(!family->isEmpty());
     }
     add_button->setMenu(add_menu);
     actions->addWidget(add_button);

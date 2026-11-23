@@ -6,6 +6,7 @@
 
 #include <algorithm>
 #include <array>
+#include <cmath>
 #include <functional>
 #include <iterator>
 #include <string>
@@ -437,6 +438,26 @@ void ConfigureGraphics::Setup(const ConfigurationShared::Builder& builder) {
             connect(scaling_filter_combobox, QOverload<int>::of(&QComboBox::currentIndexChanged),
                     this, [this](int) { UpdateWindowFilterNote(); });
             hold_graphics.emplace(setting->Id(), group);
+        } else if (setting->Id() == Settings::values.nvidia_dlss_preset.Id() &&
+                   widget->combobox != nullptr) {
+            // Cervin: the letters are NVIDIA's names; what each model is for, under the choice.
+            QWidget* group = new QWidget(this);
+            QVBoxLayout* group_layout = new QVBoxLayout(group);
+            group_layout->setContentsMargins(0, 0, 0, 0);
+            group_layout->setSpacing(2);
+            group_layout->addWidget(widget);
+            dlss_preset_combobox = widget->combobox;
+            dlss_model_note = new QLabel(group);
+            dlss_model_note->setWordWrap(true);
+            group_layout->addWidget(dlss_model_note);
+            connect(dlss_preset_combobox, QOverload<int>::of(&QComboBox::currentIndexChanged), this,
+                    [this](int) { UpdateDlssModelNote(); });
+            if (nvidia_dlss_checkbox != nullptr) {
+                connect(nvidia_dlss_checkbox, &QCheckBox::toggled, this,
+                        [this](bool) { UpdateDlssModelNote(); });
+            }
+            UpdateDlssModelNote();
+            hold_graphics.emplace(setting->Id(), group);
         } else {
             hold_graphics.emplace(setting->Id(), widget);
         }
@@ -456,6 +477,10 @@ void ConfigureGraphics::Setup(const ConfigurationShared::Builder& builder) {
     SetupOcarinaTextureRows(all_rows);
     SetupPictureMenu();
     SetupPlainNames(all_rows);
+    // Cervin: what each setting does and costs, as a grey line under it, not only on hover.
+    if (FritchiiUi::Enabled()) {
+        ConfigurationShared::AddRowHints(this);
+    }
 
     // Background color is too specific to build into the new system, so we manage it here
     // (3 settings, all collected into a single widget with a QColor to manage on top)
@@ -673,7 +698,54 @@ void ConfigureGraphics::UpdateDlssVisibility() {
             row->setVisible(false);
         }
     }
+    UpdateDlssModelNote();
     UpdateUpscalerChoice();
+}
+
+void ConfigureGraphics::UpdateDlssModelNote() {
+    if (dlss_model_note == nullptr || dlss_preset_combobox == nullptr) {
+        return;
+    }
+    dlss_model_note->setVisible(DlssOn());
+    if (dlss_preset_combobox->currentIndex() < 0) {
+        dlss_model_note->clear();
+        return;
+    }
+    using P = Settings::DlssPreset;
+    QString text;
+    switch (static_cast<P>(dlss_preset_combobox->currentData().toUInt())) {
+    case P::Auto:
+        text = tr("Cervin picks: K on most cards, the lighter E on cards with little video "
+                  "memory. The safe choice.");
+        break;
+    case P::Default:
+        text = tr("NVIDIA picks a model for each DLSS mode. Its picks for the FPS modes can "
+                  "draw thin lines.");
+        break;
+    case P::K:
+        text = tr("DLSS 4, the most tested in Cervin. Sharp and steady, little trailing.\n"
+                  "Best for: Picture or Balanced priority. GPU cost: medium.");
+        break;
+    case P::J:
+        text = tr("A sharper take on K, but it can leave trails behind fast objects.\n"
+                  "Best for: if K looks too soft to you. GPU cost: medium.");
+        break;
+    case P::M:
+        text = tr("DLSS 4.5. Keeps more detail when the base picture is small.\n"
+                  "Best for: FPS priority. GPU cost: high, heavy on RTX 20 and 30 cards.");
+        break;
+    case P::L:
+        text = tr("DLSS 4.5, made for a base a third of the output (4K from 720p).\n"
+                  "Best for: Max FPS priority in 4K. GPU cost: high.");
+        break;
+    case P::E:
+        text = tr("The older model (DLSS 3). The lightest, softer in motion.\n"
+                  "Best for: small cards with little video memory. GPU cost: low.");
+        break;
+    default:
+        break;
+    }
+    dlss_model_note->setText(text);
 }
 
 void ConfigureGraphics::UpdateAmdFsr4Visibility() {
@@ -917,6 +989,20 @@ void ConfigureGraphics::SetupUpscalerChoice(std::map<u32, QWidget*>& hold_graphi
         output_combobox = new QComboBox;
         output_row = make_row(tr("Upscale to:"), output_combobox);
         output_row->setVisible(false);
+        // Cervin: the player picks the output and what matters most; the size the game draws
+        // follows (PriorityInput), in place of the "Resolution" row.
+        priority_combobox = new QComboBox;
+        priority_combobox->addItem(tr("Picture (base at 2/3 of the output)"));
+        priority_combobox->addItem(tr("Balanced (base at 58%)"));
+        priority_combobox->addItem(tr("FPS (base at half)"));
+        priority_combobox->addItem(tr("Max FPS (base at a third, for 4K)"));
+        priority_combobox->addItem(tr("Edges only (DLAA): no FPS gain"));
+        priority_row = make_row(tr("Priority:"), priority_combobox);
+        priority_row->setToolTip(
+            tr("What matters most to you. Cervin picks the size the game draws from it.\n"
+               "Picture: the best trade. FPS: for cards that struggle. Edges only: the game draws "
+               "at the output size and the upscaler only smooths it, no FPS gain."));
+        priority_row->setVisible(false);
     }
     add_note();
 
@@ -1369,6 +1455,83 @@ void ConfigureGraphics::ApplyPictureOutput(u32 output) {
     UpdatePictureMenu();
 }
 
+namespace {
+/// Output / base for each priority row: Picture, Balanced, FPS, Max FPS, Edges only.
+constexpr std::array<double, 5> PriorityRatios{1.5, 1.72, 2.0, 3.0, 1.0};
+constexpr int PriorityEdgesOnly = 4;
+} // namespace
+
+u32 ConfigureGraphics::PriorityInput(u32 output, int priority) const {
+    const auto row = static_cast<size_t>(std::clamp(priority, 0, PriorityEdgesOnly));
+    const double target = static_cast<double>(output) / PriorityRatios[row];
+    const bool dlss = PictureUpscalerNow() == PictureUpscaler::Dlss;
+    const u64 vram = PictureVram();
+    u32 best = PictureInputNow();
+    double best_distance = -1.0;
+    for (const u32 height : Settings::OcarinaRenderHeights) {
+        if (!Settings::OcarinaRenderHeightOffered(height)) {
+            continue;
+        }
+        const std::vector<u32> outputs = PictureOutputs(height, vram, dlss);
+        if (std::ranges::find(outputs, output) == outputs.end()) {
+            continue;
+        }
+        const double distance = std::abs(static_cast<double>(height) - target);
+        if (best_distance < 0.0 || distance < best_distance) {
+            best = height;
+            best_distance = distance;
+        }
+    }
+    return best;
+}
+
+int ConfigureGraphics::PriorityFromSizes() const {
+    const u32 input = SceneHeight(PictureInputNow());
+    const u32 output = PictureOutputNow();
+    if (input == 0 || output <= input) {
+        return PriorityEdgesOnly;
+    }
+    const double ratio = static_cast<double>(output) / static_cast<double>(input);
+    int best = 0;
+    for (int row = 0; row < PriorityEdgesOnly; ++row) {
+        if (std::abs(PriorityRatios[static_cast<size_t>(row)] - ratio) <
+            std::abs(PriorityRatios[static_cast<size_t>(best)] - ratio)) {
+            best = row;
+        }
+    }
+    return best;
+}
+
+std::vector<u32> ConfigureGraphics::AllPictureOutputs() const {
+    const bool dlss = PictureUpscalerNow() == PictureUpscaler::Dlss;
+    const u64 vram = PictureVram();
+    std::vector<u32> outputs;
+    for (const u32 height : Settings::OcarinaRenderHeights) {
+        if (!Settings::OcarinaRenderHeightOffered(height)) {
+            continue;
+        }
+        for (const u32 output : PictureOutputs(height, vram, dlss)) {
+            if (std::ranges::find(outputs, output) == outputs.end()) {
+                outputs.push_back(output);
+            }
+        }
+    }
+    std::ranges::sort(outputs);
+    return outputs;
+}
+
+void ConfigureGraphics::ApplyPriorityOutput(u32 output) {
+    if (priority_combobox == nullptr || system.IsPoweredOn()) {
+        ApplyPictureOutput(output);
+        return;
+    }
+    const u32 input = PriorityInput(output, priority_combobox->currentIndex());
+    if (input != PictureInputNow()) {
+        ApplyPictureInput(input);
+    }
+    ApplyPictureOutput(output);
+}
+
 void ConfigureGraphics::SetupPictureMenu() {
     if (output_row == nullptr || render_row == nullptr) {
         return;
@@ -1406,9 +1569,13 @@ void ConfigureGraphics::SetupPictureMenu() {
     });
     connect(output_combobox, QOverload<int>::of(&QComboBox::activated), this, [this](int index) {
         if (index >= 0) {
-            ApplyPictureOutput(output_combobox->itemData(index).toUInt());
+            ApplyPriorityOutput(output_combobox->itemData(index).toUInt());
         }
     });
+    if (priority_combobox != nullptr) {
+        connect(priority_combobox, QOverload<int>::of(&QComboBox::activated), this,
+                [this](int) { ApplyPriorityOutput(PictureOutputNow()); });
+    }
     // Saved with the other add-ons by the global config (Config::SaveDisabledAddOnValues).
     apply_funcs.push_back([this](bool) { FritchiiMaxResolution::Save(max_resolution_choice); });
     apply_funcs.push_back([this](bool) {
@@ -1438,8 +1605,12 @@ void ConfigureGraphics::UpdatePictureMenu() {
     // (RasterizerVulkan::ApplyOcarinaResolution): "Resolution" is then the size the game draws
     // and "Upscale to" the size the upscaler makes.
     resolution_widget->setVisible(!upscaling);
-    render_row->setVisible(upscaling);
+    // Cervin: with a priority row the size the game draws follows the output and the priority.
+    render_row->setVisible(upscaling && priority_row == nullptr);
     output_row->setVisible(upscaling);
+    if (priority_row != nullptr) {
+        priority_row->setVisible(upscaling);
+    }
     if (max_res_row != nullptr) {
         max_res_row->setVisible(!upscaling);
         max_res_combobox->setCurrentIndex(max_resolution_choice ? 1 : 0);
@@ -1474,12 +1645,28 @@ void ConfigureGraphics::UpdatePictureMenu() {
                                    : tr("The size the game draws. Lower runs faster.\n1440p is "
                                         "the game's own size."));
 
+    if (priority_combobox != nullptr) {
+        const QSignalBlocker block_priority(priority_combobox);
+        priority_combobox->setCurrentIndex(PriorityFromSizes());
+        priority_combobox->setEnabled(!running);
+        if (running) {
+            priority_row->setToolTip(tr("Close the game to change it."));
+        }
+    }
+
     output_combobox->clear();
     const u32 screen = ScreenHeight();
-    for (const u32 height : PictureOutputsNow()) {
+    std::vector<u32> output_list =
+        (priority_combobox != nullptr && !running) ? AllPictureOutputs() : PictureOutputsNow();
+    if (std::ranges::find(output_list, output) == output_list.end()) {
+        output_list.insert(std::ranges::upper_bound(output_list, output), output);
+    }
+    for (const u32 height : output_list) {
         // The scene's own size: anti-aliasing only (DLSS Native, FSR at 1x).
-        QString name =
-            height == scene ? tr("%1 Native").arg(HeightName(height)) : HeightName(height);
+        // With a priority row "Native" is the priority's business (Edges only), not the size's.
+        QString name = (height == scene && priority_combobox == nullptr)
+                           ? tr("%1 Native").arg(HeightName(height))
+                           : HeightName(height);
         // Anything bigger is shrunk again to fit: the size that costs no more than it shows.
         if (height == screen) {
             name = tr("%1 (your screen)").arg(name);
@@ -1565,6 +1752,16 @@ void ConfigureGraphics::UpdatePictureNote() {
                           ? tr("The game draws %1, %2 smooths the edges.").arg(drawn, name)
                           : tr("The game draws %1, %2 makes it %3.")
                                 .arg(drawn, name, HeightName(output)));
+            // Cervin: what the priority saves, in the graphics card's work.
+            if (const u32 scene = SceneHeight(input); output > scene) {
+                const double side = static_cast<double>(scene) / static_cast<double>(output);
+                const int saved = static_cast<int>(std::lround((1.0 - side * side) * 100.0));
+                lines << tr("The graphics card draws %1% fewer pixels than at %2.")
+                             .arg(saved)
+                             .arg(HeightName(output));
+            } else if (priority_combobox != nullptr) {
+                lines << tr("No FPS gain: the upscaler only smooths the edges here.");
+            }
             // How to go lower (owner 2026-11-18: "make it clear ... you need upscaler OFF"). The
             // lowest height on offer follows OcarinaRenderHeightOffered.
             const auto lowest = std::ranges::find_if(Settings::OcarinaRenderHeights,
@@ -1756,9 +1953,10 @@ void ConfigureGraphics::SetupPlainNames(const std::map<u32, QWidget*>& rows) {
     set(values.vulkan_device.Id(), tr("Graphics card:"), tr("The graphics card that runs games."));
     set(values.vsync_mode.Id(), tr("VSync:"),
         tr("Stops the picture from tearing.\nOff has the least lag but the picture can tear."));
-    set(values.scaling_filter.Id(), tr("Window filter:"),
-        tr("How the picture is fitted to your window or screen.\nAuto: Area when the picture is "
-           "bigger than your screen, FSR 1 when it is smaller."));
+    set(values.scaling_filter.Id(), tr("Screen filter:"),
+        tr("How the picture is fitted to your window or screen when the sizes differ. It "
+           "changes neither the FPS nor the game, only the final look.\nAuto: Area when the "
+           "picture is bigger than your screen, ScaleForce when it is smaller."));
     set(values.game_dlss_network.Id(), tr("Use the game's own DLSS"),
         tr("Switch 2 games with DLSS use the game's own upscaler instead of FSR 3.1.\nCan be slow "
            "on older cards."));
@@ -1768,11 +1966,12 @@ void ConfigureGraphics::SetupPlainNames(const std::map<u32, QWidget*>& rows) {
     set(values.nvidia_dlss.Id(), tr("NVIDIA DLSS"),
         tr("NVIDIA's upscaler, RTX cards only.\nNeeds NVIDIA's files: use the download button."));
     set(values.nvidia_dlss_preset.Id(), tr("DLSS model:"),
-        tr("Which DLSS version to use. Automatic picks one for your card.\nK is the tested one. "
-           "Others can look sharper or softer."));
-    set(values.nvidia_dlss_quality.Id(), tr("DLSS quality:"),
-        tr("Lower quality runs faster but looks softer.\nNative only smooths edges, no "
-           "upscaling."));
+        tr("The letters are NVIDIA's names. What the picked one is for shows under the "
+           "choice.\nAutomatic is the safe choice."));
+    set(values.nvidia_dlss_quality.Id(), tr("DLSS priority:"),
+        tr("What matters most. The base is the size the game draws before DLSS rebuilds it.\n"
+           "Picture: the best trade. FPS: a smaller base for cards that struggle.\nEdges only "
+           "(DLAA): no upscaling, so no FPS gain."));
     set(values.oot_dlss_jitter.Id(), tr("DLSS jitter"),
         tr("Sharper fine detail with DLSS.\nTurn off if the picture shakes."));
     set(values.aspect_ratio.Id(), tr("Aspect ratio:"),

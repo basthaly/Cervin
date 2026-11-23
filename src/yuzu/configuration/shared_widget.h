@@ -178,4 +178,9 @@ private:
     const bool runtime_lock;
 };
 
+/// Cervin: every setting row on `page` with a tooltip gets it as a short grey line under it
+/// (what the setting does and what it costs), shown and hidden with the row and updated when its
+/// tooltip changes. Call once the rows sit in their layouts; a row in a grid is left as it is.
+void AddRowHints(QWidget* page);
+
 } // namespace ConfigurationShared

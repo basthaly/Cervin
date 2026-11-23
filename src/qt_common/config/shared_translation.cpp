@@ -157,10 +157,10 @@ std::unique_ptr<TranslationMap> InitializeTranslations(QObject* parent) {
            tr("Strength of RCAS (AMD's contrast-adaptive sharpening) on the upscaler used in place "
               "of a game's DLSS (AMD FSR 3.1); 0% turns it off.\nAlso sets the sharpening "
               "of the AMD FSR 1 and SGSR window adapting filters."));
-    INSERT(Settings, nvidia_dlss_preset, tr("DLSS preset:"),
-           tr("The DLSS model. Automatic picks one for your card; K is the tested one, L and M "
-              "are NVIDIA's newer models, J the older one. Default lets NVIDIA choose per quality "
-              "mode. The status bar shows the model in use."));
+    INSERT(Settings, nvidia_dlss_preset, tr("DLSS model:"),
+           tr("The DLSS model; the letters are NVIDIA's names. Automatic picks one for your "
+              "card. K: the all-rounder. M: keeps detail from a small base. L: 4K from a very "
+              "small base. J: sharper than K, can trail. The status bar shows the model in use."));
     INSERT(Settings, nvidia_dlss, tr("Use NVIDIA DLSS in place of a game's DLSS (experimental)"),
            tr("Uses NVIDIA DLSS on GeForce RTX cards in place of a Switch 2 game's own DLSS, "
               "instead of AMD FSR 3.1.\nNeeds NVIDIA's Streamline loader, and NVIDIA DLSS unless "
@@ -169,10 +169,12 @@ std::unique_ptr<TranslationMap> InitializeTranslations(QObject* parent) {
               "EDEN_NX2_DLSS_REPLACEMENT=dlss. Without that override, its spatial workaround "
               "remains active.\nIn The Legend of Zelda: Ocarina of Time it replaces the game's "
               "upscaler at 1x resolution scale.\nTakes effect when a game starts."));
-    INSERT(Settings, nvidia_dlss_quality, tr("DLSS quality:"),
-           tr("Automatic picks the mode from the game's own resolution. Native (DLAA) keeps the "
-              "game's resolution and only smooths it. Other modes apply when they fit the game's "
-              "resolution, otherwise Automatic is used. Changes apply while playing."));
+    INSERT(Settings, nvidia_dlss_quality, tr("DLSS priority:"),
+           tr("What matters most: the base is the size the game draws before DLSS rebuilds it.\n"
+              "Picture is the best trade, FPS lowers the base for cards that struggle. Edges only "
+              "(DLAA) keeps the game's size and only smooths it: no FPS gain.\nA priority applies "
+              "when it fits the game's size, otherwise Auto is used. Changes apply while "
+              "playing."));
     INSERT(Settings, oot_dlss_jitter, tr("DLSS jitter"),
            tr("Tiny camera shifts each frame that DLSS uses for smoother edges. On by "
               "default.\nTakes effect when the game starts."));
@@ -183,6 +185,8 @@ std::unique_ptr<TranslationMap> InitializeTranslations(QObject* parent) {
     INSERT(Settings, oot_upscale_output, QString(), QString());
     // Set by the picture menu's "Resolution" row while an upscaler is on.
     INSERT(Settings, oot_render_height, QString(), QString());
+    // Set by the banner in Mario Kart World's game settings (ConfigurePerGame).
+    INSERT(Settings, mkw_recommended, QString(), QString());
     INSERT(Settings, oot_lod_bias_custom, tr("LOD bias:"),
            tr("Lower is sharper. Too low makes textures shimmer.\nTakes effect when the game "
               "starts."));
@@ -479,12 +483,13 @@ std::unique_ptr<ComboboxTranslationMap> ComboboxEnumeration(QObject* parent) {
                               PAIR(SpirvOptimizeMode, Always, tr("Always")),
                           }});
     translations->insert({Settings::EnumMetadata<Settings::NvidiaDlssQuality>::Index(),
-                          {PAIR(NvidiaDlssQuality, Automatic, tr("Automatic")),
-                           PAIR(NvidiaDlssQuality, Native, tr("Native (DLAA)")),
-                           PAIR(NvidiaDlssQuality, Quality, tr("Quality")),
-                           PAIR(NvidiaDlssQuality, Balanced, tr("Balanced")),
-                           PAIR(NvidiaDlssQuality, Performance, tr("Performance")),
-                           PAIR(NvidiaDlssQuality, UltraPerformance, tr("Ultra Performance"))}});
+                          {PAIR(NvidiaDlssQuality, Automatic, tr("Auto (from the game's size)")),
+                           PAIR(NvidiaDlssQuality, Quality, tr("Picture (base at 2/3)")),
+                           PAIR(NvidiaDlssQuality, Balanced, tr("Balanced (base at 58%)")),
+                           PAIR(NvidiaDlssQuality, Performance, tr("FPS (base at half)")),
+                           PAIR(NvidiaDlssQuality, UltraPerformance,
+                                tr("Max FPS (base at a third)")),
+                           PAIR(NvidiaDlssQuality, Native, tr("Edges only (DLAA): no FPS gain"))}});
     translations->insert({Settings::EnumMetadata<Settings::AstcDecodeMode>::Index(),
                           {
                               PAIR(AstcDecodeMode, Cpu, tr("CPU")),
@@ -588,23 +593,26 @@ std::unique_ptr<ComboboxTranslationMap> ComboboxEnumeration(QObject* parent) {
          }});
     translations->insert({Settings::EnumMetadata<Settings::ScalingFilter>::Index(),
                           {
+                              // Cervin: grouped by what the picture needs (the row order is
+                              // the list's; the saved value is the enum's, so it can move).
                               PAIR(ScalingFilter, Auto, tr("Auto (recommended)")),
-                              PAIR(ScalingFilter, NearestNeighbor, tr("Nearest Neighbor")),
-                              PAIR(ScalingFilter, Bilinear, tr("Bilinear")),
-                              PAIR(ScalingFilter, Bicubic, tr("Bicubic")),
-                              PAIR(ScalingFilter, Gaussian, tr("Gaussian")),
-                              PAIR(ScalingFilter, Lanczos, tr("Lanczos")),
-                              PAIR(ScalingFilter, ScaleForce, tr("ScaleForce")),
-                              PAIR(ScalingFilter, Fsr, tr("AMD FidelityFX Super Resolution 1 (FSR 1)")),
-                              PAIR(ScalingFilter, Area, tr("Area")),
-                              PAIR(ScalingFilter, Mmpx, tr("MMPX")),
-                              PAIR(ScalingFilter, ZeroTangent, tr("Zero-Tangent")),
-                              PAIR(ScalingFilter, BSpline, tr("B-Spline")),
-                              PAIR(ScalingFilter, Mitchell, tr("Mitchell")),
-                              PAIR(ScalingFilter, Spline1, tr("Spline-1")),
-                              PAIR(ScalingFilter, Sgsr, tr("Snapdragon Game Super Resolution")),
-                              PAIR(ScalingFilter, SgsrEdge, tr("Snapdragon Game Super Resolution EdgeDir")),
-                              PAIR(ScalingFilter, Fsr3, tr("AMD FidelityFX Super Resolution 1, softer sharpening")),
+                              PAIR(ScalingFilter, Area, tr("Shrink · Area (cleanest)")),
+                              PAIR(ScalingFilter, Bicubic, tr("Shrink · Bicubic (softer)")),
+                              PAIR(ScalingFilter, ScaleForce, tr("Stretch · ScaleForce (natural)")),
+                              PAIR(ScalingFilter, Fsr, tr("Stretch · FSR 1 (very sharp)")),
+                              PAIR(ScalingFilter, Fsr3, tr("Stretch · FSR 1, softer")),
+                              PAIR(ScalingFilter, Sgsr, tr("Stretch · Snapdragon GSR (light)")),
+                              PAIR(ScalingFilter, NearestNeighbor,
+                                   tr("Pixel art · Nearest neighbor (square pixels)")),
+                              PAIR(ScalingFilter, Mmpx, tr("Pixel art · MMPX (smoothed)")),
+                              PAIR(ScalingFilter, Bilinear, tr("Simple · Bilinear (soft, cheapest)")),
+                              PAIR(ScalingFilter, Gaussian, tr("Advanced · Gaussian")),
+                              PAIR(ScalingFilter, Lanczos, tr("Advanced · Lanczos")),
+                              PAIR(ScalingFilter, ZeroTangent, tr("Advanced · Zero-Tangent")),
+                              PAIR(ScalingFilter, BSpline, tr("Advanced · B-Spline")),
+                              PAIR(ScalingFilter, Mitchell, tr("Advanced · Mitchell")),
+                              PAIR(ScalingFilter, Spline1, tr("Advanced · Spline-1")),
+                              PAIR(ScalingFilter, SgsrEdge, tr("Advanced · Snapdragon GSR EdgeDir")),
                           }});
     translations->insert({Settings::EnumMetadata<Settings::AntiAliasing>::Index(),
                           {
@@ -614,12 +622,12 @@ std::unique_ptr<ComboboxTranslationMap> ComboboxEnumeration(QObject* parent) {
                           }});
     translations->insert({Settings::EnumMetadata<Settings::DlssPreset>::Index(),
                           {
-                              PAIR(DlssPreset, Auto, tr("Automatic")),
-                              PAIR(DlssPreset, Default, tr("Default (NVIDIA's choice)")),
-                              PAIR(DlssPreset, J, tr("J")),
-                              PAIR(DlssPreset, K, tr("K (recommended)")),
-                              PAIR(DlssPreset, L, tr("L")),
-                              PAIR(DlssPreset, M, tr("M")),
+                              PAIR(DlssPreset, Auto, tr("Automatic (recommended)")),
+                              PAIR(DlssPreset, K, tr("K: the all-rounder")),
+                              PAIR(DlssPreset, M, tr("M: for a small base (FPS)")),
+                              PAIR(DlssPreset, L, tr("L: 4K from a very small base")),
+                              PAIR(DlssPreset, J, tr("J: a bit sharper than K")),
+                              PAIR(DlssPreset, Default, tr("NVIDIA's choice")),
                           }});
     translations->insert({Settings::EnumMetadata<Settings::HybridCpuPlacement>::Index(),
                           {

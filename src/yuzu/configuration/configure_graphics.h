@@ -124,6 +124,18 @@ private:
     [[nodiscard]] u32 OfferedOutput(u32 output) const;
     /// A picked "Upscale to" height (the scene's own: DLSS Native, FSR at 1x).
     void ApplyPictureOutput(u32 output);
+    /// Cervin: the player picks the output and a priority; the size the game draws follows.
+    /// PriorityInput is the offered render height that makes `output` and comes nearest to
+    /// output / the priority's ratio (Picture 1.5, Balanced 1.72, FPS 2, Max FPS 3, Edges only 1).
+    [[nodiscard]] u32 PriorityInput(u32 output, int priority) const;
+    /// The priority the current sizes come nearest to.
+    [[nodiscard]] int PriorityFromSizes() const;
+    /// Every output some offered render height makes (the "Upscale to" list with a priority).
+    [[nodiscard]] std::vector<u32> AllPictureOutputs() const;
+    /// Applies `output` with the picked priority: the render height first, then the output.
+    void ApplyPriorityOutput(u32 output);
+    /// Cervin: what the picked DLSS model is for, in plain words, under the model row.
+    void UpdateDlssModelNote();
     /// Fritchii builds: the window filter's pros and cons, and which one suits the picture size
     /// on this screen (bigger: Area, smaller: ScaleForce), under the "Window filter" row.
     void UpdateWindowFilterNote();
@@ -210,6 +222,10 @@ private:
     QWidget* output_row{};                 ///< "Upscale to": the size the upscaler makes
     QComboBox* output_combobox{};
     QLabel* upscale_note{};                ///< The status line (UpdatePictureNote)
+    QWidget* priority_row{};               ///< Cervin: "Priority", in place of "Resolution"
+    QComboBox* priority_combobox{};
+    QComboBox* dlss_preset_combobox{};     ///< The nvidia_dlss_preset choice
+    QLabel* dlss_model_note{};             ///< Cervin: under it, what that model is for
     u32 picture_scale_saved{};             ///< PictureScaleNow when the page opened
     QComboBox* scaling_filter_combobox{};  ///< The "Window filter" choice
     QLabel* filter_note{};                 ///< Fritchii: under it, pros, cons and the advice

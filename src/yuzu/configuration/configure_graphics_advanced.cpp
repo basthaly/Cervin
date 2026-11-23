@@ -68,6 +68,8 @@ void ConfigureGraphicsAdvanced::Setup(const ConfigurationShared::Builder& builde
     for (const auto& [id, widget] : normal_hold) {
         normal_layout.addWidget(widget);
     }
+    // Cervin: what each setting does and costs, under it.
+    ConfigurationShared::AddRowHints(this);
 }
 
 void ConfigureGraphicsAdvanced::ApplyConfiguration() {

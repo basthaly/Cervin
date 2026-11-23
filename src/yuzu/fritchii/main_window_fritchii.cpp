@@ -9,7 +9,10 @@
 #include <QStatusBar>
 #include <QTimer>
 
+#include <fmt/format.h>
+#include "common/settings.h"
 #include "core/core.h"
+#include "qt_common/config/qt_config.h"
 #include "qt_common/qt_common.h"
 #include "qt_common/util/game.h"
 #include "ui_main.h"
@@ -134,6 +137,24 @@ void MainWindow::SetUpFritchiiUi() {
         .help_menu = ui->menu_Help,
         .classic_menus = {ui->menu_File, ui->menu_Emulation, ui->menu_View, ui->menu_Tools,
                           ui->menu_Help},
+        // Cervin: the home page's quick settings read and write the game's own settings, as
+        // OpenPerGameConfiguration does, while no game runs.
+        .with_game_settings =
+            [this](u64 program_id, const std::function<bool()>& change) {
+                if (emulation_running || QtCommon::system->IsPoweredOn() || program_id == 0) {
+                    return;
+                }
+                Settings::SetConfiguringGlobal(false);
+                {
+                    QtConfig game_config(fmt::format("{:016X}", program_id),
+                                         Config::ConfigType::PerGameConfig);
+                    if (change()) {
+                        game_config.SaveAllValues();
+                    }
+                }
+                Settings::RestoreGlobalState(false);
+                Settings::SetConfiguringGlobal(true);
+            },
     };
     fritchii_home = new FritchiiUi::Home(this, ui->horizontalLayout, game_list,
                                          game_list_placeholder, std::move(home));

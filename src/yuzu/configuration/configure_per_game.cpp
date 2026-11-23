@@ -29,6 +29,8 @@
 #include <QFile>
 #include <QFileInfo>
 #include <QFont>
+#include <QFrame>
+#include <QHBoxLayout>
 #include <QIcon>
 #include <QImage>
 #include <QImageReader>
@@ -45,9 +47,11 @@
 #include <QTabBar>
 #include <QTimer>
 #include <QUrl>
+#include <QVBoxLayout>
 #include <QtConcurrent/QtConcurrentRun>
 
 #include "common/frizti_settings.h"
+#include "common/game_presets.h"
 #include "common/fs/fs_util.h"
 #include "common/settings_enums.h"
 #include "common/settings_input.h"
@@ -82,6 +86,155 @@
 #include "yuzu/fritchii/fritchii_ui.h"
 
 namespace {
+
+/// A setting value as the settings pages name it (the combobox names), else its number.
+template <typename Enum>
+QString ValueName(const ConfigurationShared::ComboboxTranslationMap& names, Enum value) {
+    const auto list = names.find(Settings::EnumMetadata<Enum>::Index());
+    if (list != names.end()) {
+        for (const auto& [id, name] : list->second) {
+            if (id == static_cast<u32>(value)) {
+                return name;
+            }
+        }
+    }
+    return QString::number(static_cast<u32>(value));
+}
+
+QString OnOff(bool value) {
+    return value ? ConfigurePerGame::tr("On") : ConfigurePerGame::tr("Off");
+}
+
+QString VSyncName(Settings::VSyncMode mode) {
+    switch (mode) {
+    case Settings::VSyncMode::Immediate:
+        return ConfigurePerGame::tr("Off");
+    case Settings::VSyncMode::Mailbox:
+        return ConfigurePerGame::tr("On (recommended)");
+    case Settings::VSyncMode::Fifo:
+        return ConfigurePerGame::tr("On, classic");
+    case Settings::VSyncMode::FifoRelaxed:
+        return ConfigurePerGame::tr("On, tears when slow");
+    default:
+        return QString::number(static_cast<u32>(mode));
+    }
+}
+
+/// Cervin: Mario Kart World's recommended settings, in its own game settings instead of a
+/// question at every start: what each one is now, what is recommended and why, and one button
+/// that turns them on for this game (Settings::values.mkw_recommended, saved with OK).
+QWidget* MakeMkwBanner(QWidget* parent, const ConfigurationShared::ComboboxTranslationMap& names) {
+    using namespace Settings;
+    auto& v = values;
+    struct Row {
+        QString name;
+        QString now;
+        QString recommended;
+        QString why;
+    };
+    const std::vector<Row> rows{
+        {ConfigurePerGame::tr("Graphics API"), ValueName(names, v.renderer_backend.GetValue()),
+         ValueName(names, RendererBackend::Vulkan), {}},
+        {ConfigurePerGame::tr("Resolution"), ValueName(names, v.resolution_setup.GetValue()),
+         ValueName(names, ResolutionSetup::Res1X), {}},
+        {ConfigurePerGame::tr("GPU accuracy"), ValueName(names, v.gpu_accuracy.GetValue()),
+         ValueName(names, GpuAccuracy::Low), {}},
+        {ConfigurePerGame::tr("Background shaders"), OnOff(v.use_asynchronous_shaders.GetValue()),
+         OnOff(true), {}},
+        {ConfigurePerGame::tr("Texture recompression"),
+         ValueName(names, v.astc_recompression.GetValue()), ValueName(names, AstcRecompression::Bc3),
+         ConfigurePerGame::tr("The game fills video memory fast")},
+        {ConfigurePerGame::tr("Video memory"), ValueName(names, v.vram_usage_mode.GetValue()),
+         ValueName(names, VramUsageMode::Conservative),
+         ConfigurePerGame::tr("Avoids running out of memory in a race")},
+        {ConfigurePerGame::tr("Reactive flushing"), OnOff(v.use_reactive_flushing.GetValue()),
+         OnOff(false), ConfigurePerGame::tr("Less waiting on the processor")},
+        {ConfigurePerGame::tr("VSync"), VSyncName(v.vsync_mode.GetValue()),
+         VSyncName(VSyncMode::FifoRelaxed), ConfigurePerGame::tr("No tearing, little lag")},
+        {ConfigurePerGame::tr("Console mode"), ValueName(names, v.use_docked_mode.GetValue()),
+         ValueName(names, ConsoleMode::Handheld),
+         ConfigurePerGame::tr("A smaller picture, more FPS")},
+        {ConfigurePerGame::tr("Screen filter"), ValueName(names, v.scaling_filter.GetValue()),
+         ValueName(names, ScalingFilter::ScaleForce),
+         ConfigurePerGame::tr("More natural when stretching")},
+        {ConfigurePerGame::tr("Anti-aliasing"), ValueName(names, v.anti_aliasing.GetValue()),
+         ValueName(names, AntiAliasing::Fxaa), ConfigurePerGame::tr("Softer edges, cheap")},
+    };
+    int changes = 0;
+    QString table = QStringLiteral("<table cellspacing='0' cellpadding='4'><tr><th align='left'>%1"
+                                   "</th><th align='left'>%2</th><th align='left'>%3</th>"
+                                   "<th align='left'>%4</th></tr>")
+                        .arg(ConfigurePerGame::tr("Setting"), ConfigurePerGame::tr("Yours"),
+                             ConfigurePerGame::tr("Recommended"), ConfigurePerGame::tr("Why"));
+    for (const Row& row : rows) {
+        const bool same = row.now == row.recommended;
+        changes += same ? 0 : 1;
+        table += QStringLiteral("<tr><td>%1</td><td>%2</td><td>%3</td><td>%4</td></tr>")
+                     .arg(row.name.toHtmlEscaped(), row.now.toHtmlEscaped(),
+                          same ? row.recommended.toHtmlEscaped()
+                               : QStringLiteral("<b>%1</b>").arg(row.recommended.toHtmlEscaped()),
+                          same ? ConfigurePerGame::tr("already set").toHtmlEscaped()
+                               : row.why.toHtmlEscaped());
+    }
+    table += QStringLiteral("</table>");
+
+    auto* banner = new QFrame(parent);
+    banner->setObjectName(QStringLiteral("CervinMkwBanner"));
+    banner->setFrameShape(QFrame::StyledPanel);
+    auto* layout = new QVBoxLayout(banner);
+    auto* title = new QLabel(banner);
+    QFont title_font = title->font();
+    title_font.setPointSizeF(title_font.pointSizeF() * 1.2);
+    title_font.setBold(true);
+    title->setFont(title_font);
+    auto* text = new QLabel(banner);
+    text->setWordWrap(true);
+    auto* details = new QLabel(table, banner);
+    details->setTextFormat(Qt::RichText);
+    auto* buttons = new QHBoxLayout;
+    auto* show = new QPushButton(ConfigurePerGame::tr("See the changes"), banner);
+    show->setCheckable(true);
+    auto* apply = new QPushButton(banner);
+    buttons->addStretch(1);
+    buttons->addWidget(show);
+    buttons->addWidget(apply);
+    layout->addWidget(title);
+    layout->addWidget(text);
+    layout->addWidget(details);
+    layout->addLayout(buttons);
+    details->setVisible(false);
+    QObject::connect(show, &QPushButton::toggled, details, &QWidget::setVisible);
+
+    const auto refresh = [title, text, apply, changes] {
+        if (values.mkw_recommended.GetValue()) {
+            title->setText(ConfigurePerGame::tr("Recommended settings are on"));
+            text->setText(ConfigurePerGame::tr(
+                "Cervin applies them at each start of Mario Kart World, over the settings below. "
+                "Press OK to keep this choice."));
+            apply->setText(ConfigurePerGame::tr("Turn them off"));
+        } else {
+            title->setText(ConfigurePerGame::tr("Recommended settings for this game"));
+            text->setText(
+                ConfigurePerGame::tr("Tested by Cervin on Mario Kart World. %n of them change "
+                                     "your current settings. No more question at each start: "
+                                     "it is decided here.",
+                                     nullptr, changes));
+            apply->setText(ConfigurePerGame::tr("Use them"));
+        }
+    };
+    QObject::connect(apply, &QPushButton::clicked, banner, [refresh] {
+        if (!values.mkw_recommended.GetValue()) {
+            values.mkw_recommended.SetGlobal(false);
+            values.mkw_recommended.SetValue(true);
+        } else {
+            values.mkw_recommended.SetValue(false);
+            values.mkw_recommended.SetGlobal(true);
+        }
+        refresh();
+    });
+    refresh();
+    return banner;
+}
 
 constexpr int IconTargetSize = 256;
 constexpr qint64 MaxIconBytes = 8 * 1024 * 1024;
@@ -448,6 +601,10 @@ ConfigurePerGame::ConfigurePerGame(QWidget* parent, u64 title_id_, const std::st
         moved->setFont(moved_font);
         moved->setContentsMargins(4, 4, 4, 10);
         ui->verticalLayout_3->insertWidget(0, moved);
+    } else if (title_id == Settings::MarioKartWorldProgramId) {
+        // Cervin: the recommended settings are decided here, not by a question at every start.
+        ui->verticalLayout_3->insertWidget(0,
+                                           MakeMkwBanner(this, builder->ComboboxTranslations()));
     }
 
     addons_tab->SetTitleId(title_id);

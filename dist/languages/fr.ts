@@ -224,7 +224,7 @@ Cela bannirait à la fois son nom d'utilisateur du forum et son adresse IP.</tra
     <context>
         <name>ConfigurationShared</name>
         <message>
-            <location filename="../../src/yuzu/configuration/shared_widget.cpp" line="+66" />
+            <location filename="../../src/yuzu/configuration/shared_widget.cpp" line="+70" />
             <source>%</source>
             <translation>%</translation>
         </message>
@@ -566,7 +566,31 @@ Des options inférieures à 1X peuvent provoquer des artefacts.</translation>
             <translation>Filtre de fenêtre adaptatif :</translation>
         </message>
         <message>
-            <location line="+40" />
+            <location line="+11" />
+            <source>DLSS model:</source>
+            <translation>Modèle DLSS :</translation>
+        </message>
+        <message>
+            <location line="+1" />
+            <source>The DLSS model; the letters are NVIDIA's names. Automatic picks one for your card. K: the all-rounder. M: keeps detail from a small base. L: 4K from a very small base. J: sharper than K, can trail. The status bar shows the model in use.</source>
+            <translation>Le modèle DLSS ; les lettres sont les noms de NVIDIA. Automatique choisit pour ta carte. K : le polyvalent. M : garde les détails depuis une petite base. L : la 4K depuis une très petite base. J : plus net que K, peut laisser des traînées. La barre d'état affiche le modèle utilisé.</translation>
+        </message>
+        <message>
+            <location line="+11" />
+            <source>DLSS priority:</source>
+            <translation>Priorité DLSS :</translation>
+        </message>
+        <message>
+            <location line="+1" />
+            <source>What matters most: the base is the size the game draws before DLSS rebuilds it.
+Picture is the best trade, FPS lowers the base for cards that struggle. Edges only (DLAA) keeps the game's size and only smooths it: no FPS gain.
+A priority applies when it fits the game's size, otherwise Auto is used. Changes apply while playing.</source>
+            <translation>Ce qui compte le plus : la base est la taille que le jeu dessine avant que DLSS la reconstruise.
+Image est le meilleur compromis, FPS baisse la base pour les cartes à la peine. Lissage seul (DLAA) garde la taille du jeu et ne fait que la lisser : aucun gain de FPS.
+Une priorité s'applique quand elle convient à la taille du jeu, sinon Auto est utilisé. Les changements s'appliquent en jeu.</translation>
+        </message>
+        <message>
+            <location line="+20" />
             <source>Anti-Aliasing Method:</source>
             <translation>Méthode d'anticrénelage :</translation>
         </message>
@@ -1290,12 +1314,12 @@ L’activer permet de contourner ces confirmations et de quitter directement l�
         </message>
         <message>
             <location line="+1" />
-            <location line="+363" />
+            <location line="+367" />
             <source>Disabled</source>
             <translation>Désactivé</translation>
         </message>
         <message>
-            <location line="-358" />
+            <location line="-362" />
             <source>Never</source>
             <translation>Jamais</translation>
         </message>
@@ -1310,27 +1334,23 @@ L’activer permet de contourner ces confirmations et de quitter directement l�
             <translation>Toujours</translation>
         </message>
         <message>
-            <location line="+4" />
             <source>Native (DLAA)</source>
-            <translation>Natif (DLAA)</translation>
+            <translation type="vanished">Natif (DLAA)</translation>
         </message>
         <message>
-            <location line="+1" />
             <source>Quality</source>
-            <translation>Qualité</translation>
+            <translation type="vanished">Qualité</translation>
         </message>
         <message>
-            <location line="+2" />
             <source>Performance</source>
-            <translation>Performance</translation>
+            <translation type="vanished">Performance</translation>
         </message>
         <message>
-            <location line="+1" />
             <source>Ultra Performance</source>
-            <translation>Ultra performance</translation>
+            <translation type="vanished">Ultra performance</translation>
         </message>
         <message>
-            <location line="+3" />
+            <location line="+12" />
             <source>CPU</source>
             <translation>CPU</translation>
         </message>
@@ -1362,12 +1382,12 @@ L’activer permet de contourner ces confirmations et de quitter directement l�
         <message>
             <location line="+4" />
             <location line="+47" />
-            <location line="+109" />
+            <location line="+112" />
             <source>Auto</source>
             <translation>Auto</translation>
         </message>
         <message>
-            <location line="-155" />
+            <location line="-158" />
             <source>30 FPS</source>
             <translation>30 FPS</translation>
         </message>
@@ -1378,18 +1398,18 @@ L’activer permet de contourner ces confirmations et de quitter directement l�
         </message>
         <message>
             <location line="+1" />
-            <location line="+145" />
+            <location line="+148" />
             <source>90 FPS</source>
             <translation>90 FPS</translation>
         </message>
         <message>
-            <location line="-144" />
-            <location line="+145" />
+            <location line="-147" />
+            <location line="+148" />
             <source>120 FPS</source>
             <translation>120 FPS</translation>
         </message>
         <message>
-            <location line="-141" />
+            <location line="-144" />
             <source>Conservative</source>
             <translation>Conservateur</translation>
         </message>
@@ -1438,12 +1458,12 @@ L’activer permet de contourner ces confirmations et de quitter directement l�
         <message>
             <location line="-21" />
             <location line="+12" />
-            <location line="+132" />
+            <location line="+135" />
             <source>Default</source>
             <translation>Par défaut</translation>
         </message>
         <message>
-            <location line="-143" />
+            <location line="-146" />
             <source>Unsafe (fast)</source>
             <translation>Insecure (rapide)</translation>
         </message>
@@ -1473,18 +1493,157 @@ L’activer permet de contourner ces confirmations et de quitter directement l�
             <translation>Immédiat</translation>
         </message>
         <message>
-            <location line="+239" />
+            <location line="+51" />
+            <source>Shrink · Area (cleanest)</source>
+            <translation>Réduire · Area (le plus propre)</translation>
+        </message>
+        <message>
+            <location line="+1" />
+            <source>Shrink · Bicubic (softer)</source>
+            <translation>Réduire · Bicubique (plus doux)</translation>
+        </message>
+        <message>
+            <location line="+1" />
+            <source>Stretch · ScaleForce (natural)</source>
+            <translation>Agrandir · ScaleForce (naturel)</translation>
+        </message>
+        <message>
+            <location line="+1" />
+            <source>Stretch · FSR 1 (very sharp)</source>
+            <translation>Agrandir · FSR 1 (très net)</translation>
+        </message>
+        <message>
+            <location line="+1" />
+            <source>Stretch · FSR 1, softer</source>
+            <translation>Agrandir · FSR 1, plus doux</translation>
+        </message>
+        <message>
+            <location line="+1" />
+            <source>Stretch · Snapdragon GSR (light)</source>
+            <translation>Agrandir · Snapdragon GSR (léger)</translation>
+        </message>
+        <message>
+            <location line="+2" />
+            <source>Pixel art · Nearest neighbor (square pixels)</source>
+            <translation>Pixel art · Plus proche voisin (pixels carrés)</translation>
+        </message>
+        <message>
+            <location line="+1" />
+            <source>Pixel art · MMPX (smoothed)</source>
+            <translation>Pixel art · MMPX (lissé)</translation>
+        </message>
+        <message>
+            <location line="+1" />
+            <source>Simple · Bilinear (soft, cheapest)</source>
+            <translation>Simple · Bilinéaire (doux, le moins coûteux)</translation>
+        </message>
+        <message>
+            <location line="+1" />
+            <source>Advanced · Gaussian</source>
+            <translation>Avancé · Gaussien</translation>
+        </message>
+        <message>
+            <location line="+1" />
+            <source>Advanced · Lanczos</source>
+            <translation>Avancé · Lanczos</translation>
+        </message>
+        <message>
+            <location line="+1" />
+            <source>Advanced · Zero-Tangent</source>
+            <translation>Avancé · Zero-Tangent</translation>
+        </message>
+        <message>
+            <location line="+1" />
+            <source>Advanced · B-Spline</source>
+            <translation>Avancé · B-Spline</translation>
+        </message>
+        <message>
+            <location line="+1" />
+            <source>Advanced · Mitchell</source>
+            <translation>Avancé · Mitchell</translation>
+        </message>
+        <message>
+            <location line="+1" />
+            <source>Advanced · Spline-1</source>
+            <translation>Avancé · Spline-1</translation>
+        </message>
+        <message>
+            <location line="+1" />
+            <source>Advanced · Snapdragon GSR EdgeDir</source>
+            <translation>Avancé · Snapdragon GSR EdgeDir</translation>
+        </message>
+        <message>
+            <location line="+10" />
+            <source>Automatic (recommended)</source>
+            <translation>Automatique (recommandé)</translation>
+        </message>
+        <message>
+            <location line="+1" />
+            <source>K: the all-rounder</source>
+            <translation>K : le polyvalent</translation>
+        </message>
+        <message>
+            <location line="+1" />
+            <source>M: for a small base (FPS)</source>
+            <translation>M : pour une petite base (FPS)</translation>
+        </message>
+        <message>
+            <location line="+1" />
+            <source>L: 4K from a very small base</source>
+            <translation>L : la 4K depuis une très petite base</translation>
+        </message>
+        <message>
+            <location line="+1" />
+            <source>J: a bit sharper than K</source>
+            <translation>J : un peu plus net que K</translation>
+        </message>
+        <message>
+            <location line="+1" />
+            <source>NVIDIA's choice</source>
+            <translation>Le choix de NVIDIA</translation>
+        </message>
+        <message>
+            <location line="+160" />
             <source>12GB DRAM (Switch 2)</source>
             <translation>12 Go de DRAM (Switch 2)</translation>
         </message>
         <message>
-            <location line="-297" />
-            <location line="+59" />
+            <location line="-241" />
             <source>Balanced</source>
             <translation>Moyen</translation>
         </message>
         <message>
-            <location line="+8" />
+            <location line="-63" />
+            <source>Auto (from the game's size)</source>
+            <translation>Auto (selon la taille du jeu)</translation>
+        </message>
+        <message>
+            <location line="+1" />
+            <source>Picture (base at 2/3)</source>
+            <translation>Image (base aux 2/3)</translation>
+        </message>
+        <message>
+            <location line="+1" />
+            <source>Balanced (base at 58%)</source>
+            <translation>Équilibre (base à 58 %)</translation>
+        </message>
+        <message>
+            <location line="+1" />
+            <source>FPS (base at half)</source>
+            <translation>FPS (base à la moitié)</translation>
+        </message>
+        <message>
+            <location line="+2" />
+            <source>Max FPS (base at a third)</source>
+            <translation>FPS max (base au tiers)</translation>
+        </message>
+        <message>
+            <location line="+1" />
+            <source>Edges only (DLAA): no FPS gain</source>
+            <translation>Lissage seul (DLAA) : aucun gain de FPS</translation>
+        </message>
+        <message>
+            <location line="+65" />
             <source>Unsafe</source>
             <translation>Risqué</translation>
         </message>
@@ -1599,77 +1758,63 @@ L’activer permet de contourner ces confirmations et de quitter directement l�
             <translation>8X (5760p/8640p)</translation>
         </message>
         <message>
-            <location line="+5" />
             <source>Nearest Neighbor</source>
-            <translation>Plus proche voisin</translation>
+            <translation type="vanished">Plus proche voisin</translation>
         </message>
         <message>
-            <location line="+1" />
             <source>Bilinear</source>
-            <translation>Bilinéaire</translation>
+            <translation type="vanished">Bilinéaire</translation>
         </message>
         <message>
-            <location line="+1" />
             <source>Bicubic</source>
-            <translation>Bicubique</translation>
+            <translation type="vanished">Bicubique</translation>
         </message>
         <message>
-            <location line="+1" />
             <source>Gaussian</source>
-            <translation>Gaussien</translation>
+            <translation type="vanished">Gaussien</translation>
         </message>
         <message>
-            <location line="+1" />
             <source>Lanczos</source>
-            <translation>Lanczos</translation>
+            <translation type="vanished">Lanczos</translation>
         </message>
         <message>
-            <location line="+1" />
             <source>ScaleForce</source>
-            <translation>ScaleForce</translation>
+            <translation type="vanished">ScaleForce</translation>
         </message>
         <message>
-            <location line="+2" />
             <source>Area</source>
-            <translation>Area (Par zone)</translation>
+            <translation type="vanished">Area (Par zone)</translation>
         </message>
         <message>
-            <location line="+1" />
             <source>MMPX</source>
-            <translation>MMPX</translation>
+            <translation type="vanished">MMPX</translation>
         </message>
         <message>
-            <location line="+1" />
             <source>Zero-Tangent</source>
-            <translation>Zero-Tangent</translation>
+            <translation type="vanished">Zero-Tangent</translation>
         </message>
         <message>
-            <location line="+1" />
             <source>B-Spline</source>
-            <translation>B-Spline</translation>
+            <translation type="vanished">B-Spline</translation>
         </message>
         <message>
-            <location line="+1" />
             <source>Mitchell</source>
-            <translation>Mitchell</translation>
+            <translation type="vanished">Mitchell</translation>
         </message>
         <message>
-            <location line="+1" />
             <source>Spline-1</source>
-            <translation>Spline-1</translation>
+            <translation type="vanished">Spline-1</translation>
         </message>
         <message>
-            <location line="+1" />
             <source>Snapdragon Game Super Resolution</source>
-            <translation>Snapdragon Game Super Resolution</translation>
+            <translation type="vanished">Snapdragon Game Super Resolution</translation>
         </message>
         <message>
-            <location line="+1" />
             <source>Snapdragon Game Super Resolution EdgeDir</source>
-            <translation>Snapdragon Game Super Resolution EdgeDir</translation>
+            <translation type="vanished">Snapdragon Game Super Resolution EdgeDir</translation>
         </message>
         <message>
-            <location line="+5" />
+            <location line="+27" />
             <source>None</source>
             <translation>Aucun</translation>
         </message>
@@ -1709,9 +1854,7 @@ L’activer permet de contourner ces confirmations et de quitter directement l�
             <translation>Étirer à la fenêtre</translation>
         </message>
         <message>
-            <location line="-187" />
-            <location line="+135" />
-            <location line="+9" />
+            <location line="-43" />
             <location line="+5" />
             <location line="+42" />
             <location line="+170" />
@@ -1719,7 +1862,7 @@ L’activer permet de contourner ces confirmations et de quitter directement l�
             <translation>Automatique</translation>
         </message>
         <message>
-            <location line="-777" />
+            <location line="-785" />
             <source>Switch 2 games always use 12 GB while they run, whatever this says: it only applies to Switch 1 games.
 Increases the amount of emulated RAM. Doesn't affect performance/stability but may allow HD texture mods to load.</source>
             <translation>Les jeux Switch 2 utilisent toujours 12 Go pendant qu'ils tournent, quelle que soit cette valeur : elle ne s'applique qu'aux jeux Switch 1.
@@ -1766,17 +1909,15 @@ Also sets the sharpening of the AMD FSR 1 and SGSR window adapting filters.</sou
 Règle aussi la netteté des filtres d'adaptation à la fenêtre AMD FSR 1 et SGSR.</translation>
         </message>
         <message>
-            <location line="+3" />
             <source>DLSS preset:</source>
-            <translation>Preset DLSS :</translation>
+            <translation type="vanished">Preset DLSS :</translation>
         </message>
         <message>
-            <location line="+1" />
             <source>The DLSS model. Automatic picks one for your card; K is the tested one, L and M are NVIDIA's newer models, J the older one. Default lets NVIDIA choose per quality mode. The status bar shows the model in use.</source>
-            <translation>Le modèle DLSS. Automatique en choisit un pour votre carte ; K est celui qui a été testé, L et M sont les modèles plus récents de NVIDIA, J l'ancien. Par défaut laisse NVIDIA choisir selon le mode de qualité. La barre d'état affiche le modèle utilisé.</translation>
+            <translation type="vanished">Le modèle DLSS. Automatique en choisit un pour votre carte ; K est celui qui a été testé, L et M sont les modèles plus récents de NVIDIA, J l'ancien. Par défaut laisse NVIDIA choisir selon le mode de qualité. La barre d'état affiche le modèle utilisé.</translation>
         </message>
         <message>
-            <location line="+3" />
+            <location line="+7" />
             <source>Use NVIDIA DLSS in place of a game's DLSS (experimental)</source>
             <translation>Utiliser NVIDIA DLSS à la place du DLSS du jeu (expérimental)</translation>
         </message>
@@ -1794,17 +1935,15 @@ Dans The Legend of Zelda: Ocarina of Time, il remplace l'upscaler du jeu à l'é
 Prend effet au lancement d'un jeu.</translation>
         </message>
         <message>
-            <location line="+7" />
             <source>DLSS quality:</source>
-            <translation>Qualité DLSS :</translation>
+            <translation type="vanished">Qualité DLSS :</translation>
         </message>
         <message>
-            <location line="+1" />
             <source>Automatic picks the mode from the game's own resolution. Native (DLAA) keeps the game's resolution and only smooths it. Other modes apply when they fit the game's resolution, otherwise Automatic is used. Changes apply while playing.</source>
-            <translation>Automatique choisit le mode d'après la résolution du jeu. Natif (DLAA) garde la résolution du jeu et se contente de la lisser. Les autres modes s'appliquent quand ils conviennent à la résolution du jeu, sinon Automatique est utilisé. Les changements s'appliquent en jeu.</translation>
+            <translation type="vanished">Automatique choisit le mode d'après la résolution du jeu. Natif (DLAA) garde la résolution du jeu et se contente de la lisser. Les autres modes s'appliquent quand ils conviennent à la résolution du jeu, sinon Automatique est utilisé. Les changements s'appliquent en jeu.</translation>
         </message>
         <message>
-            <location line="+3" />
+            <location line="+13" />
             <source>DLSS jitter</source>
             <translation>Jitter DLSS</translation>
         </message>
@@ -1828,7 +1967,7 @@ Takes effect when the game starts.</source>
 Prend effet au lancement du jeu.</translation>
         </message>
         <message>
-            <location line="+6" />
+            <location line="+8" />
             <source>LOD bias:</source>
             <translation>Biais de LOD :</translation>
         </message>
@@ -1878,47 +2017,40 @@ Avec Jeu ou Sans accentuation, NVIDIA DLSS remplace l'upscaler du jeu quand son 
 Prend effet au lancement du jeu.</translation>
         </message>
         <message>
-            <location line="+393" />
+            <location line="+396" />
             <source>Auto (recommended)</source>
             <translation>Auto (recommandé)</translation>
         </message>
         <message>
-            <location line="+7" />
             <source>AMD FidelityFX Super Resolution 1 (FSR 1)</source>
-            <translation>AMD FidelityFX Super Resolution 1 (FSR 1)</translation>
+            <translation type="vanished">AMD FidelityFX Super Resolution 1 (FSR 1)</translation>
         </message>
         <message>
-            <location line="+9" />
             <source>AMD FidelityFX Super Resolution 1, softer sharpening</source>
-            <translation>AMD FidelityFX Super Resolution 1, netteté plus douce</translation>
+            <translation type="vanished">AMD FidelityFX Super Resolution 1, netteté plus douce</translation>
         </message>
         <message>
-            <location line="+11" />
             <source>Default (NVIDIA's choice)</source>
-            <translation>Par défaut (choix de NVIDIA)</translation>
+            <translation type="vanished">Par défaut (choix de NVIDIA)</translation>
         </message>
         <message>
-            <location line="+1" />
             <source>J</source>
-            <translation>J</translation>
+            <translation type="vanished">J</translation>
         </message>
         <message>
-            <location line="+1" />
             <source>K (recommended)</source>
-            <translation>K (recommandé)</translation>
+            <translation type="vanished">K (recommandé)</translation>
         </message>
         <message>
-            <location line="+1" />
             <source>L</source>
-            <translation>L</translation>
+            <translation type="vanished">L</translation>
         </message>
         <message>
-            <location line="+1" />
             <source>M</source>
-            <translation>M</translation>
+            <translation type="vanished">M</translation>
         </message>
         <message>
-            <location line="+5" />
+            <location line="+37" />
             <source>Pin GPU to P-cores</source>
             <translation>Épingler le GPU sur les P-cores</translation>
         </message>
@@ -3779,7 +3911,7 @@ Vos paramètres actuels sont d'abord enregistrés : Restaurer les paramètres pe
             <translation>Couleur de l’arrière plan :</translation>
         </message>
         <message>
-            <location filename="../../src/yuzu/configuration/configure_graphics.cpp" line="+269" />
+            <location filename="../../src/yuzu/configuration/configure_graphics.cpp" line="+270" />
             <source>%</source>
             <comment>FSR/SGSR sharpening percentage (e.g. 50%)</comment>
             <translation>%</translation>
@@ -3790,14 +3922,14 @@ Vos paramètres actuels sont d'abord enregistrés : Restaurer les paramètres pe
             <translation>Configurer les effets...</translation>
         </message>
         <message>
-            <location line="+133" />
+            <location line="+157" />
             <location line="+16" />
-            <location line="+380" />
+            <location line="+427" />
             <source>Off</source>
             <translation>Désactivé</translation>
         </message>
         <message>
-            <location line="-394" />
+            <location line="-441" />
             <source>On (recommended)</source>
             <translation>Activé (recommandé)</translation>
         </message>
@@ -3832,7 +3964,52 @@ Vos paramètres actuels sont d'abord enregistrés : Restaurer les paramètres pe
             <translation>VSync Activée</translation>
         </message>
         <message>
-            <location line="+353" />
+            <location line="+159" />
+            <source>Cervin picks: K on most cards, the lighter E on cards with little video memory. The safe choice.</source>
+            <translation>Cervin choisit : K sur la plupart des cartes, E plus léger sur les cartes avec peu de mémoire vidéo. Le choix sûr.</translation>
+        </message>
+        <message>
+            <location line="+4" />
+            <source>NVIDIA picks a model for each DLSS mode. Its picks for the FPS modes can draw thin lines.</source>
+            <translation>NVIDIA choisit un modèle pour chaque mode DLSS. Ses choix pour les modes FPS peuvent dessiner des lignes fines.</translation>
+        </message>
+        <message>
+            <location line="+4" />
+            <source>DLSS 4, the most tested in Cervin. Sharp and steady, little trailing.
+Best for: Picture or Balanced priority. GPU cost: medium.</source>
+            <translation>DLSS 4, le plus testé dans Cervin. Net et stable, peu de traînées.
+Pour : priorité Image ou Équilibre. Coût GPU : moyen.</translation>
+        </message>
+        <message>
+            <location line="+4" />
+            <source>A sharper take on K, but it can leave trails behind fast objects.
+Best for: if K looks too soft to you. GPU cost: medium.</source>
+            <translation>Une variante plus piquée de K, mais elle peut laisser des traînées derrière ce qui bouge vite.
+Pour : si K te semble trop doux. Coût GPU : moyen.</translation>
+        </message>
+        <message>
+            <location line="+4" />
+            <source>DLSS 4.5. Keeps more detail when the base picture is small.
+Best for: FPS priority. GPU cost: high, heavy on RTX 20 and 30 cards.</source>
+            <translation>DLSS 4.5. Garde plus de détails quand l'image de base est petite.
+Pour : priorité FPS. Coût GPU : élevé, lourd sur les RTX 20 et 30.</translation>
+        </message>
+        <message>
+            <location line="+4" />
+            <source>DLSS 4.5, made for a base a third of the output (4K from 720p).
+Best for: Max FPS priority in 4K. GPU cost: high.</source>
+            <translation>DLSS 4.5, fait pour une base au tiers de la sortie (la 4K depuis 720p).
+Pour : priorité FPS max en 4K. Coût GPU : élevé.</translation>
+        </message>
+        <message>
+            <location line="+4" />
+            <source>The older model (DLSS 3). The lightest, softer in motion.
+Best for: small cards with little video memory. GPU cost: low.</source>
+            <translation>L'ancien modèle (DLSS 3). Le plus léger, plus flou en mouvement.
+Pour : petites cartes avec peu de mémoire vidéo. Coût GPU : faible.</translation>
+        </message>
+        <message>
+            <location line="+217" />
             <source>Off (up to 1080p)</source>
             <translation>Désactivé (jusqu'à 1080p)</translation>
         </message>
@@ -3860,12 +4037,12 @@ Désactivé : comme la Switch 2, plus de FPS sur les PC moins puissants.</transl
         </message>
         <message>
             <location line="+5" />
-            <location line="+882" />
+            <location line="+1009" />
             <source>Upscaler:</source>
             <translation>Upscaler :</translation>
         </message>
         <message>
-            <location line="-881" />
+            <location line="-1008" />
             <source>Makes a sharp picture from a smaller one, so the game runs faster.
 DLSS: NVIDIA RTX cards. FSR 4: Radeon RX 6000 and newer. FSR 3.1: any card.
 OoT only. Off keeps the game's own look.</source>
@@ -3880,12 +4057,12 @@ OoT uniquement. Désactivé garde le rendu d'origine du jeu.</translation>
         </message>
         <message>
             <location line="+1" />
-            <location line="+309" />
+            <location line="+323" />
             <source>FSR 3.1</source>
             <translation>FSR 3.1</translation>
         </message>
         <message>
-            <location line="-308" />
+            <location line="-322" />
             <source>FSR 4</source>
             <translation>FSR 4</translation>
         </message>
@@ -3900,7 +4077,44 @@ OoT uniquement. Désactivé garde le rendu d'origine du jeu.</translation>
             <translation>Agrandir à :</translation>
         </message>
         <message>
-            <location line="+156" />
+            <location line="+5" />
+            <source>Picture (base at 2/3 of the output)</source>
+            <translation>Image (base aux 2/3 de la sortie)</translation>
+        </message>
+        <message>
+            <location line="+1" />
+            <source>Balanced (base at 58%)</source>
+            <translation>Équilibre (base à 58 %)</translation>
+        </message>
+        <message>
+            <location line="+1" />
+            <source>FPS (base at half)</source>
+            <translation>FPS (base à la moitié)</translation>
+        </message>
+        <message>
+            <location line="+1" />
+            <source>Max FPS (base at a third, for 4K)</source>
+            <translation>FPS max (base au tiers, pour la 4K)</translation>
+        </message>
+        <message>
+            <location line="+1" />
+            <source>Edges only (DLAA): no FPS gain</source>
+            <translation>Lissage seul (DLAA) : aucun gain de FPS</translation>
+        </message>
+        <message>
+            <location line="+1" />
+            <source>Priority:</source>
+            <translation>Priorité :</translation>
+        </message>
+        <message>
+            <location line="+2" />
+            <source>What matters most to you. Cervin picks the size the game draws from it.
+Picture: the best trade. FPS: for cards that struggle. Edges only: the game draws at the output size and the upscaler only smooths it, no FPS gain.</source>
+            <translation>Ce qui compte le plus pour toi. Cervin en déduit la taille que le jeu dessine.
+Image : le meilleur compromis. FPS : pour les cartes à la peine. Lissage seul : le jeu dessine à la taille de sortie et l'agrandisseur ne fait que lisser, aucun gain de FPS.</translation>
+        </message>
+        <message>
+            <location line="+158" />
             <source>game's size</source>
             <translation>taille du jeu</translation>
         </message>
@@ -3924,29 +4138,30 @@ Avec FSR ou DLSS activé, OoT ignore ce réglage : c'est l'upscaler qui choisit 
             <translation>L'upscaler</translation>
         </message>
         <message>
-            <location line="+249" />
+            <location line="+334" />
             <source>Up to 1080p (Max Resolution off)</source>
             <translation>Jusqu'à 1080p (Résolution max. désactivée)</translation>
         </message>
         <message>
             <location line="+6" />
+            <location line="+9" />
             <source>Close the game to change it.</source>
             <translation>Fermez le jeu pour le modifier.</translation>
         </message>
         <message>
-            <location line="+1" />
+            <location line="-8" />
             <source>The size the game draws. Lower runs faster.
 1440p is the game's own size.</source>
             <translation>La taille à laquelle le jeu dessine. Plus bas = plus rapide.
 1440p est la taille d'origine du jeu.</translation>
         </message>
         <message>
-            <location line="+8" />
+            <location line="+23" />
             <source>%1 Native</source>
             <translation>%1 natif</translation>
         </message>
         <message>
-            <location line="+3" />
+            <location line="+4" />
             <source>%1 (your screen)</source>
             <translation>%1 (votre écran)</translation>
         </message>
@@ -3994,6 +4209,16 @@ Avec FSR ou DLSS activé, OoT ignore ce réglage : c'est l'upscaler qui choisit 
             <location line="+1" />
             <source>The game draws %1, %2 makes it %3.</source>
             <translation>Le jeu dessine en %1, %2 l'agrandit en %3.</translation>
+        </message>
+        <message>
+            <location line="+6" />
+            <source>The graphics card draws %1% fewer pixels than at %2.</source>
+            <translation>La carte graphique calcule %1 % de pixels en moins qu'en %2.</translation>
+        </message>
+        <message>
+            <location line="+4" />
+            <source>No FPS gain: the upscaler only smooths the edges here.</source>
+            <translation>Aucun gain de FPS : l'agrandisseur ne fait que lisser les bords ici.</translation>
         </message>
         <message>
             <location line="+6" />
@@ -4181,18 +4406,49 @@ Désactivé a le moins de latence mais l'image peut se déchirer.</translation>
         </message>
         <message>
             <location line="+1" />
-            <source>Window filter:</source>
-            <translation>Filtre de fenêtre :</translation>
+            <source>Screen filter:</source>
+            <translation>Filtre d'écran :</translation>
         </message>
         <message>
             <location line="+1" />
-            <source>How the picture is fitted to your window or screen.
-Auto: Area when the picture is bigger than your screen, FSR 1 when it is smaller.</source>
-            <translation>Comment l'image est adaptée à votre fenêtre ou à votre écran.
-Auto : Area quand l'image est plus grande que votre écran, FSR 1 quand elle est plus petite.</translation>
+            <source>How the picture is fitted to your window or screen when the sizes differ. It changes neither the FPS nor the game, only the final look.
+Auto: Area when the picture is bigger than your screen, ScaleForce when it is smaller.</source>
+            <translation>Comment l'image est ajustée à ta fenêtre ou ton écran quand les tailles diffèrent. Il ne change ni les FPS ni le jeu, seulement le rendu final.
+Auto : Area quand l'image est plus grande que ton écran, ScaleForce quand elle est plus petite.</translation>
+        </message>
+        <message>
+            <location line="+12" />
+            <source>The letters are NVIDIA's names. What the picked one is for shows under the choice.
+Automatic is the safe choice.</source>
+            <translation>Les lettres sont les noms de NVIDIA. À quoi sert le modèle choisi s'affiche sous le choix.
+Automatique est le choix sûr.</translation>
         </message>
         <message>
             <location line="+2" />
+            <source>DLSS priority:</source>
+            <translation>Priorité DLSS :</translation>
+        </message>
+        <message>
+            <location line="+1" />
+            <source>What matters most. The base is the size the game draws before DLSS rebuilds it.
+Picture: the best trade. FPS: a smaller base for cards that struggle.
+Edges only (DLAA): no upscaling, so no FPS gain.</source>
+            <translation>Ce qui compte le plus. La base est la taille que le jeu dessine avant que DLSS la reconstruise.
+Image : le meilleur compromis. FPS : une base plus petite pour les cartes à la peine.
+Lissage seul (DLAA) : pas d'agrandissement, donc aucun gain de FPS.</translation>
+        </message>
+        <message>
+            <source>Window filter:</source>
+            <translation type="vanished">Filtre de fenêtre :</translation>
+        </message>
+        <message>
+            <source>How the picture is fitted to your window or screen.
+Auto: Area when the picture is bigger than your screen, FSR 1 when it is smaller.</source>
+            <translation type="vanished">Comment l'image est adaptée à votre fenêtre ou à votre écran.
+Auto : Area quand l'image est plus grande que votre écran, FSR 1 quand elle est plus petite.</translation>
+        </message>
+        <message>
+            <location line="-12" />
             <source>Use the game's own DLSS</source>
             <translation>Utiliser le DLSS du jeu</translation>
         </message>
@@ -4233,26 +4489,23 @@ Nécessite les fichiers de NVIDIA : utilisez le bouton de téléchargement.</tra
             <translation>Modèle DLSS :</translation>
         </message>
         <message>
-            <location line="+1" />
             <source>Which DLSS version to use. Automatic picks one for your card.
 K is the tested one. Others can look sharper or softer.</source>
-            <translation>Quelle version de DLSS utiliser. Automatique en choisit une pour votre carte.
+            <translation type="vanished">Quelle version de DLSS utiliser. Automatique en choisit une pour votre carte.
 K est celle qui a été testée. Les autres peuvent être plus nettes ou plus douces.</translation>
         </message>
         <message>
-            <location line="+2" />
             <source>DLSS quality:</source>
-            <translation>Qualité DLSS :</translation>
+            <translation type="vanished">Qualité DLSS :</translation>
         </message>
         <message>
-            <location line="+1" />
             <source>Lower quality runs faster but looks softer.
 Native only smooths edges, no upscaling.</source>
-            <translation>Une qualité plus basse tourne plus vite mais est plus douce.
+            <translation type="vanished">Une qualité plus basse tourne plus vite mais est plus douce.
 Natif lisse seulement les contours, sans agrandissement.</translation>
         </message>
         <message>
-            <location line="+2" />
+            <location line="+7" />
             <source>DLSS jitter</source>
             <translation>Jitter DLSS</translation>
         </message>
@@ -5868,7 +6121,7 @@ Les valeurs actuelles sont respectivement de %1% et %2%.</translation>
         </message>
         <message>
             <location line="+3" />
-            <location filename="../../src/yuzu/configuration/configure_per_game.cpp" line="+471" />
+            <location filename="../../src/yuzu/configuration/configure_per_game.cpp" line="+628" />
             <location line="+10" />
             <location line="+228" />
             <location line="+5" />
@@ -5936,7 +6189,186 @@ Les valeurs actuelles sont respectivement de %1% et %2%.</translation>
             <translation>Certains paramètres ne sont disponibles que lorsqu'un jeu n'est pas en cours d'exécution.</translation>
         </message>
         <message>
-            <location filename="../../src/yuzu/configuration/configure_per_game.cpp" line="-308" />
+            <location filename="../../src/yuzu/configuration/configure_per_game.cpp" line="-766" />
+            <source>On</source>
+            <translation>Oui</translation>
+        </message>
+        <message>
+            <location line="+0" />
+            <location line="+6" />
+            <source>Off</source>
+            <translation>Non</translation>
+        </message>
+        <message>
+            <location line="+2" />
+            <source>On (recommended)</source>
+            <translation>Activée (recommandé)</translation>
+        </message>
+        <message>
+            <location line="+2" />
+            <source>On, classic</source>
+            <translation>Activée, classique</translation>
+        </message>
+        <message>
+            <location line="+2" />
+            <source>On, tears when slow</source>
+            <translation>Activée, déchire si ça rame</translation>
+        </message>
+        <message>
+            <location line="+19" />
+            <source>Graphics API</source>
+            <translation>API graphique</translation>
+        </message>
+        <message>
+            <location line="+2" />
+            <source>Resolution</source>
+            <translation>Résolution</translation>
+        </message>
+        <message>
+            <location line="+2" />
+            <source>GPU accuracy</source>
+            <translation>Précision du GPU</translation>
+        </message>
+        <message>
+            <location line="+2" />
+            <source>Background shaders</source>
+            <translation>Shaders en arrière-plan</translation>
+        </message>
+        <message>
+            <location line="+2" />
+            <source>Texture recompression</source>
+            <translation>Recompression des textures</translation>
+        </message>
+        <message>
+            <location line="+2" />
+            <source>The game fills video memory fast</source>
+            <translation>Le jeu remplit vite la mémoire vidéo</translation>
+        </message>
+        <message>
+            <location line="+1" />
+            <source>Video memory</source>
+            <translation>Mémoire vidéo</translation>
+        </message>
+        <message>
+            <location line="+2" />
+            <source>Avoids running out of memory in a race</source>
+            <translation>Évite les manques de mémoire en course</translation>
+        </message>
+        <message>
+            <location line="+1" />
+            <source>Reactive flushing</source>
+            <translation>Vidage réactif</translation>
+        </message>
+        <message>
+            <location line="+1" />
+            <source>Less waiting on the processor</source>
+            <translation>Moins d'attentes du processeur</translation>
+        </message>
+        <message>
+            <location line="+1" />
+            <source>VSync</source>
+            <translation>VSync</translation>
+        </message>
+        <message>
+            <location line="+1" />
+            <source>No tearing, little lag</source>
+            <translation>Pas de déchirement, peu de délai</translation>
+        </message>
+        <message>
+            <location line="+1" />
+            <source>Console mode</source>
+            <translation>Mode de la console</translation>
+        </message>
+        <message>
+            <location line="+2" />
+            <source>A smaller picture, more FPS</source>
+            <translation>Image plus petite, plus de FPS</translation>
+        </message>
+        <message>
+            <location line="+1" />
+            <source>Screen filter</source>
+            <translation>Filtre d'écran</translation>
+        </message>
+        <message>
+            <location line="+2" />
+            <source>More natural when stretching</source>
+            <translation>Plus naturel pour agrandir</translation>
+        </message>
+        <message>
+            <location line="+1" />
+            <source>Anti-aliasing</source>
+            <translation>Anticrénelage</translation>
+        </message>
+        <message>
+            <location line="+1" />
+            <source>Softer edges, cheap</source>
+            <translation>Bords plus doux, peu coûteux</translation>
+        </message>
+        <message>
+            <location line="+6" />
+            <source>Setting</source>
+            <translation>Réglage</translation>
+        </message>
+        <message>
+            <location line="+0" />
+            <source>Yours</source>
+            <translation>Le tien</translation>
+        </message>
+        <message>
+            <location line="+1" />
+            <source>Recommended</source>
+            <translation>Recommandé</translation>
+        </message>
+        <message>
+            <location line="+0" />
+            <source>Why</source>
+            <translation>Pourquoi</translation>
+        </message>
+        <message>
+            <location line="+8" />
+            <source>already set</source>
+            <translation>déjà réglé</translation>
+        </message>
+        <message>
+            <location line="+19" />
+            <source>See the changes</source>
+            <translation>Voir les changements</translation>
+        </message>
+        <message>
+            <location line="+15" />
+            <source>Recommended settings are on</source>
+            <translation>Les réglages recommandés sont activés</translation>
+        </message>
+        <message>
+            <location line="+1" />
+            <source>Cervin applies them at each start of Mario Kart World, over the settings below. Press OK to keep this choice.</source>
+            <translation>Cervin les applique à chaque lancement de Mario Kart World, par-dessus les réglages ci-dessous. Appuie sur OK pour garder ce choix.</translation>
+        </message>
+        <message>
+            <location line="+3" />
+            <source>Turn them off</source>
+            <translation>Les désactiver</translation>
+        </message>
+        <message>
+            <location line="+2" />
+            <source>Recommended settings for this game</source>
+            <translation>Réglages recommandés pour ce jeu</translation>
+        </message>
+        <message numerus="yes">
+            <location line="+2" />
+            <source>Tested by Cervin on Mario Kart World. %n of them change your current settings. No more question at each start: it is decided here.</source>
+            <translation>
+                <numerusform>Testés par Cervin sur Mario Kart World. %n d'entre eux change tes réglages actuels. Plus de question à chaque lancement : tout se décide ici.</numerusform>
+                <numerusform>Testés par Cervin sur Mario Kart World. %n d'entre eux changent tes réglages actuels. Plus de question à chaque lancement : tout se décide ici.</numerusform>
+            </translation>
+        </message>
+        <message>
+            <location line="+4" />
+            <source>Use them</source>
+            <translation>Les utiliser</translation>
+        </message>
+        <message>
+            <location line="+337" />
             <source>Add-Ons</source>
             <translation>Extensions</translation>
         </message>
@@ -6016,7 +6448,7 @@ Les valeurs actuelles sont respectivement de %1% et %2%.</translation>
             <translation>Les paramètres du jeu sont désormais fusionnés avec les Paramètres principaux. Modifiez-les là-bas.</translation>
         </message>
         <message>
-            <location line="+154" />
+            <location line="+158" />
             <source>Enter game name...</source>
             <translation>Saisissez le nom du jeu...</translation>
         </message>
@@ -6205,7 +6637,7 @@ Une fois supprimés, ils ne pourront PAS être récupérés. Êtes-vous absolume
     <context>
         <name>ConfigurePostProcessing</name>
         <message>
-            <location filename="../../src/yuzu/configuration/configure_post_processing.cpp" line="+67" />
+            <location filename="../../src/yuzu/configuration/configure_post_processing.cpp" line="+90" />
             <source>Post-Processing Effects</source>
             <translation>Effets de post-traitement</translation>
         </message>
@@ -6270,7 +6702,32 @@ Une fois supprimés, ils ne pourront PAS être récupérés. Êtes-vous absolume
             <translation>Ajouter un effet</translation>
         </message>
         <message>
-            <location line="+47" />
+            <location line="+4" />
+            <source>Sharpness and clarity</source>
+            <translation>Netteté et clarté</translation>
+        </message>
+        <message>
+            <location line="+1" />
+            <source>Colors</source>
+            <translation>Couleurs</translation>
+        </message>
+        <message>
+            <location line="+1" />
+            <source>Mood (glow, grain, blur...)</source>
+            <translation>Ambiance (halo, grain, flou...)</translation>
+        </message>
+        <message>
+            <location line="+1" />
+            <source>Retro and drawn</source>
+            <translation>Rétro et dessin</translation>
+        </message>
+        <message>
+            <location line="+1" />
+            <source>Other</source>
+            <translation>Autres</translation>
+        </message>
+        <message>
+            <location line="+51" />
             <source>None</source>
             <translation>Aucun</translation>
         </message>
@@ -8095,12 +8552,13 @@ Veuillez aller dans Configurer -&gt; Système -&gt; Réseau puis en choisir une.
     <context>
         <name>Home</name>
         <message>
-            <location filename="../../src/yuzu/fritchii/home.cpp" line="+216" />
+            <location filename="../../src/yuzu/fritchii/home.cpp" line="+258" />
+            <location line="+83" />
             <source>Library</source>
             <translation>Bibliothèque</translation>
         </message>
         <message>
-            <location line="+4" />
+            <location line="-79" />
             <source>Settings</source>
             <translation>Paramètres</translation>
         </message>
@@ -8130,27 +8588,165 @@ Veuillez aller dans Configurer -&gt; Système -&gt; Réseau puis en choisir une.
             <translation>Sauvegardes</translation>
         </message>
         <message>
-            <location line="+85" />
+            <location line="+122" />
+            <source>Show its quick settings</source>
+            <translation>Voir ses réglages rapides</translation>
+        </message>
+        <message>
+            <location line="+19" />
+            <source>Recommended settings available</source>
+            <translation>Réglages recommandés dispo</translation>
+        </message>
+        <message>
+            <location line="+8" />
             <source>Play</source>
             <translation>Jouer</translation>
         </message>
         <message>
-            <location line="+6" />
-            <source>Add your games</source>
-            <translation>Ajoutez vos jeux</translation>
+            <location line="+8" />
+            <source>Game settings</source>
+            <translation>Réglages du jeu</translation>
+        </message>
+        <message>
+            <location line="+51" />
+            <source>Quick settings</source>
+            <translation>Réglages rapides</translation>
+        </message>
+        <message>
+            <location line="+12" />
+            <source>Close the game to change them here.</source>
+            <translation>Ferme le jeu pour les changer ici.</translation>
         </message>
         <message>
             <location line="+1" />
-            <source>Add Folder</source>
-            <translation>Ajouter un dossier</translation>
+            <source>Only this game. "As in Settings" follows your main settings.</source>
+            <translation>Ce jeu seulement. « Comme dans les Paramètres » suit tes réglages principaux.</translation>
         </message>
         <message>
-            <location line="+43" />
+            <location line="+10" />
+            <source>DLSS priority</source>
+            <translation>Priorité DLSS</translation>
+        </message>
+        <message>
+            <location line="+1" />
+            <source>Picture (base at 2/3)</source>
+            <translation>Image (base aux 2/3)</translation>
+        </message>
+        <message>
+            <location line="+1" />
+            <source>Balanced (base at 58%)</source>
+            <translation>Équilibre (base à 58 %)</translation>
+        </message>
+        <message>
+            <location line="+1" />
+            <source>FPS (base at half)</source>
+            <translation>FPS (base à la moitié)</translation>
+        </message>
+        <message>
+            <location line="+1" />
+            <source>Max FPS (base at a third)</source>
+            <translation>FPS max (base au tiers)</translation>
+        </message>
+        <message>
+            <location line="+2" />
+            <source>Edges only (DLAA): no FPS gain</source>
+            <translation>Lissage seul (DLAA) : aucun gain de FPS</translation>
+        </message>
+        <message>
+            <location line="+2" />
+            <source>Auto (from the game's size)</source>
+            <translation>Auto (selon la taille du jeu)</translation>
+        </message>
+        <message>
+            <location line="+4" />
+            <source>DLSS model</source>
+            <translation>Modèle DLSS</translation>
+        </message>
+        <message>
+            <location line="+1" />
+            <source>Automatic (recommended)</source>
+            <translation>Automatique (recommandé)</translation>
+        </message>
+        <message>
+            <location line="+1" />
+            <source>K: the all-rounder</source>
+            <translation>K : le polyvalent</translation>
+        </message>
+        <message>
+            <location line="+1" />
+            <source>M: for a small base (FPS)</source>
+            <translation>M : pour une petite base (FPS)</translation>
+        </message>
+        <message>
+            <location line="+1" />
+            <source>L: 4K from a very small base</source>
+            <translation>L : la 4K depuis une très petite base</translation>
+        </message>
+        <message>
+            <location line="+1" />
+            <source>J: a bit sharper than K</source>
+            <translation>J : un peu plus net que K</translation>
+        </message>
+        <message>
+            <location line="+3" />
+            <source>Console mode</source>
+            <translation>Mode de la console</translation>
+        </message>
+        <message>
+            <location line="+1" />
+            <source>TV (sharper)</source>
+            <translation>TV (plus net)</translation>
+        </message>
+        <message>
+            <location line="+1" />
+            <source>Handheld (smaller picture, more FPS)</source>
+            <translation>Portable (image plus petite, plus de FPS)</translation>
+        </message>
+        <message>
+            <location line="+3" />
+            <source>Speed limit</source>
+            <translation>Limite de vitesse</translation>
+        </message>
+        <message>
+            <location line="+1" />
+            <source>Normal speed</source>
+            <translation>Vitesse normale</translation>
+        </message>
+        <message>
+            <location line="+0" />
+            <source>No limit (fast forward)</source>
+            <translation>Sans limite (accéléré)</translation>
+        </message>
+        <message>
+            <location line="+21" />
+            <source>As in Settings</source>
+            <translation>Comme dans les Paramètres</translation>
+        </message>
+        <message>
+            <location line="+23" />
+            <source>Recommended settings for this game...</source>
+            <translation>Réglages recommandés pour ce jeu...</translation>
+        </message>
+        <message>
+            <location line="+7" />
+            <source>All the game's settings</source>
+            <translation>Tous les réglages du jeu</translation>
+        </message>
+        <message>
+            <source>Add your games</source>
+            <translation type="vanished">Ajoutez vos jeux</translation>
+        </message>
+        <message>
+            <source>Add Folder</source>
+            <translation type="vanished">Ajouter un dossier</translation>
+        </message>
+        <message>
+            <location line="-122" />
             <source>All games</source>
             <translation>Tous les jeux</translation>
         </message>
         <message>
-            <location line="+5" />
+            <location line="+3" />
             <source>Add folder</source>
             <translation>Ajouter un dossier</translation>
         </message>
@@ -8840,7 +9436,7 @@ ou cliquez pour parcourir</translation>
         </message>
         <message>
             <location line="+8" />
-            <location filename="../../src/yuzu/main_window.cpp" line="+2290" />
+            <location filename="../../src/yuzu/main_window.cpp" line="+2292" />
             <source>&amp;Pause</source>
             <translation>&amp;Pause</translation>
         </message>
@@ -8996,7 +9592,7 @@ ou cliquez pour parcourir</translation>
         </message>
         <message>
             <location line="+11" />
-            <location filename="../../src/yuzu/main_window.cpp" line="+3515" />
+            <location filename="../../src/yuzu/main_window.cpp" line="+3509" />
             <source>&amp;Start</source>
             <translation>&amp;Démarrer</translation>
         </message>
@@ -9098,7 +9694,7 @@ ou cliquez pour parcourir</translation>
         </message>
         <message>
             <location line="+5" />
-            <location filename="../../src/yuzu/main_window.cpp" line="-5350" />
+            <location filename="../../src/yuzu/main_window.cpp" line="-5344" />
             <location filename="../../src/qt_common/config/shared_translation.h" line="+30" />
             <source>None</source>
             <translation>Aucun</translation>
@@ -9239,12 +9835,12 @@ Changez à tout moment avec le bouton 60 FPS / 30 FPS en bas de la fenêtre.</tr
         </message>
         <message>
             <location line="+3" />
-            <location line="+4904" />
+            <location line="+4898" />
             <source>60 FPS</source>
             <translation>60 FPS</translation>
         </message>
         <message>
-            <location line="-4903" />
+            <location line="-4897" />
             <source>30 FPS (lower-end PCs)</source>
             <translation>30 FPS (PC modestes)</translation>
         </message>
@@ -9387,7 +9983,7 @@ La préparation se fait pendant que le jeu est en pause. Émulation &gt; Prépar
             <translation>Une erreur inconnue s'est produite. Consultez le journal pour plus de détails.</translation>
         </message>
         <message>
-            <location line="+284" />
+            <location line="+278" />
             <location line="+2949" />
             <source>(64-bit)</source>
             <translation>(64-bit)</translation>
@@ -9595,19 +10191,19 @@ La préparation se fait pendant que le jeu est en pause. Émulation &gt; Prépar
             <translation>Le dossier sélectionné ne contient pas de fichier « main ».</translation>
         </message>
         <message>
-            <location line="-1184" />
+            <location line="-1178" />
             <source>This is usually caused by outdated GPU drivers. Please see the log for more details.</source>
             <translation>C'est généralement dû à des pilotes GPU obsolètes. Consultez le journal pour plus de détails.</translation>
         </message>
         <message>
             <location line="+53" />
-            <location line="+2421" />
+            <location line="+2415" />
             <location line="+26" />
             <source>NX Archive</source>
             <translation>Archive NX</translation>
         </message>
         <message>
-            <location line="-2446" />
+            <location line="-2440" />
             <source>Wait for the NX metadata edit to finish before starting a game.</source>
             <translation>Attendez la fin de la modification des métadonnées NX avant de lancer un jeu.</translation>
         </message>
@@ -9632,25 +10228,23 @@ La préparation se fait pendant que le jeu est en pause. Émulation &gt; Prépar
             <translation>Aucun jeu ne peut être lancé pendant la préparation des shaders. Attendez qu'elle se termine ou annulez-la.</translation>
         </message>
         <message>
-            <location line="+79" />
             <source>Recommended Mario Kart World settings</source>
-            <translation>Paramètres recommandés pour Mario Kart World</translation>
+            <translation type="vanished">Paramètres recommandés pour Mario Kart World</translation>
         </message>
         <message>
-            <location line="+1" />
             <source>Use the recommended settings for Mario Kart World?
 
 Vulkan, 1x resolution, GPU Fast, asynchronous shaders, BC3, conservative VRAM, reactive flushing off, FIFO Relaxed VSync, handheld mode, ScaleForce, and FXAA.
 
 They apply to Mario Kart World until Cervin is closed. Your saved settings are not changed.</source>
-            <translation>Utiliser les paramètres recommandés pour Mario Kart World ?
+            <translation type="vanished">Utiliser les paramètres recommandés pour Mario Kart World ?
 
 Vulkan, résolution 1x, GPU Rapide, shaders asynchrones, BC3, VRAM économe, vidage réactif désactivé, VSync FIFO Relaxed, mode portable, ScaleForce et FXAA.
 
 Ils s'appliquent à Mario Kart World jusqu'à la fermeture de Cervin. Vos paramètres enregistrés ne sont pas modifiés.</translation>
         </message>
         <message>
-            <location line="+36" />
+            <location line="+110" />
             <source>Preparing game files...</source>
             <translation>Préparation des fichiers du jeu...</translation>
         </message>
@@ -10780,7 +11374,7 @@ Voulez-vous passer outre et quitter quand même ?</translation>
             <translation>Null</translation>
         </message>
         <message>
-            <location filename="../../src/yuzu/fritchii/main_window_fritchii.cpp" line="+37" />
+            <location filename="../../src/yuzu/fritchii/main_window_fritchii.cpp" line="+40" />
             <source>Delete Shader Cache</source>
             <translation>Supprimer le cache des shaders</translation>
         </message>
@@ -10810,7 +11404,7 @@ Voulez-vous passer outre et quitter quand même ?</translation>
             <translation>Supprimer</translation>
         </message>
         <message>
-            <location line="+121" />
+            <location line="+139" />
             <source>the game</source>
             <translation>le jeu</translation>
         </message>
