@@ -23,6 +23,8 @@
 
 #include "common/cityhash.h"
 #include "common/fritchii_bind_skip.h"
+#include "common/game_presets.h"
+#include "video_core/buffer_cache/storage_buffer_size.h"
 #include "common/fritchii_write_ring.h"
 #include "common/nx2_uniform_keep_pages.h"
 #include "common/range_sets.inc"
@@ -2218,9 +2220,22 @@ bool BufferCache<P>::BindGraphicsStorageBuffer(size_t stage, size_t ssbo_index, 
         const char* const value = std::getenv("EDEN_NX2_GRAPHICS_SSBO_BARE");
         return value == nullptr || value[0] != '0';
     }();
+    // From Eglantine (894f2c119): NVN graphics descriptor slots carry a valid size, so they are
+    // bound at that size instead of as bare pointers. Mario Kart World's light-probe buffer is
+    // larger than the bare reach, and its far probes fell outside the binding. Cervin applies it
+    // to Mario Kart World only, so Fritchii's tuned behaviour elsewhere (Ocarina of Time) is
+    // unchanged. CERVIN_NVN_SSBO_SIZE=0 turns it off, =2 applies it to every game.
+    static const int nvn_sizes = [] {
+        const char* const value = std::getenv("CERVIN_NVN_SSBO_SIZE");
+        return value != nullptr ? std::atoi(value) : 1;
+    }();
+    const bool nvn_descriptor =
+        nvn_sizes != 0 &&
+        (nvn_sizes >= 2 || Settings::GetCurrentProgramID() == Settings::MarioKartWorldProgramId) &&
+        IsNvnGraphicsStorageDescriptor(stage, cbuf_index, cbuf_offset, indirect_offset);
     channel_state->storage_buffers[stage][ssbo_index] =
         StorageBufferBinding(ssbo_addr, cbuf_index, is_written,
-                             (bare_pointers && Inputs().NativeTuring()) ||
+                             (bare_pointers && Inputs().NativeTuring() && !nvn_descriptor) ||
                                  indirect_offset != ~0U,
                              indirect_offset != ~0U);
     if (indirect_offset != ~0U) {
