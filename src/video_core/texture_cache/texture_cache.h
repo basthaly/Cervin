@@ -5928,9 +5928,38 @@ void TextureCache<P>::UploadLayers(Image& image, std::span<const u32> layers) {
         const size_t chunk_layers = static_cast<size_t>(
             (std::max<u64>)(1, ChunkBytes / (std::max<u64>)(image.info.layer_stride, 1)));
         if (layers.size() > chunk_layers) {
+            // Cervin: staging buffers only come back once the GPU has run their copies. Mario Kart
+            // World's lightmap arrays (8192x8192 BC6H, a 128 MiB staging buffer per layer) held
+            // 15 GiB of them within one draw and ran the PC out of RAM. Wait for the GPU every
+            // GiB so the next layers reuse the same buffers.
+            constexpr u64 InFlightLimit = 1_GiB;
+            const u64 chunk_bytes =
+                (std::max<u64>)(u64{image.info.layer_stride} * chunk_layers, 1);
+            u64 in_flight = 0;
             for (size_t first = 0; first < layers.size(); first += chunk_layers) {
-                UploadLayers(image, layers.subspan(first, (std::min)(chunk_layers,
-                                                                     layers.size() - first)));
+                if (in_flight >= InFlightLimit) {
+                    runtime.Finish();
+                    in_flight = 0;
+                }
+                const auto chunk =
+                    layers.subspan(first, (std::min)(chunk_layers, layers.size() - first));
+                try {
+                    UploadLayers(image, chunk);
+                } catch (const std::exception& error) {
+                    // Out of staging memory all the same: give every buffer back and retry once.
+                    runtime.Finish();
+                    try {
+                        UploadLayers(image, chunk);
+                    } catch (const std::exception&) {
+                        LOG_WARNING(HW_GPU,
+                                    "Layer upload of image 0x{:x} stopped at layer {} of {} ({}): "
+                                    "out of memory",
+                                    image.gpu_addr, chunk.front(), layers.size(), error.what());
+                        return;
+                    }
+                    in_flight = 0;
+                }
+                in_flight += chunk_bytes;
             }
             return;
         }
