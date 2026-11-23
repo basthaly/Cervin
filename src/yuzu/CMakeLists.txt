@@ -330,9 +330,28 @@ set_source_files_properties(fritchii/fritchii_ui.cpp fritchii/main_window_fritch
 # (util/export_log.cpp).
 target_link_libraries(yuzu PRIVATE QuaZip::QuaZip)
 
+# Cervin: translations (French). Every dist/languages/*.ts is compiled to a .qm and packed under
+# :/languages, where MainWindow::LoadTranslation looks for the system locale's file. Refresh the
+# source strings with lupdate (see dist/languages/README.md).
+if (ENABLE_QT_TRANSLATION)
+    file(GLOB LANGUAGES_TS "${PROJECT_SOURCE_DIR}/dist/languages/*.ts")
+    qt_add_translation(LANGUAGES_QM ${LANGUAGES_TS})
+    set(LANGUAGES_QRC ${CMAKE_CURRENT_BINARY_DIR}/languages.qrc)
+    file(WRITE ${LANGUAGES_QRC} "<RCC><qresource prefix=\"languages\">\n")
+    foreach (QM ${LANGUAGES_QM})
+        get_filename_component(QM_FILE ${QM} NAME)
+        file(APPEND ${LANGUAGES_QRC} "<file>${QM_FILE}</file>\n")
+    endforeach ()
+    file(APPEND ${LANGUAGES_QRC} "</qresource></RCC>")
+    qt_add_resources(LANGUAGES ${LANGUAGES_QRC})
+else()
+    set(LANGUAGES)
+endif()
+
 target_sources(yuzu
     PRIVATE
         ${ICONS}
+        ${LANGUAGES}
         ${THEMES})
 
 # TODO: Move icon/icns handling to its own Module.
