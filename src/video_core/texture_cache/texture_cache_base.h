@@ -992,8 +992,9 @@ private:
     void NoteContentLookup(ImageId image_id);
     void ForgetContent(ImageId image_id, const ImageBase& image, bool deleted);
     std::unordered_map<ContentKey, ImageId, ContentKeyHash> nx2_content_index;
-    std::unordered_map<ContentKey, u32, ContentKeyHash> nx2_content_kept;
-    std::deque<std::pair<ContentKey, u32>> nx2_content_kept_order;
+    // Cervin: u64 like ImageBase::guest_size_bytes (layered atlases can pass 4 GiB).
+    std::unordered_map<ContentKey, u64, ContentKeyHash> nx2_content_kept;
+    std::deque<std::pair<ContentKey, u64>> nx2_content_kept_order;
     u64 nx2_content_kept_bytes = 0;
     std::array<u64, 4> nx2_content_cases{}; ///< idle twin, busy twin, kept, none
     std::array<u64, 4> nx2_content_case_bytes{};
