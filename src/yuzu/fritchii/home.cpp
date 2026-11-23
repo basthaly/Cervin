@@ -157,6 +157,16 @@ Home::Home(QMainWindow* window_, QBoxLayout* central, QWidget* game_list_, QWidg
            HomeHooks hooks_)
     : QObject(window_), window{window_}, game_list{game_list_}, placeholder{placeholder_},
       hooks{std::move(hooks_)} {
+    // Cervin: the Saves window's copy list shows each game's name and icon from the game list.
+    SetSaveGameInfoLookup([model = hooks.model](u64 program_id) -> std::optional<SaveGameInfo> {
+        for (const auto& game : CollectGames(model, QPixmap{})) {
+            if (game.program_id == program_id) {
+                return SaveGameInfo{game.title, game.icon};
+            }
+        }
+        return std::nullopt;
+    });
+
     // The classic menus live behind the rail's menu button. A zero-height bar keeps every
     // shortcut working and stays out of the way when fullscreen shows the bar again.
     window->menuBar()->setFixedHeight(0);

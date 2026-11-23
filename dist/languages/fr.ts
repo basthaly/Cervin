@@ -7449,17 +7449,7 @@ Veuillez aller dans Configurer -&gt; Système -&gt; Réseau puis en choisir une.
             <translation>&amp;Supprimer le cache des shaders...</translation>
         </message>
         <message>
-            <location line="+7" />
-            <source>Cervin &amp;Discord</source>
-            <translation>&amp;Discord de Cervin</translation>
-        </message>
-        <message>
-            <location line="+2" />
-            <source>D&amp;onate</source>
-            <translation>Faire un d&amp;on</translation>
-        </message>
-        <message>
-            <location line="+6" />
+            <location line="+11" />
             <source>&amp;Copy Data from Eden or Lichii...</source>
             <translation>&amp;Copier les données depuis Eden ou Lichii...</translation>
         </message>
@@ -8105,7 +8095,7 @@ Veuillez aller dans Configurer -&gt; Système -&gt; Réseau puis en choisir une.
     <context>
         <name>Home</name>
         <message>
-            <location filename="../../src/yuzu/fritchii/home.cpp" line="+206" />
+            <location filename="../../src/yuzu/fritchii/home.cpp" line="+216" />
             <source>Library</source>
             <translation>Bibliothèque</translation>
         </message>
@@ -8135,22 +8125,12 @@ Veuillez aller dans Configurer -&gt; Système -&gt; Réseau puis en choisir une.
             <translation>Supprimer le cache des shaders...</translation>
         </message>
         <message>
-            <location line="+24" />
+            <location line="+15" />
             <source>Saves</source>
             <translation>Sauvegardes</translation>
         </message>
         <message>
-            <location line="+9" />
-            <source>Discord</source>
-            <translation>Discord</translation>
-        </message>
-        <message>
-            <location line="+3" />
-            <source>Buy me a coffee</source>
-            <translation>Offrez-moi un café</translation>
-        </message>
-        <message>
-            <location line="+81" />
+            <location line="+85" />
             <source>Play</source>
             <translation>Jouer</translation>
         </message>
@@ -8860,7 +8840,7 @@ ou cliquez pour parcourir</translation>
         </message>
         <message>
             <location line="+8" />
-            <location filename="../../src/yuzu/main_window.cpp" line="+2288" />
+            <location filename="../../src/yuzu/main_window.cpp" line="+2290" />
             <source>&amp;Pause</source>
             <translation>&amp;Pause</translation>
         </message>
@@ -13201,7 +13181,7 @@ Fermez tout émulateur ou programme qui l'utilise, puis relancez Cervin.</transl
             <translation>Sans effet sur cette carte : elle utilise déjà un autre chemin rapide.</translation>
         </message>
         <message>
-            <location filename="../../src/yuzu/fritchii/saves_window.cpp" line="+175" />
+            <location filename="../../src/yuzu/fritchii/saves_window.cpp" line="+183" />
             <source>Done: the saves of 1 game were copied.</source>
             <translation>Terminé : les sauvegardes d'un jeu ont été copiées.</translation>
         </message>
@@ -13223,7 +13203,13 @@ Les sauvegardes qui s'y trouvaient avant sont conservées dans :
         </message>
         <message>
             <location line="+2" />
+            <location line="+193" />
             <location line="+13" />
+            <location line="+11" />
+            <location line="+6" />
+            <location line="+15" />
+            <location line="+9" />
+            <location line="+20" />
             <location line="+16" />
             <location line="+7" />
             <location line="+8" />
@@ -13235,25 +13221,28 @@ Les sauvegardes qui s'y trouvaient avant sont conservées dans :
             <translation>Sauvegardes</translation>
         </message>
         <message>
-            <location line="-158" />
+            <location line="-412" />
             <source>Open backup</source>
             <translation>Ouvrir la copie de sécurité</translation>
         </message>
         <message>
-            <location line="+29" />
+            <location line="+206" />
+            <location line="+77" />
             <location filename="../../src/yuzu/fritchii/switches_window.cpp" line="+232" />
             <source>Close the game first.</source>
             <translation>Fermez d'abord le jeu.</translation>
         </message>
         <message>
-            <location line="+7" />
+            <location line="-36" />
+            <location line="+43" />
             <source>That didn't work:
 %1</source>
             <translation>Ça n'a pas fonctionné :
 %1</translation>
         </message>
         <message>
-            <location line="+8" />
+            <location line="-55" />
+            <location line="+63" />
             <source>
 
 The saves there now are backed up first, in:
@@ -13264,7 +13253,120 @@ Les sauvegardes présentes sont d'abord mises de côté dans :
 %1</translation>
         </message>
         <message>
+            <location line="-247" />
+            <source>Saves from another emulator</source>
+            <translation>Sauvegardes d'un autre émulateur</translation>
+        </message>
+        <message>
             <location line="+4" />
+            <source>Tick the games whose saves Cervin should take. The other emulator is never changed, and Cervin's saves are backed up first.</source>
+            <translation>Cochez les jeux dont Cervin doit reprendre les sauvegardes. L'autre émulateur n'est jamais modifié, et les sauvegardes de Cervin sont d'abord mises de côté.</translation>
+        </message>
+        <message>
+            <location line="+8" />
+            <source>Emulator:</source>
+            <translation>Émulateur :</translation>
+        </message>
+        <message>
+            <location line="+3" />
+            <source>Other folder...</source>
+            <translation>Autre dossier...</translation>
+        </message>
+        <message>
+            <location line="+1" />
+            <source>A portable emulator, or one kept in another folder: pick its folder (the one with user/ or portable/ inside).</source>
+            <translation>Un émulateur portable, ou rangé dans un autre dossier : choisissez son dossier (celui qui contient user/ ou portable/).</translation>
+        </message>
+        <message>
+            <location line="+8" />
+            <source>Game</source>
+            <translation>Jeu</translation>
+        </message>
+        <message>
+            <location line="+0" />
+            <source>Its save</source>
+            <translation>Sa sauvegarde</translation>
+        </message>
+        <message>
+            <location line="+0" />
+            <source>Save in Cervin</source>
+            <translation>Sauvegarde dans Cervin</translation>
+        </message>
+        <message>
+            <location line="+14" />
+            <source>Tick all</source>
+            <translation>Tout cocher</translation>
+        </message>
+        <message>
+            <location line="+1" />
+            <source>Untick all</source>
+            <translation>Tout décocher</translation>
+        </message>
+        <message>
+            <location line="+1" />
+            <source>Copy into Cervin</source>
+            <translation>Copier dans Cervin</translation>
+        </message>
+        <message>
+            <location line="+24" />
+            <source>No other emulator was found in the usual folders. For a portable one, use Other folder...</source>
+            <translation>Aucun autre émulateur n'a été trouvé dans les dossiers habituels. Pour un émulateur portable, utilisez Autre dossier...</translation>
+        </message>
+        <message>
+            <location line="+24" />
+            <source> (device save)</source>
+            <translation> (sauvegarde de l'appareil)</translation>
+        </message>
+        <message>
+            <location line="+11" />
+            <source>none</source>
+            <translation>aucune</translation>
+        </message>
+        <message>
+            <location line="+2" />
+            <source>%1 (newer)</source>
+            <translation>%1 (plus récente)</translation>
+        </message>
+        <message>
+            <location line="+9" />
+            <source>%1 has no game saves.</source>
+            <translation>%1 n'a aucune sauvegarde de jeu.</translation>
+        </message>
+        <message>
+            <location line="+3" />
+            <source>Games whose save in Cervin is newer are left unticked.</source>
+            <translation>Les jeux dont la sauvegarde dans Cervin est plus récente restent décochés.</translation>
+        </message>
+        <message>
+            <location line="+21" />
+            <source>The other emulator's folder</source>
+            <translation>Le dossier de l'autre émulateur</translation>
+        </message>
+        <message>
+            <location line="+8" />
+            <source>No saves were found in that folder. Pick the emulator's own folder (with user/ or portable/ inside), or its save folder.</source>
+            <translation>Aucune sauvegarde n'a été trouvée dans ce dossier. Choisissez le dossier de l'émulateur lui-même (qui contient user/ ou portable/), ou son dossier de sauvegardes.</translation>
+        </message>
+        <message>
+            <location line="+24" />
+            <source>Tick at least one game.</source>
+            <translation>Cochez au moins un jeu.</translation>
+        </message>
+        <message>
+            <location line="+6" />
+            <source>Cervin has no user profile yet. Start a game once in Cervin, then copy the saves.</source>
+            <translation>Cervin n'a pas encore de profil utilisateur. Lancez un jeu une fois dans Cervin, puis copiez les sauvegardes.</translation>
+        </message>
+        <message numerus="yes">
+            <location line="+7" />
+            <source>Copy the saves of %n game(s) from %1 into Cervin? Those games' saves in Cervin are replaced.</source>
+            <translation>
+                <numerusform>Copier la sauvegarde de %n jeu depuis %1 dans Cervin ? La sauvegarde de ce jeu dans Cervin sera remplacée.</numerusform>
+                <numerusform>Copier les sauvegardes de %n jeux depuis %1 dans Cervin ? Les sauvegardes de ces jeux dans Cervin seront remplacées.</numerusform>
+            </translation>
+        </message>
+        <message>
+            <location line="+72" />
             <source>Export...</source>
             <translation>Exporter...</translation>
         </message>
@@ -13353,12 +13455,23 @@ Les sauvegardes présentes sont d'abord mises de côté dans :
             <translation>Copier les sauvegardes de %1 vers %2 ? Les sauvegardes des jeux dans %2 seront remplacées.</translation>
         </message>
         <message>
-            <location line="+4" />
+            <location line="-182" />
+            <location line="+186" />
             <source> Close %1 first.</source>
             <translation> Fermez d'abord %1.</translation>
         </message>
         <message>
-            <location line="+32" />
+            <location line="+16" />
+            <source>Choose games...</source>
+            <translation>Choisir les jeux...</translation>
+        </message>
+        <message>
+            <location line="+1" />
+            <source>From another emulator (Ryujinx, yuzu, Eden...)</source>
+            <translation>Depuis un autre émulateur (Ryujinx, yuzu, Eden...)</translation>
+        </message>
+        <message>
+            <location line="+24" />
             <source>Fix</source>
             <translation>Réparer</translation>
         </message>
@@ -13373,7 +13486,8 @@ Les sauvegardes présentes sont d'abord mises de côté dans :
             <translation>Déplacer les sauvegardes qui n'apparaissent pas dans votre profil Cervin ?</translation>
         </message>
         <message>
-            <location line="+37" />
+            <location line="-379" />
+            <location line="+416" />
             <source>Close</source>
             <translation>Fermer</translation>
         </message>

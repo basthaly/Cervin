@@ -5,6 +5,9 @@
 #include <algorithm>
 #include <array>
 #include <cctype>
+#include <chrono>
+#include <map>
+#include <optional>
 #include <stdexcept>
 #include <utility>
 #include <cstring>
@@ -24,16 +27,21 @@
 #include <QFileDialog>
 #include <QGridLayout>
 #include <QHBoxLayout>
+#include <QHeaderView>
+#include <QIcon>
 #include <QLabel>
+#include <QLocale>
 #include <QMessageBox>
 #include <QPushButton>
 #include <QStandardPaths>
+#include <QTreeWidget>
 #include <QUrl>
 #include <QVBoxLayout>
 
 #include "common/fs/fs_paths.h"
 #include "common/fs/path_util.h"
 #include "common/common_types.h"
+#include "yuzu/fritchii/emulator_saves.h"
 
 namespace FritchiiUi {
 namespace {
@@ -184,7 +192,261 @@ void Done(QWidget* parent, int games, const fs::path& backup) {
     }
 }
 
+// ---- Cervin: saves from another emulator ----
+
+std::function<std::optional<SaveGameInfo>(u64)>& GameInfoLookup() {
+    static std::function<std::optional<SaveGameInfo>(u64)> lookup;
+    return lookup;
+}
+
+/// Where the yuzu family keeps its data: %APPDATA% on Windows, ~/.local/share elsewhere.
+fs::path DataHome() {
+#ifdef _WIN32
+    return fs::path(qEnvironmentVariable("APPDATA").toStdWString());
+#else
+    return fs::path(
+        QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation).toStdString());
+#endif
+}
+
+/// Where Ryujinx keeps its data: %APPDATA% on Windows, ~/.config elsewhere.
+fs::path ConfigHome() {
+#ifdef _WIN32
+    return DataHome();
+#else
+    return fs::path(
+        QStandardPaths::writableLocation(QStandardPaths::GenericConfigLocation).toStdString());
+#endif
+}
+
+QString When(fs::file_time_type time) {
+    const auto system = std::chrono::clock_cast<std::chrono::system_clock>(time);
+    const auto ms =
+        std::chrono::duration_cast<std::chrono::milliseconds>(system.time_since_epoch()).count();
+    return QLocale().toString(QDateTime::fromMSecsSinceEpoch(ms), QLocale::ShortFormat);
+}
+
+QString TitleHex(u64 title_id) {
+    return QString::fromStdString(fmt::format("{:016X}", title_id));
+}
+
+/// Pick games and copy their saves into Cervin from Ryujinx or a yuzu-family emulator. The other
+/// emulator is only read; Cervin's saves are backed up first, as everywhere in this window.
+void ShowOtherEmulators(QWidget* parent, const fs::path& cervin_root,
+                        const std::function<bool()>& emulation_running) {
+    namespace Saves = Cervin::EmulatorSaves;
+    QDialog dialog(parent);
+    dialog.setWindowTitle(QObject::tr("Saves from another emulator"));
+    dialog.setWindowFlag(Qt::WindowContextHelpButtonHint, false);
+    dialog.resize(820, 520);
+    auto* layout = new QVBoxLayout(&dialog);
+    auto* intro = new QLabel(QObject::tr("Tick the games whose saves Cervin should take. The other "
+                                         "emulator is never changed, and Cervin's saves are backed "
+                                         "up first."),
+                             &dialog);
+    intro->setWordWrap(true);
+    layout->addWidget(intro);
+
+    auto* source_row = new QHBoxLayout;
+    source_row->addWidget(new QLabel(QObject::tr("Emulator:"), &dialog));
+    auto* combo = new QComboBox(&dialog);
+    source_row->addWidget(combo, 1);
+    auto* other = new QPushButton(QObject::tr("Other folder..."), &dialog);
+    other->setToolTip(QObject::tr("A portable emulator, or one kept in another folder: pick its "
+                                  "folder (the one with user/ or portable/ inside)."));
+    source_row->addWidget(other);
+    layout->addLayout(source_row);
+
+    auto* tree = new QTreeWidget(&dialog);
+    tree->setColumnCount(3);
+    tree->setHeaderLabels(
+        {QObject::tr("Game"), QObject::tr("Its save"), QObject::tr("Save in Cervin")});
+    tree->setRootIsDecorated(false);
+    tree->setUniformRowHeights(true);
+    tree->setIconSize(QSize(32, 32));
+    tree->header()->setStretchLastSection(false);
+    tree->header()->setSectionResizeMode(0, QHeaderView::Stretch);
+    tree->header()->setSectionResizeMode(1, QHeaderView::ResizeToContents);
+    tree->header()->setSectionResizeMode(2, QHeaderView::ResizeToContents);
+    layout->addWidget(tree, 1);
+    auto* note = new QLabel(&dialog);
+    note->setWordWrap(true);
+    layout->addWidget(note);
+
+    auto* buttons = new QHBoxLayout;
+    auto* all = new QPushButton(QObject::tr("Tick all"), &dialog);
+    auto* none = new QPushButton(QObject::tr("Untick all"), &dialog);
+    auto* copy = new QPushButton(QObject::tr("Copy into Cervin"), &dialog);
+    auto* close = new QPushButton(QObject::tr("Close"), &dialog);
+    copy->setDefault(true);
+    buttons->addWidget(all);
+    buttons->addWidget(none);
+    buttons->addStretch(1);
+    buttons->addWidget(copy);
+    buttons->addWidget(close);
+    layout->addLayout(buttons);
+
+    std::vector<Saves::Source> sources = Saves::Detect(DataHome(), ConfigHome(), cervin_root);
+    std::vector<Saves::GameSave> shown; // one per row of the tree
+
+    const auto fill_combo = [&] {
+        const QSignalBlocker block(combo);
+        combo->clear();
+        for (const auto& source : sources) {
+            combo->addItem(QString::fromStdString(source.name));
+        }
+    };
+    const auto refresh = [&] {
+        tree->clear();
+        shown.clear();
+        if (sources.empty() || combo->currentIndex() < 0) {
+            note->setText(QObject::tr("No other emulator was found in the usual folders. For a "
+                                      "portable one, use Other folder..."));
+            copy->setEnabled(false);
+            return;
+        }
+        const auto& source = sources[static_cast<std::size_t>(combo->currentIndex())];
+        try {
+            shown = Saves::List(source);
+        } catch (const std::exception&) {
+            shown.clear();
+        }
+        // Cervin's own saves, to compare the dates.
+        std::map<std::pair<u64, bool>, fs::file_time_type> mine;
+        for (const auto& save :
+             Saves::List(Saves::Source{"Cervin", Saves::Kind::YuzuFamily, cervin_root})) {
+            mine[{save.title_id, save.device}] = save.modified;
+        }
+        const auto& lookup = GameInfoLookup();
+        bool newer_in_cervin = false;
+        for (const auto& save : shown) {
+            auto* item = new QTreeWidgetItem(tree);
+            const auto info = lookup ? lookup(save.title_id) : std::nullopt;
+            QString title = info && !info->title.isEmpty() ? info->title : TitleHex(save.title_id);
+            if (save.device) {
+                title += QObject::tr(" (device save)");
+            }
+            item->setText(0, title);
+            item->setToolTip(0, TitleHex(save.title_id) + QLatin1Char('\n') + Text(save.dir));
+            if (info && !info->icon.isNull()) {
+                item->setIcon(0, QIcon(info->icon));
+            }
+            item->setText(1, When(save.modified));
+            bool tick = true;
+            const auto it = mine.find({save.title_id, save.device});
+            if (it == mine.end()) {
+                item->setText(2, QObject::tr("none"));
+            } else if (it->second > save.modified) {
+                item->setText(2, QObject::tr("%1 (newer)").arg(When(it->second)));
+                tick = false;
+                newer_in_cervin = true;
+            } else {
+                item->setText(2, When(it->second));
+            }
+            item->setCheckState(0, tick ? Qt::Checked : Qt::Unchecked);
+        }
+        if (shown.empty()) {
+            note->setText(QObject::tr("%1 has no game saves.")
+                              .arg(QString::fromStdString(source.name)));
+        } else if (newer_in_cervin) {
+            note->setText(QObject::tr("Games whose save in Cervin is newer are left unticked."));
+        } else {
+            note->clear();
+        }
+        copy->setEnabled(!shown.empty());
+    };
+
+    QObject::connect(combo, &QComboBox::currentIndexChanged, &dialog, [&] { refresh(); });
+    QObject::connect(all, &QPushButton::clicked, &dialog, [&] {
+        for (int i = 0; i < tree->topLevelItemCount(); ++i) {
+            tree->topLevelItem(i)->setCheckState(0, Qt::Checked);
+        }
+    });
+    QObject::connect(none, &QPushButton::clicked, &dialog, [&] {
+        for (int i = 0; i < tree->topLevelItemCount(); ++i) {
+            tree->topLevelItem(i)->setCheckState(0, Qt::Unchecked);
+        }
+    });
+    QObject::connect(close, &QPushButton::clicked, &dialog, &QDialog::accept);
+    QObject::connect(other, &QPushButton::clicked, &dialog, [&] {
+        const QString folder = QFileDialog::getExistingDirectory(
+            &dialog, QObject::tr("The other emulator's folder"),
+            QStandardPaths::writableLocation(QStandardPaths::HomeLocation));
+        if (folder.isEmpty()) {
+            return;
+        }
+        auto source = Saves::FromFolder(fs::path(folder.toStdWString()));
+        if (!source) {
+            QMessageBox::information(&dialog, QObject::tr("Saves"),
+                                     QObject::tr("No saves were found in that folder. Pick the "
+                                                 "emulator's own folder (with user/ or portable/ "
+                                                 "inside), or its save folder."));
+            return;
+        }
+        sources.push_back(std::move(*source));
+        fill_combo();
+        combo->setCurrentIndex(combo->count() - 1);
+        refresh();
+    });
+    QObject::connect(copy, &QPushButton::clicked, &dialog, [&] {
+        if (emulation_running && emulation_running()) {
+            QMessageBox::information(&dialog, QObject::tr("Saves"),
+                                     QObject::tr("Close the game first."));
+            return;
+        }
+        std::vector<Saves::GameSave> chosen;
+        for (int i = 0; i < tree->topLevelItemCount(); ++i) {
+            if (tree->topLevelItem(i)->checkState(0) == Qt::Checked) {
+                chosen.push_back(shown[static_cast<std::size_t>(i)]);
+            }
+        }
+        if (chosen.empty()) {
+            QMessageBox::information(&dialog, QObject::tr("Saves"),
+                                     QObject::tr("Tick at least one game."));
+            return;
+        }
+        const bool needs_user = std::ranges::any_of(chosen, [](const auto& s) { return !s.device; });
+        if (needs_user && Saves::TargetUser(cervin_root).empty()) {
+            QMessageBox::information(&dialog, QObject::tr("Saves"),
+                                     QObject::tr("Cervin has no user profile yet. Start a game "
+                                                 "once in Cervin, then copy the saves."));
+            return;
+        }
+        const QString name = combo->currentText();
+        const auto backup_path = BackupPath(cervin_root);
+        const QString question =
+            QObject::tr("Copy the saves of %n game(s) from %1 into Cervin? Those games' saves in "
+                        "Cervin are replaced.",
+                        "", static_cast<int>(chosen.size()))
+                .arg(name) +
+            QObject::tr(" Close %1 first.").arg(name) +
+            QObject::tr("\n\nThe saves there now are backed up first, in:\n%1")
+                .arg(Text(backup_path));
+        if (QMessageBox::question(&dialog, QObject::tr("Saves"), question) != QMessageBox::Yes) {
+            return;
+        }
+        try {
+            const auto backup = Backup(cervin_root, backup_path);
+            const int games = Saves::CopyInto(chosen, cervin_root);
+            Done(&dialog, games, backup);
+            refresh();
+        } catch (const std::exception& error) {
+            QMessageBox::warning(&dialog, QObject::tr("Saves"),
+                                 QObject::tr("That didn't work:\n%1")
+                                     .arg(QString::fromUtf8(error.what())));
+        }
+    });
+
+    fill_combo();
+    refresh();
+    dialog.exec();
+}
+
 } // namespace
+
+void SetSaveGameInfoLookup(std::function<std::optional<SaveGameInfo>(u64 program_id)> lookup) {
+    GameInfoLookup() = std::move(lookup);
+}
 
 void ShowSavesWindow(QWidget* parent, const std::function<bool()>& emulation_running) {
     const auto places = Places();
@@ -358,6 +620,15 @@ void ShowSavesWindow(QWidget* parent, const std::function<bool()>& emulation_run
         }
     });
 
+    // Cervin: saves from another emulator (Ryujinx, the yuzu family, portable installs).
+    auto* others_button = new QPushButton(QObject::tr("Choose games..."), &dialog);
+    layout->addWidget(new QLabel(QObject::tr("From another emulator (Ryujinx, yuzu, Eden...)"),
+                                 &dialog),
+                      3, 0);
+    layout->addWidget(others_button, 3, 1);
+    QObject::connect(others_button, &QPushButton::clicked, &dialog,
+                     [&] { ShowOtherEmulators(&dialog, fritchii, emulation_running); });
+
     // v5.8.4: saves in a profile folder Fritchii has no user for (v5.8.3's copy left some there:
     // "Orphaned Profiles Detected") go into its user's profile.
     const auto orphans = [&] {
@@ -373,7 +644,7 @@ void ShowSavesWindow(QWidget* parent, const std::function<bool()>& emulation_run
         }
         return result;
     };
-    int row = 3;
+    int row = 4;
     if (!orphans().empty()) {
         auto* fix_button = new QPushButton(QObject::tr("Fix"), &dialog);
         layout->addWidget(new QLabel(QObject::tr("Saves that don't show up in the game"), &dialog),

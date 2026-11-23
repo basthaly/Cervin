@@ -228,6 +228,8 @@ add_executable(yuzu
     fritchii/perf_overlay.h
     fritchii/precompile_gate.cpp
     fritchii/precompile_gate.h
+    fritchii/emulator_saves.cpp
+    fritchii/emulator_saves.h
     fritchii/saves_window.cpp
     fritchii/saves_window.h
     fritchii/switches_window.cpp

@@ -31,6 +31,15 @@ Eglantine: please do not report Cervin problems to those projects (or to Lichii,
 
 All of them descend from Eden, yuzu and Sudachi.
 
+## Only in Cervin
+
+- **Saves from another emulator** (Help > Saves > From another emulator): pick games and copy
+  their saves into Cervin from Ryujinx or any yuzu-family emulator (yuzu, suyu, Sudachi, Citron,
+  Eden, Trudy, Lichii, Eglantine, Orchid), installed or portable. Each game shows the date of
+  both saves; games whose save in Cervin is newer start unticked. The other emulator is only
+  read, and Cervin's saves are backed up before any change.
+- **French interface**, picked from the system language.
+
 ## Setup
 
 On Windows, extract the whole build and run **lichii.exe** (the internal executable name is kept).
