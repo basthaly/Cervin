@@ -130,7 +130,12 @@ if (MSVC AND NOT CXX_CLANG)
 
         $<$<CONFIG:Release>:/GS->   # No stack buffer overflow checks
         /Gy                         # Enable function level linking
-        /GR-                        # Disable run time type information
+        # Cervin: run time type information stays on. Fritchii's GPU split code uses dynamic_cast
+        # on engines (gpu_split.cpp, memstage_shadow.cpp, fritchii_e_split.cpp); with /GR- MSVC
+        # throws __non_rtti_object there and the GPU thread aborts as soon as a game starts
+        # (Ocarina of Time, 2026-11-23). Fritchii's own Windows releases are built by clang, which
+        # keeps RTTI.
+        /GR
     )
 
     if (NOT CXX_CLANG)
