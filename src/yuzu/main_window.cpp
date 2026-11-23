@@ -8,6 +8,8 @@
 #undef VMA_IMPLEMENTATION
 #endif
 
+#include <filesystem>
+#include <fstream>
 #include <boost/algorithm/string/split.hpp>
 #include "common/fs/path_util.h"
 #include "common/game_presets.h"
@@ -6592,6 +6594,22 @@ void MainWindow::UpdateUITheme() {
 void MainWindow::LoadTranslation() {
     bool loaded;
 
+    // Cervin: Fritchii shipped no translations, so its loader failed and saved "en" in the shared
+    // profile on every start. Once, on Cervin's first start, that inherited "en" goes back to the
+    // system language (French on a French Windows). A later choice of English is kept.
+    {
+        const auto marker =
+            Common::FS::GetEdenPath(Common::FS::EdenPath::ConfigDir) / "cervin-language-v1";
+        std::error_code ec;
+        if (!std::filesystem::exists(marker, ec)) {
+            if (UISettings::values.language.GetValue() == "en") {
+                UISettings::values.language = std::string{};
+            }
+            std::filesystem::create_directories(marker.parent_path(), ec);
+            std::ofstream{marker} << "Cervin: the inherited UI language was reset once.\n";
+        }
+    }
+
     if (UISettings::values.language.GetValue().empty()) {
         // If the selected language is empty, use system locale
         loaded = translator.load(QLocale(), {}, {}, QStringLiteral(":/languages/"));
@@ -6601,10 +6619,13 @@ void MainWindow::LoadTranslation() {
                                  QStringLiteral(":/languages/"));
     }
 
-    if (loaded)
+    if (loaded) {
         qApp->installTranslator(&translator);
-    else
+    } else if (!UISettings::values.language.GetValue().empty()) {
+        // An explicit language without a translation falls back to English. A system language
+        // without one stays "system", so a translation added later is picked up (Cervin).
         UISettings::values.language = std::string("en");
+    }
 }
 
 void MainWindow::OnLanguageChanged(const QString& locale) {
