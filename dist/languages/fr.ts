@@ -8383,7 +8383,7 @@ Veuillez aller dans Configurer -&gt; Système -&gt; Réseau puis en choisir une.
         <message>
             <location line="+3" />
             <source>Configure Game</source>
-            <translation>Configurer le jeux</translation>
+            <translation>Configurer le jeu</translation>
         </message>
         <message>
             <location line="+124" />
