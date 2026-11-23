@@ -141,6 +141,13 @@ if (MSVC AND NOT CXX_CLANG)
         )
     endif()
 
+    # Cervin: MSVC 2026 (19.50+) reports name hiding (C4456-C4459) in places MSVC 2022 lets pass,
+    # such as a parameter named like the global Settings::values. Keep them as plain warnings
+    # there instead of errors; the later option wins.
+    if (MSVC_VERSION GREATER_EQUAL 1950)
+        add_compile_options(/w14456 /w14457 /w14458 /w14459)
+    endif()
+
     if (ARCHITECTURE_x86_64)
         add_compile_options(/QIntel-jcc-erratum)
     endif()
