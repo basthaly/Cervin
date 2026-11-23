@@ -46,7 +46,7 @@ std::vector<Item> Items(const std::vector<VkDeviceInfo::Record>& records) {
         items.push_back({QObject::tr("Fixed in 6.2: Intel 12th to 14th gen"),
                          QObject::tr("The fps drop on Intel CPUs with P-cores and E-cores is fixed. "
                                      "You don't need EDEN_HYBRID_CORES=0 any more: if you had "
-                                     "added it, Fritchii turned it off for you.")});
+                                     "added it, Cervin turned it off for you.")});
     }
     items.insert(items.end(), {
         {QObject::tr("Killing enemies"),
@@ -66,7 +66,7 @@ std::vector<Item> Items(const std::vector<VkDeviceInfo::Record>& records) {
                                      "tested default.")});
     }
     items.push_back({QObject::tr("Mods"),
-                     QObject::tr("A mod that changes the same game code as Fritchii can turn off "
+                     QObject::tr("A mod that changes the same game code as Cervin can turn off "
                                  "high refresh. Ctrl+U tells you which one.")});
     items.push_back({QObject::tr("Weaker PCs and Steam Deck"),
                      QObject::tr("Keep Max Resolution off and pick a lower Resolution in "
@@ -136,7 +136,7 @@ void ShowImpl(QWidget* parent, const std::vector<VkDeviceInfo::Record>& records,
 
     ReadFirstDialog dialog(parent);
     dialog.setObjectName(QStringLiteral("FritchiiKnownIssues"));
-    dialog.setWindowTitle(QObject::tr("Fritchii: very important, please read"));
+    dialog.setWindowTitle(QObject::tr("Cervin: very important, please read"));
     dialog.setWindowFlag(Qt::WindowContextHelpButtonHint, false);
     dialog.setMinimumWidth(640);
     auto* layout = new QVBoxLayout(&dialog);

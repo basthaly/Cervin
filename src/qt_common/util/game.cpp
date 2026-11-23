@@ -486,7 +486,7 @@ void CreateShortcut(const std::string& game_path, const u64 program_id,
     if (CreateShortcutMessagesGUI(ShortcutMessages::Fullscreen, qgame_title)) {
         arguments = "-f " + arguments;
     }
-    const std::string comment = fmt::format("Start {:s} with Fritchii", game_title);
+    const std::string comment = fmt::format("Start {:s} with Cervin", game_title);
     const std::string categories = "Game;Emulator;Qt;";
     const std::string keywords = "Switch;Nintendo;";
 

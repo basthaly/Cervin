@@ -15,7 +15,7 @@ AboutDialog::AboutDialog(QWidget* parent)
     : QDialog(parent), ui{std::make_unique<Ui::AboutDialog>()} {
     static const std::string build_id = std::string{Common::g_build_id};
     static const std::string yuzu_build =
-        fmt::format("{} | {} | {}", std::string{Common::g_build_name},
+        fmt::format("{} | {} | {}", std::string{"Cervin"},
                     Common::BuildLabelWithTag(), std::string{Common::g_compiler_id});
 
     const auto override_build =
@@ -33,8 +33,8 @@ AboutDialog::AboutDialog(QWidget* parent)
         ui->labelBuildInfo->text().arg(QString::fromStdString(yuzu_build_version),
                                        QString::fromUtf8(Common::g_build_date).left(10)));
     if (FritchiiUi::Enabled()) {
-        setWindowTitle(tr("About Fritchii"));
-        ui->labelYuzu->setText(QStringLiteral("<span style='font-size:30px'>Fritchii</span>"));
+        setWindowTitle(tr("About Cervin"));
+        ui->labelYuzu->setText(QStringLiteral("<span style='font-size:30px'>Cervin</span>"));
     }
 }
 

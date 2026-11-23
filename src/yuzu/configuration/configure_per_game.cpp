@@ -263,7 +263,7 @@ std::optional<std::string> HttpGetUrl(const std::string& full_url, DetectionBudg
     QNetworkRequest request(url);
     request.setAttribute(QNetworkRequest::RedirectPolicyAttribute,
                          QNetworkRequest::ManualRedirectPolicy);
-    request.setRawHeader("User-Agent", "Fritchii icon lookup");
+    request.setRawHeader("User-Agent", "Cervin icon lookup");
     request.setRawHeader("Accept-Encoding", "identity");
 
     std::string body;

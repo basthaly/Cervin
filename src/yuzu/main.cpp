@@ -664,7 +664,7 @@ int main(int argc, char* argv[]) {
                     &MainWindow::OnAppFocusStateChanged);
         return app.exec();
     } catch (const std::exception& exception) {
-        QMessageBox::critical(nullptr, QObject::tr("Fritchii startup stopped"),
+        QMessageBox::critical(nullptr, QObject::tr("Cervin startup stopped"),
                               QString::fromUtf8(exception.what()));
         return EXIT_FAILURE;
     }

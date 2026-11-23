@@ -6,57 +6,65 @@
 -->
 
 <p align="center">
-  <img src="dist/fritchii.png" alt="Fritchii" width="256">
+  <img src="dist/cervin.png" alt="Cervin" width="200">
 </p>
 
-# Fritchii
+# Cervin
 
-Fritchii is an experimental, open-source Nintendo Switch and Switch 2 emulator written in C++, tuned for The Legend of Zelda: Ocarina of Time. Fritchii is not affiliated with Nintendo.
+Cervin is an experimental, open-source Nintendo Switch and Switch 2 emulator written in C++. It
+takes [Fritchii](https://github.com/Frizti/Fritchii) v6.5 as its base and adds the NVIDIA RTX and
+Ryzen performance work of [Trudy](https://github.com/joshpack/Trudy) and the Mario Kart World fixes
+of [Eglantine](https://github.com/Eglantine-Community/Eglantine). Cervin is not affiliated with
+Nintendo.
 
-Fritchii is a modified version of GPL-licensed software: see [LICENSE.txt](LICENSE.txt) and the copyright notices in the source files.
+Cervin is a modified version of GPL-licensed software: see [LICENSE.txt](LICENSE.txt) and the
+copyright notices in the source files. It is an independent fork and is not Fritchii, Trudy or
+Eglantine: please do not report Cervin problems to those projects (or to Lichii, Orchid or Eden).
 
-## Downloads and setup
+## Where it comes from
 
-Builds are on the [releases page](https://github.com/Frizti/Fritchii/releases).
+| Source | What Cervin takes |
+| --- | --- |
+| Fritchii v6.5 (Frizti; fork of Lichii) | The base: everything in Fritchii v6.5 |
+| Trudy (joshpack; fork of Orchid) | RTX 40/50 and Ryzen tuning, copying back only the GPU-written pages the CPU reads, Switch 2 performance defaults |
+| Eglantine (Eglantine community) | Mario Kart World fixes Fritchii does not have yet |
 
-On Windows, extract the entire build archive and run **lichii.exe** (the executable keeps that name for now). Only use games and system files you have legally obtained. Games, keys and firmware are not included.
+All of them descend from Eden, yuzu and Sudachi.
 
-### Existing saves and settings
+## Setup
 
-Fritchii keeps its own profile: `%APPDATA%\fritchii` on Windows, and the `fritchii` directories under `$XDG_DATA_HOME`, `$XDG_CONFIG_HOME` and `$XDG_CACHE_HOME` on Linux and macOS. An existing portable `user/` directory still takes priority and is not imported or changed.
+On Windows, extract the whole build and run **lichii.exe** (the internal executable name is kept).
+Only use games and system files you have legally obtained; games, keys and firmware are not
+included.
 
-On the first launch Fritchii copies your newest existing profile (an earlier Fritchii or Eden in `%APPDATA%\eden`, Lichii 150+ in `%APPDATA%\lichii`, else yuzu, suyu, sudachi or citron) into its folder and shows what it copied. Settings, keys, mods and saves are copied; caches are not, so shaders are prepared again once. The old folder is never changed. If the emulator using it is still open, close it and start Fritchii again. An interrupted copy is put back and retried on the next launch.
+- User data lives in `%APPDATA%\fritchii`, shared with Fritchii.
+- The in-app updater is off: Cervin has no release channel of its own yet.
+- Fritchii's shader precompile **recipes** (`*.nx2recipe`) are not part of Cervin. They are
+  Frizti's, all rights reserved, and need Frizti's direct permission to ship in another build (see
+  [LICENSES/Fritchii-Recipe.txt](LICENSES/Fritchii-Recipe.txt)).
 
-## Compatibility and issue reports
+## Building
 
-Compatibility and performance vary by game, hardware and driver. Rendering errors, stutters and crashes remain possible. Passing automated tests does not establish that a game renders correctly, and this project makes no universal frame-rate guarantee.
+See the [build guide](docs/Build.md). Windows needs Visual Studio 2022 Build Tools (Desktop
+development with C++), Qt 6.8.3 (msvc2022_64 with qtcharts) and the Vulkan SDK 1.4.341.1. The GUI
+target is still called `yuzu` and builds `lichii.exe`.
 
-When [reporting an issue](https://github.com/Frizti/Fritchii/issues), include:
-
-- The exact build, game version, CPU, GPU and driver version.
-- Relevant settings and steps to reproduce the problem.
-- A screenshot and the log from the affected session (Help > Export Log), after checking it for personal information.
-
-Do not upload game files, keys, firmware or private account information. Questions and help: [discord.gg/fritchii](https://discord.gg/fritchii).
-
-## Building and contributing
-
-See the [build guide](docs/Build.md) and [coding guidelines](docs/Coding.md). Some internal build target names still use older names: the GUI build target is `yuzu`, and its output is `lichii.exe` on Windows and `lichii` on other desktop platforms.
-
-Keep changes focused and distinguish code-level checks from actual gameplay testing.
+Branding-only commits carry the trailer `Cervin-Branding: yes`, so fixes can be cherry-picked
+without them.
 
 ## Artwork
 
-The Fritchii logo, the pear (`dist/fritchii.png`, `dist/fritchii.ico`), was made for Fritchii by Freshdyno.
+The Cervin logo, a small mountain (`dist/cervin.svg`, `dist/cervin.png`, `dist/cervin.ico`), is
+generated by simple shapes.
 
 ## Credits and license
 
-Fritchii is a modified version of GPL-licensed software. The original copyright notices and third-party licenses are kept in the source files; see [LICENSE.txt](LICENSE.txt) for the license terms.
+Cervin is a modified version of GPL-licensed software. The original copyright notices and
+third-party licenses are kept in the source files; see [LICENSE.txt](LICENSE.txt).
 
-Dynamic FPS by Dark, bundled with his permission.
-
-### Fritchii shader precompile recipe
-
-The shader precompile recipes (the `*.nx2recipe` files in the `recipes` folder) were made by Frizti for Fritchii. They are not part of the GPL-licensed source code and are all rights reserved: **to use them in your own build, fork or package, you need Frizti's direct permission first. Ask Frizti by direct message on Discord.** See [LICENSES/Fritchii-Recipe.txt](LICENSES/Fritchii-Recipe.txt).
-
-The precompile system itself (`src/video_core/nx2_precompile.*`, `src/yuzu/fritchii/precompile_gate.h`) is GPL code with additional terms under GPLv3 section 7: keep the credit "Shader precompile system by Frizti (Fritchii)", mark modified versions, and don't use the Fritchii name for other builds. See [LICENSES/Fritchii-Additional-Terms.txt](LICENSES/Fritchii-Additional-Terms.txt). If you want to use it, please ask Frizti on Discord first.
+- Base: Fritchii by Frizti, itself built on Lichii (zortos293), Eglantine, Eden, yuzu and Sudachi.
+- Shader precompile system by Frizti (Fritchii). Modified in Cervin; see
+  [LICENSES/Fritchii-Additional-Terms.txt](LICENSES/Fritchii-Additional-Terms.txt).
+- Performance work from Trudy by joshpack, on top of Orchid by MythosOfs.
+- Mario Kart World fixes from the Eglantine contributors.
+- Dynamic FPS by Dark, bundled with his permission.

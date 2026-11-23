@@ -23,7 +23,7 @@
       </sizepolicy>
      </property>
      <property name="text">
-      <string>Linking save data to Ryujinx lets both Ryujinx and Fritchii reference the same save files for your games.
+      <string>Linking save data to Ryujinx lets both Ryujinx and Cervin reference the same save files for your games.
 
 By selecting &quot;From Fritchii&quot;, previous save data stored in Ryujinx will be deleted, and vice versa for &quot;From Ryujinx&quot;.</string>
      </property>
@@ -37,7 +37,7 @@ By selecting &quot;From Fritchii&quot;, previous save data stored in Ryujinx wil
      <item>
       <widget class="QPushButton" name="eden">
        <property name="text">
-      <string>From Fritchii</string>
+      <string>From Cervin</string>
        </property>
       </widget>
      </item>

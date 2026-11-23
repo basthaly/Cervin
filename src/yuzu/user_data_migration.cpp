@@ -75,7 +75,7 @@ UserDataMigrator::UserDataMigrator(QMainWindow* main_window) {
                 QMessageBox::Retry | QMessageBox::Close, QMessageBox::Retry);
             if (answer != QMessageBox::Retry) {
                 throw std::runtime_error(
-                    "Import recovery was postponed. Relaunch Fritchii to retry.");
+                    "Import recovery was postponed. Relaunch Cervin to retry.");
             }
             Migration::Recover(state_dir);
         }
@@ -143,11 +143,11 @@ void UserDataMigrator::ShowMigrationPrompt(QMainWindow* main_window) {
                      [=](bool linked) { clear_shaders->setEnabled(!linked); });
     update_cache_default();
     migration_prompt.setText(
-        QObject::tr("Import an existing emulator profile into Fritchii?\n"
+        QObject::tr("Import an existing emulator profile into Cervin?\n"
                     "Copy keeps the original profile unchanged and is recommended.\n"
                     "Move retains a recovery backup and requires space for a full copy.\n"
                     "Link shares settings and saves with the source emulator.\n"
-                    "Existing Fritchii data is kept in backup directories, not merged or deleted.\n\n"
+                    "Existing Cervin data is kept in backup directories, not merged or deleted.\n\n"
                     "Close the source emulator, then choose its profile below.\n"
                     "Close this window to decide on the next launch."));
     migration_prompt.addButton(QObject::tr("Import"));
@@ -158,7 +158,7 @@ void UserDataMigrator::ShowMigrationPrompt(QMainWindow* main_window) {
     QAbstractButton* button = migration_prompt.clickedButton();
 
     if (button == nullptr) {
-        throw std::runtime_error("Import was postponed. Relaunch Fritchii to choose a profile.");
+        throw std::runtime_error("Import was postponed. Relaunch Cervin to choose a profile.");
     }
     if (button == fresh) {
         Common::FS::ProfileMigration::MarkFresh(FrontendCommon::ProfileImportStateDirectory());
@@ -173,13 +173,13 @@ void UserDataMigrator::ShowMigrationPrompt(QMainWindow* main_window) {
     MigrateUserData(main_window, clear_shaders->isEnabled() && clear_shaders->isChecked(),
                     strategy);
     if (!migrated) {
-        throw std::runtime_error("Import failed. Relaunch Fritchii to retry or recover.");
+        throw std::runtime_error("Import failed. Relaunch Cervin to retry or recover.");
     }
 }
 
 void UserDataMigrator::ShowMigrationCancelledMessage(QMainWindow* main_window) {
     QMessageBox::information(main_window, QObject::tr("Migration"),
-                             QObject::tr("Fritchii will use its own profile. Your old emulator "
+                             QObject::tr("Cervin will use its own profile. Your old emulator "
                                          "data has not been changed."),
                              QMessageBox::Ok);
 }
@@ -503,7 +503,7 @@ std::optional<ProfileImportChoice> UserDataMigrator::AskImport(QWidget* parent, 
         return std::nullopt;
     }
     QDialog dialog(parent);
-    dialog.setWindowTitle(QStringLiteral("Fritchii"));
+    dialog.setWindowTitle(QStringLiteral("Cervin"));
     dialog.setWindowFlag(Qt::WindowContextHelpButtonHint, false);
     auto* layout = new QVBoxLayout(&dialog);
     layout->setSpacing(12);
@@ -517,7 +517,7 @@ std::optional<ProfileImportChoice> UserDataMigrator::AskImport(QWidget* parent, 
     auto* text = new QLabel(
         from_menu ? QObject::tr("Copy your data from another folder?\nFritchii restarts and "
                                 "copies it over its own. What it has now is kept as a backup.")
-                  : QObject::tr("Fritchii keeps its data in its own folder now.\nCopy your data "
+                  : QObject::tr("Cervin keeps its data in its own folder now.\nCopy your data "
                                 "from another emulator folder?"),
         &dialog);
     text->setFont(big);
@@ -639,7 +639,7 @@ void UserDataMigrator::CatchUpShaderCache(QWidget* parent) {
     std::atomic<std::uintmax_t> copied{0};
     FrontendCommon::ShaderCacheCopyResult result;
     QProgressDialog progress(parent);
-    progress.setWindowTitle(QStringLiteral("Fritchii"));
+    progress.setWindowTitle(QStringLiteral("Cervin"));
     progress.setLabelText(QObject::tr("Copying your shader cache from %1 (%2)...")
                               .arg(where, SizeText(plan.bytes)));
     progress.setRange(0, 1000);
@@ -688,7 +688,7 @@ void UserDataMigrator::CatchUpShaderCache(QWidget* parent) {
         return;
     }
     QMessageBox::information(
-        parent, QStringLiteral("Fritchii"),
+        parent, QStringLiteral("Cervin"),
         QObject::tr("Copied your shader cache from %1 (%2), so games don't have to build "
                     "their shaders again.")
             .arg(where, SizeText(result.bytes)));
@@ -742,9 +742,9 @@ void UserDataMigrator::AutoImport(QMainWindow* main_window,
             return;
         }
         auto* progress = new QProgressDialog(main_window);
-        progress->setWindowTitle(QStringLiteral("Fritchii"));
+        progress->setWindowTitle(QStringLiteral("Cervin"));
         progress->setLabelText(
-            QObject::tr("Copying your data from the %1 folder to Fritchii's own folder (%2 GB)...")
+            QObject::tr("Copying your data from the %1 folder to Cervin's own folder (%2 GB)...")
                 .arg(folder, Gigabytes(import.copy_bytes)));
         progress->setRange(0, 0);
         progress->setCancelButton(nullptr);
@@ -826,7 +826,7 @@ void UserDataMigrator::AutoImport(QMainWindow* main_window,
         }
         QString what = parts.join(QStringLiteral(", "));
         what[0] = what[0].toUpper();
-        QString text = QObject::tr("Fritchii now keeps its data in its own folder:\n%1\n\n"
+        QString text = QObject::tr("Cervin now keeps its data in its own folder:\n%1\n\n"
                                    "%2 copied from the %3 folder.")
                            .arg(destination_text, what, folder);
         if (!import.linked.empty()) {
@@ -867,7 +867,7 @@ void UserDataMigrator::AutoImport(QMainWindow* main_window,
             FrontendCommon::MarkShaderCacheCatchUpDone();
         }
         text += QObject::tr("\nYour old folder was not changed: %1").arg(old_text);
-        QMessageBox box(QMessageBox::Information, QStringLiteral("Fritchii"), text,
+        QMessageBox box(QMessageBox::Information, QStringLiteral("Cervin"), text,
                         QMessageBox::Ok, main_window);
         auto* open = box.addButton(QObject::tr("Open folder"), QMessageBox::ActionRole);
         box.exec();
@@ -880,10 +880,10 @@ void UserDataMigrator::AutoImport(QMainWindow* main_window,
     if (Migration::GetState(state_dir) == Migration::State::Pending) {
         Migration::Recover(state_dir);
     }
-    QMessageBox box(QMessageBox::Warning, QStringLiteral("Fritchii"),
-                    QObject::tr("Your data in the %1 folder could not be copied to Fritchii's "
+    QMessageBox box(QMessageBox::Warning, QStringLiteral("Cervin"),
+                    QObject::tr("Your data in the %1 folder could not be copied to Cervin's "
                                 "folder. Nothing was changed.\n\n%2\n\nClose any emulator or "
-                                "program using it, then start Fritchii again.")
+                                "program using it, then start Cervin again.")
                         .arg(folder, failure),
                     QMessageBox::NoButton, main_window);
     auto* later = box.addButton(QObject::tr("Close and try again"), QMessageBox::AcceptRole);

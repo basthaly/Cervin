@@ -570,7 +570,7 @@ private:
     bool update_check_manual = false;
     // An update waiting for the game to stop or for other dialogs to close.
     std::optional<UpdateChecker::CheckResult> pending_update;
-    // What the process this one replaced reported, such as "Fritchii v5 is installed".
+    // What the process this one replaced reported, such as "Cervin v5 is installed".
     QString restart_note;
 #endif
 

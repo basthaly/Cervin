@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#1b3a63"/>
+      <stop offset="1" stop-color="#3f86c8"/>
+    </linearGradient>
+  </defs>
+  <rect x="8" y="8" width="240" height="240" rx="56" fill="url(#sky)"/>
+  <!-- face éclairée (gauche) -->
+  <path d="M30 206 L84 146 L112 100 L132 56 L146 44 L150 62 L140 110 L150 206 Z" fill="#e6edf5"/>
+  <!-- face à l'ombre (droite) -->
+  <path d="M146 44 L150 62 L176 108 L202 146 L228 206 L150 206 L140 110 L150 62 Z" fill="#94aac2"/>
+  <!-- neige au sommet -->
+  <path d="M112 100 L132 56 L146 44 L150 62 L164 88 L152 82 L144 96 L134 84 L122 98 Z" fill="#ffffff"/>
+  <!-- ligne de sol -->
+  <rect x="30" y="204" width="198" height="6" rx="3" fill="#1b3a63" opacity="0.35"/>
+</svg>

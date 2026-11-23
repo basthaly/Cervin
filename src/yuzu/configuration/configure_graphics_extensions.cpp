@@ -81,7 +81,7 @@ void ConfigureGraphicsExtensions::Setup(const ConfigurationShared::Builder& buil
     if (FritchiiUi::Enabled()) {
         // Where other builds have their "Pin GPU threads" toggle: players kept asking for it.
         auto* pinning = new QLabel(tr("<b>GPU thread pinning is built in.</b><br>On automatically, nothing "
-                                      "to turn on. Fritchii had it first."),
+                                      "to turn on. Cervin had it first."),
                                    this);
         pinning->setObjectName(QStringLiteral("FritchiiSettingsNote"));
         pinning->setWordWrap(true);

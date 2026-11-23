@@ -172,7 +172,7 @@ bool AskToTurnOn(QWidget* parent, const QString& card_line) {
         }
         text += QStringLiteral("\n\n") +
                 QObject::tr("Change it later: right-click OoT > Properties > Add-Ons.");
-        QMessageBox box(QMessageBox::Question, QStringLiteral("Fritchii"), title,
+        QMessageBox box(QMessageBox::Question, QStringLiteral("Cervin"), title,
                         QMessageBox::NoButton, parent);
         box.setInformativeText(text);
         QPushButton* const turn_on = box.addButton(on_text, QMessageBox::AcceptRole);
@@ -185,7 +185,7 @@ bool AskToTurnOn(QWidget* parent, const QString& card_line) {
 
     QDialog dialog(parent);
     dialog.setObjectName(QStringLiteral("FritchiiMaxResPrompt"));
-    dialog.setWindowTitle(QStringLiteral("Fritchii"));
+    dialog.setWindowTitle(QStringLiteral("Cervin"));
     dialog.setWindowFlag(Qt::WindowContextHelpButtonHint, false);
     dialog.setMinimumWidth(660);
     auto* layout = new QVBoxLayout(&dialog);

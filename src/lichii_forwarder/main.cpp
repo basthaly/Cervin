@@ -53,7 +53,7 @@ const wchar_t* ArgumentsAfterProgram(const wchar_t* line) {
 }
 
 int Fail(const wchar_t* text) {
-    MessageBoxW(nullptr, text, L"Fritchii", MB_OK | MB_ICONERROR);
+    MessageBoxW(nullptr, text, L"Cervin", MB_OK | MB_ICONERROR);
     return 1;
 }
 

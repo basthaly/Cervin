@@ -100,7 +100,7 @@ bool AskToTurnOn(QWidget* parent) {
     const QString off_text = QObject::tr("Not now");
 
     if (!FritchiiUi::Enabled()) {
-        QMessageBox box(QMessageBox::Question, QStringLiteral("Fritchii"), title,
+        QMessageBox box(QMessageBox::Question, QStringLiteral("Cervin"), title,
                         QMessageBox::NoButton, parent);
         box.setInformativeText(lead + QStringLiteral("\n\n") + later);
         QPushButton* const turn_on = box.addButton(on_text, QMessageBox::AcceptRole);
@@ -113,7 +113,7 @@ bool AskToTurnOn(QWidget* parent) {
 
     QDialog dialog(parent);
     dialog.setObjectName(QStringLiteral("FritchiiOcclPrompt"));
-    dialog.setWindowTitle(QStringLiteral("Fritchii"));
+    dialog.setWindowTitle(QStringLiteral("Cervin"));
     dialog.setWindowFlag(Qt::WindowContextHelpButtonHint, false);
     dialog.setMinimumWidth(520);
     auto* layout = new QVBoxLayout(&dialog);

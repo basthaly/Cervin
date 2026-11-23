@@ -147,7 +147,7 @@ void PlanTitle(const fs::path& dir, Plan& plan) {
             return Remove("another version's cache, never read");
         }
         if (merged(name)) {
-            return Remove("already merged into Fritchii's cache");
+            return Remove("already merged into Cervin's cache");
         }
         return Keep("shared cache not merged yet");
     };
@@ -205,7 +205,7 @@ void PlanTitle(const fs::path& dir, Plan& plan) {
                 return Remove("pipeline records, the preparation builds them again");
             }
             if (version == Current) {
-                return Keep("Fritchii's pipeline records, the only copy for this game");
+                return Keep("Cervin's pipeline records, the only copy for this game");
             }
             if (Contains(VideoCommon::VulkanOwnPreviousVersions, version) && !own_exists) {
                 return Keep("an older version's records, not copied to this version yet");
@@ -270,7 +270,7 @@ bool AskToClear(QWidget* parent, std::uintmax_t bytes) {
         QObject::tr("Frees %1 and can help performance a lot. Shaders are prepared again once.")
             .arg(SizeText(bytes));
     if (!FritchiiUi::Enabled()) {
-        QMessageBox box(QMessageBox::Question, QStringLiteral("Fritchii"), title,
+        QMessageBox box(QMessageBox::Question, QStringLiteral("Cervin"), title,
                         QMessageBox::NoButton, parent);
         box.setInformativeText(lead);
         QPushButton* const clear = box.addButton(QObject::tr("Clear"), QMessageBox::AcceptRole);
@@ -281,7 +281,7 @@ bool AskToClear(QWidget* parent, std::uintmax_t bytes) {
     }
     QDialog dialog(parent);
     dialog.setObjectName(QStringLiteral("FritchiiCachePrompt"));
-    dialog.setWindowTitle(QStringLiteral("Fritchii"));
+    dialog.setWindowTitle(QStringLiteral("Cervin"));
     auto* layout = new QVBoxLayout(&dialog);
     layout->setContentsMargins(40, 34, 40, 30);
     layout->setSpacing(14);
@@ -319,7 +319,7 @@ Result RemoveFiles(QWidget* parent, const Plan& plan) {
     std::atomic<size_t> done{0};
     Result result;
     QProgressDialog progress(parent);
-    progress.setWindowTitle(QStringLiteral("Fritchii"));
+    progress.setWindowTitle(QStringLiteral("Cervin"));
     progress.setLabelText(QObject::tr("Clearing shader caches..."));
     progress.setRange(0, static_cast<int>(plan.remove.size()));
     progress.setCancelButton(nullptr);

@@ -117,6 +117,12 @@ std::optional<Common::Net::Release> SelectUpdate(std::span<const Common::Net::Re
 }
 
 CheckResult Check() {
+    // Cervin: no release channel of its own yet. The checks below look at Fritchii and Lichii
+    // releases, whose versions (v6.5...) are above Cervin v0.1 and would offer to replace Cervin
+    // with Fritchii. Never offer an update until Cervin publishes its own releases.
+    if (std::string_view{Common::g_build_name} == "Fritchii") {
+        return {};
+    }
     if (const auto running = RunningVersion()) {
         return CheckFritchii(*running);
     }

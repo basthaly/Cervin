@@ -95,7 +95,7 @@ static const constexpr frozen::map<StringKey, frozen::string, 29> strings = {
     {FwInstallFailedCorrupted,
      QT_TR_NOOP(
          "Firmware installation cancelled, firmware may be in a bad state or corrupted. Restart "
-         "Fritchii or re-install firmware.")},
+         "Cervin or re-install firmware.")},
 
     {FwCheckErrorFirmwareMissing,
      QT_TR_NOOP(
@@ -108,9 +108,9 @@ static const constexpr frozen::map<StringKey, frozen::string, 29> strings = {
     // migrator
     // 17-22
     {MigrationPromptPrefix,
-     QT_TR_NOOP("Fritchii has detected user data for the following emulators:")},
+     QT_TR_NOOP("Cervin has detected user data for the following emulators:")},
     {MigrationPrompt,
-     QT_TR_NOOP("Would you like to migrate your data for use in Fritchii?\n"
+     QT_TR_NOOP("Would you like to migrate your data for use in Cervin?\n"
                 "Select the corresponding button to migrate data from that emulator.\n"
                 "This may take a while.")},
     {MigrationTooltipClearShader, QT_TR_NOOP("Clearing shader cache is recommended when migrating "
@@ -124,7 +124,7 @@ static const constexpr frozen::map<StringKey, frozen::string, 29> strings = {
                                           "free space for a full copy. Keep the backup until "
                                           "you have checked your saves.")},
     {MigrationTooltipLinkOld,
-     QT_TR_NOOP("Creates a filesystem link between the old directory and the Fritchii directory.\n"
+     QT_TR_NOOP("Creates a filesystem link between the old directory and the Cervin directory.\n"
                 "This is recommended if you want to share data between emulators.")},
 
     // why am I writing these comments again

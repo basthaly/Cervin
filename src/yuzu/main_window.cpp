@@ -820,11 +820,11 @@ bool AskUseRecommendedSettings() {
     const QString title = MainWindow::tr("Use the recommended settings?");
     const QString lead =
         (!version.isEmpty() && version.front().isDigit()
-             ? MainWindow::tr("Fritchii %1 comes with settings tuned for OoT.").arg(version)
-             : MainWindow::tr("Fritchii comes with settings tuned for OoT.")) +
+             ? MainWindow::tr("Cervin %1 comes with settings tuned for OoT.").arg(version)
+             : MainWindow::tr("Cervin comes with settings tuned for OoT.")) +
         QLatin1Char(' ') + MainWindow::tr("Your own changes would be replaced.");
     if (!FritchiiUi::ApplyTheme()) {
-        QMessageBox box(QMessageBox::Question, QStringLiteral("Fritchii"), title,
+        QMessageBox box(QMessageBox::Question, QStringLiteral("Cervin"), title,
                         QMessageBox::NoButton);
         box.setInformativeText(lead);
         QPushButton* const use =
@@ -836,7 +836,7 @@ bool AskUseRecommendedSettings() {
     }
     QDialog dialog;
     dialog.setObjectName(QStringLiteral("FritchiiSettingsPrompt"));
-    dialog.setWindowTitle(QStringLiteral("Fritchii"));
+    dialog.setWindowTitle(QStringLiteral("Cervin"));
     auto* layout = new QVBoxLayout(&dialog);
     layout->setContentsMargins(40, 34, 40, 30);
     layout->setSpacing(14);
@@ -2552,7 +2552,7 @@ void MainWindow::BootGame(const QString& filename, Service::AM::FrontendAppletPa
     if (close_pending) {
         return;
     }
-    LOG_INFO(Frontend, "Fritchii starting...");
+    LOG_INFO(Frontend, "Cervin starting...");
 
     if (params.program_id == 0 ||
         params.program_id > static_cast<u64>(Service::AM::AppletProgramId::MaxProgramId)) {
@@ -2605,7 +2605,7 @@ void MainWindow::BootGame(const QString& filename, Service::AM::FrontendAppletPa
                    "Vulkan, 1x resolution, GPU Fast, asynchronous shaders, BC3, conservative VRAM, "
                    "reactive flushing off, FIFO Relaxed VSync, handheld mode, ScaleForce, and "
                    "FXAA.\n\n"
-                   "They apply to Mario Kart World until Fritchii is closed. Your saved settings "
+                   "They apply to Mario Kart World until Cervin is closed. Your saved settings "
                    "are not changed."),
                 QMessageBox::Yes | QMessageBox::No, QMessageBox::No) == QMessageBox::Yes;
         LOG_INFO(Config, "MKW recommended settings accepted: {}", use_recommended_mkw_settings);
@@ -4342,7 +4342,7 @@ void MainWindow::OnConfigure() {
 
         if (!restore.isEmpty() && !FritchiiUi::RestoreSettingsFiles(restore)) {
             QMessageBox::warning(this, tr("Restore Settings"),
-                                 tr("Some settings could not be restored. Fritchii's defaults "
+                                 tr("Some settings could not be restored. Cervin's defaults "
                                     "fill the gaps."));
         }
         config = std::make_unique<QtConfig>();
@@ -4762,8 +4762,8 @@ void MainWindow::SetUpProfilingMode() {
         if (on == ProfilingMode::Active()) {
             return;
         }
-        QString text = on ? tr("Restart Fritchii to turn profiling mode on.")
-                          : tr("Restart Fritchii to turn profiling mode off.");
+        QString text = on ? tr("Restart Cervin to turn profiling mode on.")
+                          : tr("Restart Cervin to turn profiling mode off.");
         if (emulation_running || boot_in_progress) {
             text += QStringLiteral("\n\n") + tr("Save your game first.");
         }
@@ -5605,7 +5605,7 @@ void MainWindow::OnEmulatorUpdateAvailable() {
         QString text;
         switch (result.failure) {
         case UpdateChecker::Failure::RateLimited:
-            text = tr("Could not check for updates: GitHub rate limit reached. Fritchii will try "
+            text = tr("Could not check for updates: GitHub rate limit reached. Cervin will try "
                       "again at the next start.");
             break;
         case UpdateChecker::Failure::Http:
@@ -5628,7 +5628,7 @@ void MainWindow::OnEmulatorUpdateAvailable() {
         if (manual) {
             QMessageBox::information(this, tr("Check for Updates"),
                                      tr("You have the latest version (%1 %2).")
-                                         .arg(QString::fromLatin1(Common::g_build_name),
+                                         .arg(QStringLiteral("Cervin"),
                                               QString::fromLatin1(Common::g_build_label)));
         }
         return;
@@ -5672,7 +5672,7 @@ void MainWindow::ShowRestartNote() {
         QTimer::singleShot(1000, this, &MainWindow::ShowRestartNote);
         return;
     }
-    QMessageBox::information(this, tr("Fritchii"), restart_note);
+    QMessageBox::information(this, tr("Cervin"), restart_note);
 }
 
 void MainWindow::ShowUpdate(const UpdateChecker::CheckResult& result) {
@@ -5732,7 +5732,7 @@ void MainWindow::UpdateWindowTitle(std::string_view title_name, std::string_view
                                    std::string_view gpu_vendor) {
     static const std::string build_id = std::string{Common::g_build_id};
     static const std::string yuzu_title =
-        fmt::format("{} | {} | {}", std::string{Common::g_build_name},
+        fmt::format("{} | {} | {}", std::string{"Cervin"},
                     Common::BuildLabelWithTag(), std::string{Common::g_compiler_id});
 
     const auto override_title =
@@ -6248,7 +6248,7 @@ void MainWindow::OnCheckGraphicsBackend() {
         UISettings::values.gui_force_x11.SetValue(true);
         GraphicsBackend::SetForceX11(true);
         QMessageBox::information(this, tr("Restart Required"),
-                                 tr("Restart Fritchii to apply the X11 backend."));
+                                 tr("Restart Cervin to apply the X11 backend."));
     }
 }
 #endif
@@ -6373,8 +6373,8 @@ bool MainWindow::ConfirmClose() {
         UISettings::values.confirm_before_stopping.GetValue() == ConfirmStop::Ask_Based_On_Game)
         return true;
 
-    const auto text = tr("Are you sure you want to close Fritchii?");
-    return question(this, tr("Fritchii"), text);
+    const auto text = tr("Are you sure you want to close Cervin?");
+    return question(this, tr("Cervin"), text);
 }
 
 void MainWindow::closeEvent(QCloseEvent* event) {
@@ -6488,7 +6488,7 @@ bool MainWindow::ConfirmChangeGame() {
 
     // Use custom question to link controller navigation
     return question(
-        this, tr("Fritchii"),
+        this, tr("Cervin"),
         tr("Are you sure you want to stop the emulation? Any unsaved progress will be lost."),
         QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
 }
@@ -6497,10 +6497,10 @@ bool MainWindow::ConfirmForceLockedExit() {
     if (QtCommon::emu_thread == nullptr)
         return true;
 
-    const auto text = tr("The currently running application has requested Fritchii to not exit.\n\n"
+    const auto text = tr("The currently running application has requested Cervin to not exit.\n\n"
                          "Would you like to bypass this and exit anyway?");
 
-    return question(this, tr("Fritchii"), text);
+    return question(this, tr("Cervin"), text);
 }
 
 void MainWindow::RequestGameExit() {
