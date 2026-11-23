@@ -1,0 +1,105 @@
+name: Signaler un problème
+description: Un plantage, un bug graphique, un ralentissement, un souci d'interface ou de sauvegardes
+title: "[Problème] "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Merci ! Le plus utile : **Aide > Exporter le journal** dans Cervin, puis glisser le `.zip` dans le champ « Journal » plus bas.
+        Il contient le journal, ta version de Cervin, les réglages utiles et un résumé de ton PC (sans ton nom d'utilisateur ni le nom du PC).
+
+  - type: dropdown
+    id: type
+    attributes:
+      label: Type de problème
+      options:
+        - Plantage (Cervin ou le jeu se ferme)
+        - Bug graphique (affichage faux, éléments manquants, scintillement)
+        - Performances (FPS bas, saccades, ralentissements)
+        - Jeu bloqué ou qui ne se lance pas
+        - Interface ou traduction
+        - Sauvegardes (copie depuis un autre émulateur, import, export)
+        - Autre
+    validations:
+      required: true
+
+  - type: input
+    id: game
+    attributes:
+      label: Jeu et version du jeu
+      description: Le nom du jeu et sa version (clic droit sur le jeu > Propriétés).
+      placeholder: "ex. Mario Kart World v1.2.0"
+    validations:
+      required: true
+
+  - type: input
+    id: build
+    attributes:
+      label: Version de Cervin
+      description: Affichée dans la barre de titre et dans Aide > À propos.
+      placeholder: "ex. Cervin v0.1 | cervin-a1b2c3d4e5"
+    validations:
+      required: true
+
+  - type: textarea
+    id: what
+    attributes:
+      label: Ce qui s'est passé
+      description: Ce que tu faisais, ce que tu attendais, et ce qui est arrivé à la place. L'endroit précis du jeu aide beaucoup.
+      placeholder: |
+        1. Lancer Mario Kart World, course Whistlestop Summit
+        2. Après 2 tours...
+        3. L'herbe devient noire / le jeu passe à 15 FPS / Cervin se ferme
+    validations:
+      required: true
+
+  - type: dropdown
+    id: fritchii
+    attributes:
+      label: Le même problème arrive-t-il dans Fritchii ?
+      description: Ça permet de savoir si le problème vient d'un ajout de Cervin ou s'il existait déjà.
+      options:
+        - Je n'ai pas essayé
+        - Oui, pareil dans Fritchii
+        - Non, seulement dans Cervin
+    validations:
+      required: true
+
+  - type: dropdown
+    id: frequency
+    attributes:
+      label: Fréquence
+      options:
+        - À chaque fois
+        - Souvent
+        - Une seule fois
+    validations:
+      required: true
+
+  - type: textarea
+    id: log
+    attributes:
+      label: Journal (Aide > Exporter le journal)
+      description: Glisse ici le fichier `.zip` exporté par Cervin.
+    validations:
+      required: true
+
+  - type: textarea
+    id: media
+    attributes:
+      label: Captures ou vidéo
+      description: Pour un bug graphique ou de performance, une capture avec l'overlay de performances affiché (Affichage > Overlay de performances).
+
+  - type: input
+    id: pc
+    attributes:
+      label: PC (facultatif si le journal est joint)
+      placeholder: "ex. Ryzen 7 5800X, RTX 4070, pilote 591.xx, 32 Go"
+
+  - type: checkboxes
+    id: legal
+    attributes:
+      label: Vérification
+      options:
+        - label: Mon jeu, mes clés et mon firmware proviennent de ma propre console.
+          required: true

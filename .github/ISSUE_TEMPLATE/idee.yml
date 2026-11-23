@@ -1,0 +1,17 @@
+name: Proposer une idée
+description: Une amélioration ou une nouvelle fonction pour Cervin
+title: "[Idée] "
+body:
+  - type: textarea
+    id: idea
+    attributes:
+      label: L'idée
+      description: Ce que Cervin devrait faire, et dans quelle situation ça t'aiderait.
+    validations:
+      required: true
+
+  - type: input
+    id: elsewhere
+    attributes:
+      label: Déjà vu ailleurs ?
+      description: Si un autre émulateur (Fritchii, Trudy, Eglantine, Ryujinx...) le fait déjà, lequel.
