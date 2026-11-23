@@ -5802,7 +5802,18 @@ void TextureCache<P>::RefreshSparseTiles(Image& image) {
             }
             const auto layer_rects = remaining.first(count);
             const size_t bytes = UnswizzledRectsBytes(image.info, layer_rects);
-            auto staging = runtime.UploadStagingBuffer(bytes);
+            // Cervin: with video memory full, a staging buffer can't be made and the exception
+            // aborted the GPU thread (2026-11-23, Mario Kart World). Skip these tiles instead:
+            // they keep their old contents until the next refresh of this image.
+            std::optional<decltype(runtime.UploadStagingBuffer(bytes))> staging_slot;
+            try {
+                staging_slot.emplace(runtime.UploadStagingBuffer(bytes));
+            } catch (const std::exception& error) {
+                LOG_WARNING(HW_GPU, "Sparse tile upload of {} KiB skipped ({}): out of memory",
+                            bytes >> 10, error.what());
+                break;
+            }
+            auto& staging = *staging_slot;
             const auto copies = UnswizzleImageRects(*gpu_memory, image.gpu_addr, image.info,
                                                    layer_rects, staging.mapped_span);
             image.UploadMemory(staging, copies);

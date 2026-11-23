@@ -308,7 +308,15 @@ enum class SparseTilesMode {
     const bool plain_image = info.resources.layers == 1 &&
                              VideoCore::Surface::DefaultBlockWidth(info.format) == 1 &&
                              VideoCore::Surface::DefaultBlockHeight(info.format) == 1;
-    const bool hdr_array = info.native_tiling && info.resources.layers > 1 &&
+    // Cervin: BC6H lightmap arrays by sparse tile (Eglantine 20fab1102) are off by default. On
+    // Fritchii's texture cache they ran Mario Kart World out of video and host memory within
+    // seconds (2026-11-23: a 128 MiB staging buffer failed, crash). CERVIN_MKW_HDR_TILES=1 turns
+    // them on for testing; the 64-bit image sizes of that commit stay on.
+    static const bool hdr_tiles = [] {
+        const char* value = std::getenv("CERVIN_MKW_HDR_TILES");
+        return value != nullptr && value[0] == '1';
+    }();
+    const bool hdr_array = hdr_tiles && info.native_tiling && info.resources.layers > 1 &&
                            (info.format == PixelFormat::BC6H_UFLOAT ||
                             info.format == PixelFormat::BC6H_SFLOAT) &&
                            mode == SparseTilesMode::Unbound && device.IsOptimalBcnSupported();
