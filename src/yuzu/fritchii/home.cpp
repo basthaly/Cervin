@@ -270,15 +270,6 @@ QWidget* Home::MakePage() {
     auto* links = new QHBoxLayout;
     links->setSpacing(10);
     links->addStretch(1);
-    const auto link = [this](const QString& icon, const QString& text, void (*open)()) {
-        auto* button = new QPushButton(Icon(icon, 18), text, page);
-        button->setObjectName(QStringLiteral("FritchiiLink"));
-        button->setIconSize(QSize(18, 18));
-        button->setCursor(Qt::PointingHandCursor);
-        button->setFocusPolicy(Qt::NoFocus);
-        connect(button, &QPushButton::clicked, this, [open] { open(); });
-        return button;
-    };
     // v5.8.3: the Saves window (export, import, copy between Fritchii, Eden and Lichii).
     auto* saves = new QPushButton(Icon(QStringLiteral("list"), 18), tr("Saves"), page);
     saves->setObjectName(QStringLiteral("FritchiiLink"));
@@ -289,16 +280,8 @@ QWidget* Home::MakePage() {
         ShowSavesWindow(window, hooks.emulation_running);
     });
     links->addWidget(saves);
-    links->addWidget(link(QStringLiteral("community"), tr("Discord"), &OpenDiscord));
-    // Buy Me a Coffee (owner, 2026-11-12): the support link in its own yellow, so it is seen.
-    auto* coffee = new QPushButton(IconTinted(QStringLiteral("coffee"), QColor(0x1b, 0x1b, 0x1f), 18),
-                                   tr("Buy me a coffee"), page);
-    coffee->setObjectName(QStringLiteral("FritchiiCoffee"));
-    coffee->setIconSize(QSize(18, 18));
-    coffee->setCursor(Qt::PointingHandCursor);
-    coffee->setFocusPolicy(Qt::NoFocus);
-    connect(coffee, &QPushButton::clicked, this, [] { OpenDonate(); });
-    links->addWidget(coffee);
+    // Cervin: no Discord or donation buttons here. Fritchii's pointed to its own Discord server and
+    // to Frizti's donation page, which are not Cervin's.
     layout->addLayout(links);
     layout->addSpacing(28);
 

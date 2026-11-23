@@ -13536,7 +13536,7 @@ Essayez un autre dossier.</translation>
         </message>
         <message>
             <location line="+1" />
-            <source>Drag this file into your post in the Cervin Discord issues, or send it to Frizti.&lt;br&gt;&lt;br&gt;What's inside:&lt;ul style='margin-left:-20px'&gt;&lt;li&gt;Your log from this session and the one before&lt;/li&gt;&lt;li&gt;Your Cervin version and the settings that matter for support&lt;/li&gt;&lt;li&gt;A short summary of your PC: Windows version, CPU, graphics card and driver, RAM and screen&lt;/li&gt;&lt;/ul&gt;Your Windows user name and PC name are removed. Nothing else from your PC is in it.</source>
+            <source>Attach this file to your Cervin issue report.&lt;br&gt;&lt;br&gt;What's inside:&lt;ul style='margin-left:-20px'&gt;&lt;li&gt;Your log from this session and the one before&lt;/li&gt;&lt;li&gt;Your Cervin version and the settings that matter for support&lt;/li&gt;&lt;li&gt;A short summary of your PC: Windows version, CPU, graphics card and driver, RAM and screen&lt;/li&gt;&lt;/ul&gt;Your Windows user name and PC name are removed. Nothing else from your PC is in it.</source>
             <translation>Glissez ce fichier dans votre message de signalement de problème Cervin.&lt;br&gt;&lt;br&gt;Contenu :&lt;ul style='margin-left:-20px'&gt;&lt;li&gt;Votre journal de cette session et de la précédente&lt;/li&gt;&lt;li&gt;Votre version de Cervin et les paramètres utiles pour l'assistance&lt;/li&gt;&lt;li&gt;Un court résumé de votre PC : version de Windows, CPU, carte graphique et pilote, RAM et écran&lt;/li&gt;&lt;/ul&gt;Votre nom d'utilisateur Windows et le nom de votre PC sont retirés. Rien d'autre de votre PC n'y figure.</translation>
         </message>
         <message>

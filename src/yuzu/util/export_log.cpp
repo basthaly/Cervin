@@ -497,7 +497,7 @@ void Export(QWidget* parent, const std::vector<VkDeviceInfo::Record>& vk_device_
     box.setWindowTitle(QObject::tr("Log Exported"));
     box.setText(QObject::tr("<b>Saved %1</b>").arg(QFileInfo(path).fileName().toHtmlEscaped()));
     box.setInformativeText(QObject::tr(
-        "Drag this file into your post in the Cervin Discord issues, or send it to Frizti."
+        "Attach this file to your Cervin issue report."
         "<br><br>What's inside:"
         "<ul style='margin-left:-20px'>"
         "<li>Your log from this session and the one before</li>"
