@@ -40,8 +40,8 @@ li.checked::marker { content: "\2612"; }
         </message>
         <message>
             <location line="+33" />
-            <source>&lt;html&gt;&lt;body&gt;&lt;p&gt;&lt;a href="https://github.com/Frizti/Fritchii"&gt;Source Code&lt;/a&gt; | &lt;a href="https://github.com/Frizti/Fritchii/issues"&gt;Report an Issue&lt;/a&gt; | &lt;a href="https://github.com/Frizti/Fritchii#credits-and-license"&gt;Credits and License&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-            <translation>&lt;html&gt;&lt;body&gt;&lt;p&gt;&lt;a href="https://github.com/Frizti/Fritchii"&gt;Code source&lt;/a&gt; | &lt;a href="https://github.com/Frizti/Fritchii/issues"&gt;Signaler un problème&lt;/a&gt; | &lt;a href="https://github.com/Frizti/Fritchii#credits-and-license"&gt;Crédits et licence&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+            <source>&lt;html&gt;&lt;body&gt;&lt;p&gt;&lt;a href="https://github.com/basthaly/Cervin"&gt;Source Code&lt;/a&gt; | &lt;a href="https://github.com/basthaly/Cervin/issues"&gt;Report an Issue&lt;/a&gt; | &lt;a href="https://github.com/basthaly/Cervin#credits-and-license"&gt;Credits and License&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+            <translation>&lt;html&gt;&lt;body&gt;&lt;p&gt;&lt;a href="https://github.com/basthaly/Cervin"&gt;Code source&lt;/a&gt; | &lt;a href="https://github.com/basthaly/Cervin/issues"&gt;Signaler un problème&lt;/a&gt; | &lt;a href="https://github.com/basthaly/Cervin#credits-and-license"&gt;Crédits et licence&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
         </message>
         <message>
             <location line="+16" />

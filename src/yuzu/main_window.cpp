@@ -4052,7 +4052,7 @@ void MainWindow::OnOpenModsPage() {
 }
 
 void MainWindow::OnOpenUserHandbook() {
-    OpenURL(QUrl(QStringLiteral("https://github.com/Frizti/Fritchii#readme")));
+    OpenURL(QUrl(QStringLiteral("https://github.com/basthaly/Cervin#readme")));
 }
 
 void MainWindow::ToggleFullscreen() {
