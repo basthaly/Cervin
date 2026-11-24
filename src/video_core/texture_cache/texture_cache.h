@@ -5345,6 +5345,31 @@ void TextureCache<P>::RefreshContents(Image& image, ImageId image_id) {
         }
     };
     VideoCommon::Nx2Profile::Scope profile_scope{VideoCommon::Nx2Profile::Zone::TextureUpload};
+    // Cervin: a refresh over 30 ms is logged (Mario Kart World: 1-5 s drops in a race, R busy
+    // 300-400 ms a frame with no pipeline built). At most 400 lines a session.
+    const auto refresh_start = std::chrono::steady_clock::now();
+    const u64 refresh_uploaded = uploaded_bytes;
+    SCOPE_EXIT {
+        const auto ms = std::chrono::duration<double, std::milli>(
+                            std::chrono::steady_clock::now() - refresh_start)
+                            .count();
+        static u32 slow_reports = 0;
+        if (ms < 30.0 || slow_reports >= 400) {
+            return;
+        }
+        ++slow_reports;
+        const char* const kind = True(image.flags & ImageFlagBits::SparseTiles)    ? "sparse tiles"
+                                 : True(image.flags & ImageFlagBits::SparseLayers) ? "sparse layers"
+                                 : UploadsByLayer(image)                           ? "by layer"
+                                                                                   : "whole";
+        LOG_INFO(HW_GPU,
+                 "Slow texture refresh: {:.1f} ms, image 0x{:x} {}x{} {} layers {} levels format "
+                 "{}, {} MiB guest, {} upload, {} MiB uploaded",
+                 ms, image.gpu_addr, image.info.size.width, image.info.size.height,
+                 image.info.resources.layers, image.info.resources.levels,
+                 static_cast<u32>(image.info.format), image.guest_size_bytes >> 20, kind,
+                 (uploaded_bytes - refresh_uploaded) >> 20);
+    };
 
     if (image.unmapped_tick != 0) {
         ++unmap_stats.reuploaded; // still Remapped: reached through a cached descriptor or binding
@@ -5808,31 +5833,75 @@ void TextureCache<P>::RefreshSparseTiles(Image& image) {
             return;
         }
         // Bound staging allocations to one layer even when a large atlas has many mapped layers.
+        // Cervin: the staging buffers are taken on this thread (the runtime isn't thread-safe),
+        // then the layers' tiles are read and unswizzled on several threads: one after the other
+        // they held R for 300-400 ms when Mario Kart World streamed terrain in mid-race.
+        using Staging = decltype(runtime.UploadStagingBuffer(size_t{}));
+        struct LayerTiles {
+            std::span<const LevelRect> rects;
+            size_t bytes = 0;
+            std::optional<Staging> staging;
+            std::vector<BufferImageCopy> copies;
+        };
+        std::vector<LayerTiles> groups;
         std::span<const LevelRect> remaining{rects};
+        size_t total_bytes = 0;
         while (!remaining.empty()) {
             size_t count = 1;
             while (count < remaining.size() && remaining[count].layer == remaining.front().layer) {
                 ++count;
             }
-            const auto layer_rects = remaining.first(count);
-            const size_t bytes = UnswizzledRectsBytes(image.info, layer_rects);
+            LayerTiles& group = groups.emplace_back();
+            group.rects = remaining.first(count);
+            group.bytes = UnswizzledRectsBytes(image.info, group.rects);
             // Cervin: with video memory full, a staging buffer can't be made and the exception
             // aborted the GPU thread (2026-11-23, Mario Kart World). Skip these tiles instead:
             // they keep their old contents until the next refresh of this image.
-            std::optional<decltype(runtime.UploadStagingBuffer(bytes))> staging_slot;
             try {
-                staging_slot.emplace(runtime.UploadStagingBuffer(bytes));
+                group.staging.emplace(runtime.UploadStagingBuffer(group.bytes));
             } catch (const std::exception& error) {
                 LOG_WARNING(HW_GPU, "Sparse tile upload of {} KiB skipped ({}): out of memory",
-                            bytes >> 10, error.what());
+                            group.bytes >> 10, error.what());
+                groups.pop_back();
                 break;
             }
-            auto& staging = *staging_slot;
-            const auto copies = UnswizzleImageRects(*gpu_memory, image.gpu_addr, image.info,
-                                                   layer_rects, staging.mapped_span);
-            image.UploadMemory(staging, copies);
-            uploaded_bytes += bytes;
+            total_bytes += group.bytes;
             remaining = remaining.subspan(count);
+        }
+        const auto unswizzle = [&](LayerTiles& group) {
+            group.copies = UnswizzleImageRects(*gpu_memory, image.gpu_addr, image.info,
+                                               group.rects, group.staging->mapped_span);
+        };
+        const size_t threads_wanted =
+            total_bytes < (8ULL << 20)
+                ? 1
+                : (std::min<size_t>)(groups.size(), (std::max<size_t>)(
+                                                        1, std::thread::hardware_concurrency() / 2));
+        if (threads_wanted <= 1) {
+            for (LayerTiles& group : groups) {
+                unswizzle(group);
+            }
+        } else {
+            std::atomic<size_t> next{0};
+            const auto work = [&] {
+                for (size_t index = next.fetch_add(1); index < groups.size();
+                     index = next.fetch_add(1)) {
+                    unswizzle(groups[index]);
+                }
+            };
+            std::vector<std::thread> helpers;
+            helpers.reserve(threads_wanted - 1);
+            for (size_t helper = 1; helper < threads_wanted; ++helper) {
+                helpers.emplace_back(work);
+            }
+            work();
+            for (std::thread& helper : helpers) {
+                helper.join();
+            }
+        }
+        for (LayerTiles& group : groups) {
+            image.UploadMemory(*group.staging, group.copies);
+            uploaded_bytes += group.bytes;
         }
         runtime.InsertUploadMemoryBarrier();
         ++images_uploaded;
