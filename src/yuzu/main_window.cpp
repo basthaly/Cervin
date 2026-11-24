@@ -702,10 +702,8 @@ MainWindow::MainWindow(bool has_broken_vulkan)
         OnSaveConfig();
     }
 
-    // Then, once per major version: the common things players will still run into.
-    if (!launched_with_game && FritchiiKnownIssues::ShowOnce(this, vk_device_records)) {
-        OnSaveConfig();
-    }
+    // Cervin: the "very important" notes (Fritchii's OoT ones) no longer open by themselves
+    // after an update (owner 2026-11-24); they stay in the Help menu.
 
     // Then the faster occlusion mode for AMD, once, when the last game could use it and the app
     // was closed before it was offered (it is offered after a game otherwise).

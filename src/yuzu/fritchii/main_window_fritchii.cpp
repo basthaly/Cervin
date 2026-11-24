@@ -79,7 +79,8 @@ void MainWindow::SetUpFritchiiUi() {
             timer->deleteLater();
             FritchiiUi::MarkWhatsNewSeen();
             OnSaveConfig();
-            FritchiiUi::ShowWhatsNew(this);
+            // Cervin: "What's new" no longer opens by itself after an update (owner 2026-11-24):
+            // the update offer shows the notes first, and Help keeps them.
         });
         timer->start();
     } else if (!used_before) {

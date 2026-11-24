@@ -33,9 +33,11 @@ std::optional<u64> ParseBuildNumber(std::string_view tag) {
     return number;
 }
 
-constexpr std::string_view ReleaseRepo = "Frizti/Lichii";
-// Download URLs name the repository by its current name; GitHub redirects the old one.
-constexpr std::array RepoNames{std::string_view{"Lichii"}, std::string_view{"Fritchii"}};
+// Cervin: its own releases (tags cervin-vN.M[.P], assets Cervin-vN.M[.P]-Windows-x64.zip).
+constexpr std::string_view ReleaseOwner = "basthaly";
+constexpr std::string_view ReleaseRepo = "basthaly/Cervin";
+// Download URLs name the repository by its current name; GitHub redirects an old one.
+constexpr std::array RepoNames{std::string_view{"Cervin"}};
 
 std::optional<u32> ParseNumber(std::string_view text) {
     if (text.empty() || (text.size() > 1 && text.front() == '0') ||
@@ -117,12 +119,7 @@ std::optional<Common::Net::Release> SelectUpdate(std::span<const Common::Net::Re
 }
 
 CheckResult Check() {
-    // Cervin: no release channel of its own yet. The checks below look at Fritchii and Lichii
-    // releases, whose versions (v6.5...) are above Cervin v0.1 and would offer to replace Cervin
-    // with Fritchii. Never offer an update until Cervin publishes its own releases.
-    if (std::string_view{Common::g_build_name} == "Fritchii") {
-        return {};
-    }
+    // Cervin: the checks look at Cervin's own releases on GitHub (ReleaseRepo) since v1.0.3.
     if (const auto running = RunningVersion()) {
         return CheckFritchii(*running);
     }
@@ -181,9 +178,7 @@ std::optional<FritchiiVersion> ParseFritchiiVersion(std::string_view text) {
         return std::nullopt;
     }
     if (dot2 == std::string_view::npos) {
-        if (*minor == 0) {
-            return std::nullopt;
-        }
+        // Cervin numbers its versions N.0 too (v1.0).
         return FritchiiVersion{.major = *major, .minor = *minor};
     }
     const std::string_view patch_text = rest.substr(dot2 + 1);
@@ -212,7 +207,7 @@ std::optional<FritchiiVersion> RunningVersion() {
 }
 
 std::optional<FritchiiVersion> ParseFritchiiTag(std::string_view tag) {
-    for (const std::string_view prefix : {"fritchii-v", "frizti-v"}) {
+    for (const std::string_view prefix : {"cervin-v", "fritchii-v", "frizti-v"}) {
         if (tag.starts_with(prefix)) {
             return ParseFritchiiVersion(tag.substr(prefix.size()));
         }
@@ -220,8 +215,20 @@ std::optional<FritchiiVersion> ParseFritchiiTag(std::string_view tag) {
     return std::nullopt;
 }
 
+namespace {
+/// Cervin: the zip a release tag names, spelled as the tag spells the version (cervin-v1.0 ->
+/// Cervin-v1.0-Windows-x64.zip, where FritchiiVersion would write v1).
+std::string CervinAssetName(std::string_view tag) {
+    constexpr std::string_view prefix = "cervin-";
+    if (tag.starts_with(prefix)) {
+        tag.remove_prefix(prefix.size());
+    }
+    return fmt::format("Cervin-{}-Windows-x64.zip", tag);
+}
+} // namespace
+
 std::string FritchiiAssetName(const FritchiiVersion& version) {
-    return fmt::format("Fritchii-v{}-Windows-x64.zip", version.ToString());
+    return fmt::format("Cervin-v{}-Windows-x64.zip", version.ToString());
 }
 
 Source DefaultSource() {
@@ -268,7 +275,7 @@ std::optional<Common::Net::Asset> SelectFritchiiAsset(const Common::Net::Release
     if (!version) {
         return std::nullopt;
     }
-    const auto filename = FritchiiAssetName(*version);
+    const auto filename = CervinAssetName(release.tag);
     for (const auto& url : release.assets) {
         std::string origin;
         if (source.test) {
@@ -279,8 +286,8 @@ std::optional<Common::Net::Asset> SelectFritchiiAsset(const Common::Net::Release
             }
         } else {
             for (const auto repo : RepoNames) {
-                if (url == fmt::format("https://github.com/Frizti/{}/releases/download/{}/{}", repo,
-                                       release.tag, filename)) {
+                if (url == fmt::format("https://github.com/{}/{}/releases/download/{}/{}",
+                                       ReleaseOwner, repo, release.tag, filename)) {
                     origin = "https://github.com";
                 }
             }
@@ -288,7 +295,7 @@ std::optional<Common::Net::Asset> SelectFritchiiAsset(const Common::Net::Release
         if (origin.empty()) {
             continue;
         }
-        Common::Net::Asset asset{.name = "Fritchii",
+        Common::Net::Asset asset{.name = "Cervin",
                                  .url = origin,
                                  .path = url.substr(origin.size()),
                                  .filename = filename};
