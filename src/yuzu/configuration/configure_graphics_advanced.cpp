@@ -4,6 +4,7 @@
 // SPDX-License-Identifier: GPL-2.0-or-later
 
 #include <vector>
+#include <QBoxLayout>
 #include <QLabel>
 #include <qnamespace.h>
 #include "common/settings.h"
@@ -12,7 +13,9 @@
 #include "ui_configure_graphics_advanced.h"
 #include "yuzu/configuration/configuration_shared.h"
 #include "yuzu/configuration/configure_graphics_advanced.h"
+#include "yuzu/configuration/setting_cards.h"
 #include "yuzu/configuration/shared_widget.h"
+#include "yuzu/fritchii/fritchii_ui.h"
 #include "yuzu/fritchii/occlusion_offer.h"
 
 ConfigureGraphicsAdvanced::ConfigureGraphicsAdvanced(
@@ -68,8 +71,13 @@ void ConfigureGraphicsAdvanced::Setup(const ConfigurationShared::Builder& builde
     for (const auto& [id, widget] : normal_hold) {
         normal_layout.addWidget(widget);
     }
-    // Cervin: what each setting does and costs, under it.
-    ConfigurationShared::AddRowHints(this);
+    // Cervin: every setting in a card (what it does, what it changes in game, its cost).
+    if (FritchiiUi::Enabled()) {
+        ui->verticalLayout_2->insertWidget(
+            0, ConfigurationShared::MakeCardsHeader(
+                   this, tr("Each setting says what it does and what you gain or lose in game.")));
+        ConfigurationShared::MakeCards(qobject_cast<QBoxLayout*>(&normal_layout));
+    }
 }
 
 void ConfigureGraphicsAdvanced::ApplyConfiguration() {

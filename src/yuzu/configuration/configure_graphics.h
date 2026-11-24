@@ -48,6 +48,8 @@ class ConfigureGraphics;
 
 namespace ConfigurationShared {
 class Builder;
+class SizeDiagram;
+struct ChoiceText;
 }
 
 class ConfigureGraphics : public ConfigurationShared::Tab {
@@ -136,6 +138,10 @@ private:
     void ApplyPriorityOutput(u32 output);
     /// Cervin: what the picked DLSS model is for, in plain words, under the model row.
     void UpdateDlssModelNote();
+    /// Cervin: the text of the upscaler's, the output's and the priority's cards.
+    ConfigurationShared::ChoiceText UpscalerChoice(int index) const;
+    ConfigurationShared::ChoiceText OutputChoice(int index) const;
+    ConfigurationShared::ChoiceText PriorityChoice(int index) const;
     /// Fritchii builds: the window filter's pros and cons, and which one suits the picture size
     /// on this screen (bigger: Area, smaller: ScaleForce), under the "Window filter" row.
     void UpdateWindowFilterNote();
@@ -222,6 +228,8 @@ private:
     QWidget* output_row{};                 ///< "Upscale to": the size the upscaler makes
     QComboBox* output_combobox{};
     QLabel* upscale_note{};                ///< The status line (UpdatePictureNote)
+    QWidget* picture_result{};             ///< Cervin: the "Result" card around it
+    ConfigurationShared::SizeDiagram* picture_diagram{}; ///< Cervin: base and output to scale
     QWidget* priority_row{};               ///< Cervin: "Priority", in place of "Resolution"
     QComboBox* priority_combobox{};
     QComboBox* dlss_preset_combobox{};     ///< The nvidia_dlss_preset choice

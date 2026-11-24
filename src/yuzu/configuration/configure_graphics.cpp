@@ -17,6 +17,7 @@
 #include <QCheckBox>
 #include <QColorDialog>
 #include <QComboBox>
+#include <QHBoxLayout>
 #include <QDoubleSpinBox>
 #include <QIcon>
 #include <QLabel>
@@ -52,6 +53,7 @@
 #include "yuzu/configuration/amd_fsr4_panel.h"
 #include "video_core/ocarina_upscale.h"
 #include "yuzu/configuration/nvidia_dlss_panel.h"
+#include "yuzu/configuration/setting_cards.h"
 #include "yuzu/configuration/shared_widget.h"
 #include "yuzu/fritchii/fritchii_ui.h"
 #include "yuzu/fritchii/max_resolution.h"
@@ -231,6 +233,92 @@ ConfigureGraphics::~ConfigureGraphics() = default;
 
 void ConfigureGraphics::SetConfiguration() {}
 
+namespace {
+
+/// What a DLSS model is for (the letters are NVIDIA's names): the text under the model's card.
+QString DlssModelText(Settings::DlssPreset preset) {
+    using P = Settings::DlssPreset;
+    switch (preset) {
+    case P::Auto:
+        return ConfigureGraphics::tr("Cervin picks: K on most cards, the lighter E on cards with "
+                                     "little video memory. The safe choice.");
+    case P::Default:
+        return ConfigureGraphics::tr("NVIDIA picks a model for each DLSS mode. Its picks for the "
+                                     "FPS modes can draw thin lines.");
+    case P::K:
+        return ConfigureGraphics::tr("DLSS 4, the most tested in Cervin. Sharp and steady, little "
+                                     "trailing.\nBest for: Picture or Balanced priority. GPU cost: "
+                                     "medium.");
+    case P::J:
+        return ConfigureGraphics::tr("A sharper take on K, but it can leave trails behind fast "
+                                     "objects.\nBest for: if K looks too soft to you. GPU cost: "
+                                     "medium.");
+    case P::M:
+        return ConfigureGraphics::tr("DLSS 4.5. Keeps more detail when the base picture is small.\n"
+                                     "Best for: FPS priority. GPU cost: high, heavy on RTX 20 and "
+                                     "30 cards.");
+    case P::L:
+        return ConfigureGraphics::tr("DLSS 4.5, made for a base a third of the output (4K from "
+                                     "720p).\nBest for: Max FPS priority in 4K. GPU cost: high.");
+    case P::E:
+        return ConfigureGraphics::tr("The older model (DLSS 3). The lightest, softer in motion.\n"
+                                     "Best for: small cards with little video memory. GPU cost: "
+                                     "low.");
+    default:
+        break;
+    }
+    return {};
+}
+
+/// A DLSS model's card: its letter and name, what it is for, and how sharp and steady it is.
+ConfigurationShared::ChoiceText DlssModelChoice(const QComboBox* combo, int row) {
+    using P = Settings::DlssPreset;
+    const auto preset = static_cast<P>(combo->itemData(row).toUInt());
+    const auto dots = [](int filled) {
+        return QString(filled, QChar(0x25CF)) + QString(3 - filled, QChar(0x25CB));
+    };
+    const auto rated = [&](int sharp, int steady) {
+        return QStringLiteral("\n") +
+               ConfigureGraphics::tr("Sharpness %1  ·  Steadiness %2").arg(dots(sharp), dots(steady));
+    };
+    QString title;
+    QString text = DlssModelText(preset);
+    switch (preset) {
+    case P::Auto:
+        title = ConfigureGraphics::tr("Automatic (recommended)");
+        break;
+    case P::Default:
+        title = ConfigureGraphics::tr("NVIDIA's choice");
+        break;
+    case P::K:
+        title = ConfigureGraphics::tr("K · The all-rounder");
+        text += rated(2, 3);
+        break;
+    case P::M:
+        title = ConfigureGraphics::tr("M · For a small base");
+        text += rated(3, 3);
+        break;
+    case P::L:
+        title = ConfigureGraphics::tr("L · 4K from very low");
+        text += rated(2, 2);
+        break;
+    case P::J:
+        title = ConfigureGraphics::tr("J · A bit sharper");
+        text += rated(3, 2);
+        break;
+    case P::E:
+        title = ConfigureGraphics::tr("E · The lightest");
+        text += rated(1, 1);
+        break;
+    default:
+        title = combo->itemText(row);
+        break;
+    }
+    return {title, text};
+}
+
+} // Anonymous namespace
+
 void ConfigureGraphics::Setup(const ConfigurationShared::Builder& builder) {
     QLayout* api_layout = ui->api_widget->layout();
     QWidget* api_grid_widget = new QWidget(this);
@@ -365,6 +453,8 @@ void ConfigureGraphics::Setup(const ConfigurationShared::Builder& builder) {
                 QWidget* group = new QWidget(this);
                 QVBoxLayout* group_layout = new QVBoxLayout(group);
                 resolution_group_layout = group_layout;
+                // Cervin: its rows get cards of their own (MakeCards opens it).
+                group->setProperty("cervin_section", true);
                 group_layout->setContentsMargins(0, 0, 0, 0);
                 group_layout->setSpacing(2);
                 group_layout->addWidget(widget);
@@ -433,6 +523,7 @@ void ConfigureGraphics::Setup(const ConfigurationShared::Builder& builder) {
             group_layout->addWidget(widget);
             scaling_filter_combobox = widget->combobox;
             filter_note = new QLabel(group);
+            filter_note->setObjectName(QStringLiteral("CervinWhat"));
             filter_note->setWordWrap(true);
             group_layout->addWidget(filter_note);
             connect(scaling_filter_combobox, QOverload<int>::of(&QComboBox::currentIndexChanged),
@@ -440,23 +531,30 @@ void ConfigureGraphics::Setup(const ConfigurationShared::Builder& builder) {
             hold_graphics.emplace(setting->Id(), group);
         } else if (setting->Id() == Settings::values.nvidia_dlss_preset.Id() &&
                    widget->combobox != nullptr) {
-            // Cervin: the letters are NVIDIA's names; what each model is for, under the choice.
+            // Cervin: the letters are NVIDIA's names; what each model is for, with the choice.
             QWidget* group = new QWidget(this);
             QVBoxLayout* group_layout = new QVBoxLayout(group);
             group_layout->setContentsMargins(0, 0, 0, 0);
             group_layout->setSpacing(2);
             group_layout->addWidget(widget);
             dlss_preset_combobox = widget->combobox;
-            dlss_model_note = new QLabel(group);
-            dlss_model_note->setWordWrap(true);
-            group_layout->addWidget(dlss_model_note);
-            connect(dlss_preset_combobox, QOverload<int>::of(&QComboBox::currentIndexChanged), this,
-                    [this](int) { UpdateDlssModelNote(); });
-            if (nvidia_dlss_checkbox != nullptr) {
-                connect(nvidia_dlss_checkbox, &QCheckBox::toggled, this,
-                        [this](bool) { UpdateDlssModelNote(); });
+            if (FritchiiUi::Enabled()) {
+                // The models as cards to click, each saying what it is for.
+                ConfigurationShared::AttachChoiceCards(
+                    dlss_preset_combobox, widget,
+                    [combo = dlss_preset_combobox](int index) { return DlssModelChoice(combo, index); });
+            } else {
+                dlss_model_note = new QLabel(group);
+                dlss_model_note->setWordWrap(true);
+                group_layout->addWidget(dlss_model_note);
+                connect(dlss_preset_combobox, QOverload<int>::of(&QComboBox::currentIndexChanged),
+                        this, [this](int) { UpdateDlssModelNote(); });
+                if (nvidia_dlss_checkbox != nullptr) {
+                    connect(nvidia_dlss_checkbox, &QCheckBox::toggled, this,
+                            [this](bool) { UpdateDlssModelNote(); });
+                }
+                UpdateDlssModelNote();
             }
-            UpdateDlssModelNote();
             hold_graphics.emplace(setting->Id(), group);
         } else {
             hold_graphics.emplace(setting->Id(), widget);
@@ -477,9 +575,14 @@ void ConfigureGraphics::Setup(const ConfigurationShared::Builder& builder) {
     SetupOcarinaTextureRows(all_rows);
     SetupPictureMenu();
     SetupPlainNames(all_rows);
-    // Cervin: what each setting does and costs, as a grey line under it, not only on hover.
+    // Cervin: every setting in a card (what it does, what it changes in game, its cost and the
+    // recommended value), the "Compact list" switch on top.
     if (FritchiiUi::Enabled()) {
-        ConfigurationShared::AddRowHints(this);
+        ui->verticalLayout_2->insertWidget(
+            0, ConfigurationShared::MakeCardsHeader(
+                   this, tr("Each setting says what it does and what you gain or lose in game.")));
+        ConfigurationShared::MakeCards(api_grid_layout);
+        ConfigurationShared::MakeCards(qobject_cast<QBoxLayout*>(&graphics_layout));
     }
 
     // Background color is too specific to build into the new system, so we manage it here
@@ -711,41 +814,8 @@ void ConfigureGraphics::UpdateDlssModelNote() {
         dlss_model_note->clear();
         return;
     }
-    using P = Settings::DlssPreset;
-    QString text;
-    switch (static_cast<P>(dlss_preset_combobox->currentData().toUInt())) {
-    case P::Auto:
-        text = tr("Cervin picks: K on most cards, the lighter E on cards with little video "
-                  "memory. The safe choice.");
-        break;
-    case P::Default:
-        text = tr("NVIDIA picks a model for each DLSS mode. Its picks for the FPS modes can "
-                  "draw thin lines.");
-        break;
-    case P::K:
-        text = tr("DLSS 4, the most tested in Cervin. Sharp and steady, little trailing.\n"
-                  "Best for: Picture or Balanced priority. GPU cost: medium.");
-        break;
-    case P::J:
-        text = tr("A sharper take on K, but it can leave trails behind fast objects.\n"
-                  "Best for: if K looks too soft to you. GPU cost: medium.");
-        break;
-    case P::M:
-        text = tr("DLSS 4.5. Keeps more detail when the base picture is small.\n"
-                  "Best for: FPS priority. GPU cost: high, heavy on RTX 20 and 30 cards.");
-        break;
-    case P::L:
-        text = tr("DLSS 4.5, made for a base a third of the output (4K from 720p).\n"
-                  "Best for: Max FPS priority in 4K. GPU cost: high.");
-        break;
-    case P::E:
-        text = tr("The older model (DLSS 3). The lightest, softer in motion.\n"
-                  "Best for: small cards with little video memory. GPU cost: low.");
-        break;
-    default:
-        break;
-    }
-    dlss_model_note->setText(text);
+    dlss_model_note->setText(
+        DlssModelText(static_cast<Settings::DlssPreset>(dlss_preset_combobox->currentData().toUInt())));
 }
 
 void ConfigureGraphics::UpdateAmdFsr4Visibility() {
@@ -921,12 +991,31 @@ void ConfigureGraphics::SetupUpscalerChoice(std::map<u32, QWidget*>& hold_graphi
     if (!FritchiiUi::Enabled() || resolution_group_layout == nullptr) {
         return;
     }
-    // The status line (UpdatePictureNote). Same size as the rows, not a small grey hint.
+    // The status line (UpdatePictureNote). Cervin: in a "Result" card, beside a drawing of the
+    // base inside the output.
     const auto add_note = [this] {
-        upscale_note = new QLabel(this);
+        picture_result = new QWidget(this);
+        picture_result->setProperty("cervin_card", QStringLiteral("result"));
+        auto* const result_layout = new QHBoxLayout(picture_result);
+        result_layout->setContentsMargins(0, 0, 0, 0);
+        result_layout->setSpacing(14);
+        picture_diagram = new ConfigurationShared::SizeDiagram(picture_result);
+        picture_diagram->setVisible(false);
+        result_layout->addWidget(picture_diagram, 0, Qt::AlignTop);
+        auto* const text_layout = new QVBoxLayout;
+        text_layout->setSpacing(4);
+        auto* const title = new QLabel(tr("Result"), picture_result);
+        QFont bold = title->font();
+        bold.setWeight(QFont::DemiBold);
+        title->setFont(bold);
+        text_layout->addWidget(title);
+        upscale_note = new QLabel(picture_result);
         upscale_note->setWordWrap(true);
-        upscale_note->setVisible(false);
-        resolution_group_layout->addWidget(upscale_note);
+        text_layout->addWidget(upscale_note);
+        text_layout->addStretch(1);
+        result_layout->addLayout(text_layout, 1);
+        picture_result->setVisible(false);
+        resolution_group_layout->addWidget(picture_result);
     };
     // Per-game settings keep the separate rows: each has its own "use global" button.
     if (!Settings::IsConfiguringGlobal() || oot_aa_combobox == nullptr ||
@@ -959,17 +1048,20 @@ void ConfigureGraphics::SetupUpscalerChoice(std::map<u32, QWidget*>& hold_graphi
         max_res_combobox->addItem(tr("Off (up to 1080p)"));
         max_res_combobox->addItem(tr("On (1440p)"));
         max_res_row = make_row(tr("Max Resolution:"), max_res_combobox);
+        max_res_row->setProperty("cervin_guide", QStringLiteral("cervin_max_resolution"));
         max_res_row->setToolTip(tr("On: sharper, needs about an RTX 3070 / RX 6800 (8 GB).\n"
                                    "Off: like the Switch 2, more fps on weaker PCs."));
         max_res_row->setVisible(false);
 
         render_combobox = new QComboBox;
         render_row = make_row(tr("Resolution:"), render_combobox);
+        render_row->setProperty("cervin_guide", QStringLiteral("cervin_render"));
         render_row->setVisible(false);
     }
 
     upscaler_combobox = new QComboBox;
     QWidget* const row = make_row(tr("Upscaler:"), upscaler_combobox);
+    row->setProperty("cervin_guide", QStringLiteral("cervin_upscaler"));
     row->setToolTip(tr("Makes a sharp picture from a smaller one, so the game runs faster.\n"
                        "DLSS: NVIDIA RTX cards. FSR 4: Radeon RX 6000 and newer. FSR 3.1: any "
                        "card.\nOoT only. Off keeps the game's own look."));
@@ -988,6 +1080,7 @@ void ConfigureGraphics::SetupUpscalerChoice(std::map<u32, QWidget*>& hold_graphi
     if (picture_menu) {
         output_combobox = new QComboBox;
         output_row = make_row(tr("Upscale to:"), output_combobox);
+        output_row->setProperty("cervin_guide", QStringLiteral("cervin_output"));
         output_row->setVisible(false);
         // Cervin: the player picks the output and what matters most; the size the game draws
         // follows (PriorityInput), in place of the "Resolution" row.
@@ -998,6 +1091,7 @@ void ConfigureGraphics::SetupUpscalerChoice(std::map<u32, QWidget*>& hold_graphi
         priority_combobox->addItem(tr("Max FPS (base at a third, for 4K)"));
         priority_combobox->addItem(tr("Edges only (DLAA): no FPS gain"));
         priority_row = make_row(tr("Priority:"), priority_combobox);
+        priority_row->setProperty("cervin_guide", QStringLiteral("cervin_priority"));
         priority_row->setToolTip(
             tr("What matters most to you. Cervin picks the size the game draws from it.\n"
                "Picture: the best trade. FPS: for cards that struggle. Edges only: the game draws "
@@ -1022,6 +1116,28 @@ void ConfigureGraphics::SetupUpscalerChoice(std::map<u32, QWidget*>& hold_graphi
             resolution_group_layout->addWidget(it->second);
             hold_graphics.erase(it);
         }
+    }
+
+    // Cervin: the upscaler, the output size, the priority and Max Resolution as cards to click.
+    ConfigurationShared::AttachChoiceCards(
+        upscaler_combobox, row, [this](int index) { return UpscalerChoice(index); });
+    if (output_row != nullptr) {
+        ConfigurationShared::AttachChoiceCards(
+            output_combobox, output_row, [this](int index) { return OutputChoice(index); }, 4);
+        ConfigurationShared::AttachChoiceCards(
+            priority_combobox, priority_row, [this](int index) { return PriorityChoice(index); });
+        ConfigurationShared::AttachChoiceCards(
+            max_res_combobox, max_res_row,
+            [this](int index) {
+                return index == 0
+                           ? ConfigurationShared::ChoiceText{max_res_combobox->itemText(0),
+                                                             tr("Like the Switch 2. More FPS on "
+                                                                "weaker PCs.")}
+                           : ConfigurationShared::ChoiceText{max_res_combobox->itemText(1),
+                                                             tr("Sharper. Needs about an RTX 3070 "
+                                                                "/ RX 6800 (8 GB).")};
+            },
+            2);
     }
 
     connect(upscaler_combobox, QOverload<int>::of(&QComboBox::activated), this,
@@ -1115,6 +1231,7 @@ void ConfigureGraphics::UpdateUpscalerChoice() {
             view->setRowHidden(dlss_row, !dlss_card && shown_row != dlss_row);
         }
     }
+    ConfigurationShared::RefreshChoiceCards(upscaler_combobox);
     UpdatePictureMenu();
 }
 
@@ -1532,6 +1649,78 @@ void ConfigureGraphics::ApplyPriorityOutput(u32 output) {
     ApplyPictureOutput(output);
 }
 
+ConfigurationShared::ChoiceText ConfigureGraphics::UpscalerChoice(int index) const {
+    using Aa = Settings::OotAntiAliasing;
+    const u32 data = upscaler_combobox->itemData(index).toUInt();
+    QString text;
+    if (data == UPSCALER_DLSS) {
+        text = tr("The finest picture. NVIDIA RTX cards.");
+    } else {
+        switch (static_cast<Aa>(data)) {
+        case Aa::Game:
+            text = tr("The game's own look and anti-aliasing.");
+            break;
+        case Aa::NoSharpening:
+            text = tr("The game's own look, without its sharpening.");
+            break;
+        case Aa::Fsr3:
+            text = tr("Works on every card. A little less fine than DLSS.");
+            break;
+        case Aa::Fsr4:
+            text = tr("Radeon RX 6000 and newer. Finer than FSR 3.1.");
+            break;
+        }
+    }
+    return {upscaler_combobox->itemText(index), text};
+}
+
+ConfigurationShared::ChoiceText ConfigureGraphics::OutputChoice(int index) const {
+    const u32 height = output_combobox->itemData(index).toUInt();
+    const u32 screen = ScreenHeight();
+    QString text;
+    if (screen != 0 && height == screen) {
+        text = tr("Your screen's size.");
+    } else if (screen != 0 && height > screen) {
+        text = tr("Sharper, shrunk to fit your screen. Heavier.");
+    } else if (screen != 0) {
+        text = tr("Lighter, stretched to fit your screen.");
+    }
+    return {HeightName(height), text};
+}
+
+ConfigurationShared::ChoiceText ConfigureGraphics::PriorityChoice(int index) const {
+    QString title;
+    QString text;
+    switch (index) {
+    case 0:
+        title = tr("Picture");
+        text = tr("The best trade.");
+        break;
+    case 1:
+        title = tr("Balanced");
+        text = tr("A little more FPS.");
+        break;
+    case 2:
+        title = tr("FPS");
+        text = tr("For cards that struggle.");
+        break;
+    case 3:
+        title = tr("Max FPS");
+        text = tr("Mostly for 4K.");
+        break;
+    default:
+        title = tr("Edges only");
+        text = tr("No FPS gain: only smooths the edges (DLAA).");
+        break;
+    }
+    // The base this priority gives for the output picked now.
+    if (const u32 output = PictureOutputNow(); output != 0) {
+        const u32 base = index >= PriorityEdgesOnly ? output : SceneHeight(PriorityInput(output, index));
+        text = tr("Base %1. %2").arg(HeightName(base), text);
+    }
+    return {title, text};
+}
+
 void ConfigureGraphics::SetupPictureMenu() {
     if (output_row == nullptr || render_row == nullptr) {
         return;
@@ -1597,6 +1786,12 @@ void ConfigureGraphics::UpdatePictureMenu() {
     // The window filter's advice follows the picture (it reads the rows set below).
     const auto filter_note_update = qScopeGuard([this] { UpdateWindowFilterNote(); });
     const auto note_update = qScopeGuard([this] { UpdatePictureNote(); });
+    // Cervin: the cards' bases follow the output, and their checked card follows the choices.
+    const auto cards_update = qScopeGuard([this] {
+        ConfigurationShared::RefreshChoiceCards(priority_combobox);
+        ConfigurationShared::RefreshChoiceCards(output_combobox);
+        ConfigurationShared::RefreshChoiceCards(max_res_combobox);
+    });
     if (output_row == nullptr || render_row == nullptr || resolution_widget == nullptr) {
         return;
     }
@@ -1738,6 +1933,8 @@ void ConfigureGraphics::UpdatePictureNote() {
         !running && picture_scale_saved != 0 && PictureScaleNow() != picture_scale_saved;
     QStringList lines;
     QString hint;
+    u32 diagram_base = 0;   // Cervin: the result card's drawing
+    u32 diagram_output = 0;
     if (picture_menu && upscaler != PictureUpscaler::None) {
         const VkDeviceInfo::Record* const record = PictureRecord();
         if (upscaler == PictureUpscaler::Dlss && record != nullptr && !VkDeviceInfo::RunsDlss(*record)) {
@@ -1748,6 +1945,8 @@ void ConfigureGraphics::UpdatePictureNote() {
             const u32 output = PictureOutputNow();
             const QString name = PictureUpscalerName();
             const QString drawn = input == DYNAMIC_INPUT ? tr("up to 1080p") : HeightName(input);
+            diagram_base = SceneHeight(input);
+            diagram_output = output;
             lines << (output == SceneHeight(input)
                           ? tr("The game draws %1, %2 smooths the edges.").arg(drawn, name)
                           : tr("The game draws %1, %2 makes it %3.")
@@ -1802,6 +2001,13 @@ void ConfigureGraphics::UpdatePictureNote() {
     }
     upscale_note->setText(lines.join(QLatin1Char('\n')));
     upscale_note->setVisible(!lines.isEmpty());
+    if (picture_diagram != nullptr) {
+        picture_diagram->SetSizes(diagram_base, diagram_output);
+        picture_diagram->setVisible(diagram_output != 0);
+    }
+    if (picture_result != nullptr) {
+        picture_result->setVisible(!lines.isEmpty());
+    }
 }
 
 namespace {
@@ -1900,19 +2106,21 @@ void ConfigureGraphics::UpdateWindowFilterNote() {
                      .arg(HeightName(screen_height));
     }
 
+    // Cervin: one note, not three. The card already says what the filter does; this says what
+    // the picked one is like, and gives the advice only when another filter would look better.
     QString text;
-    if (filter == F::Auto) {
+    if (known && !bigger && !smaller) {
+        text = advice; // Every filter looks the same here.
+    } else if (filter == F::Auto) {
         text = known ? tr("Auto uses %1 for you now, and switches by itself.")
                            .arg(bigger ? tr("Area") : tr("ScaleForce"))
                      : tr("Area when the picture is bigger than your screen, ScaleForce when it "
                           "is smaller.");
     } else {
         text = FilterProsCons(filter);
-    }
-    if (!advice.isEmpty() && (filter == F::Auto || filter == best || !(bigger || smaller))) {
-        text += QStringLiteral("\n") + advice;
-    } else if (!advice.isEmpty()) {
-        text += QStringLiteral("\n") + advice + QStringLiteral(" ") + tr("Or pick Auto.");
+        if (!advice.isEmpty() && filter != best) {
+            text += QStringLiteral("\n") + advice + QStringLiteral(" ") + tr("Or pick Auto.");
+        }
     }
     filter_note->setText(text);
 }
@@ -1966,8 +2174,7 @@ void ConfigureGraphics::SetupPlainNames(const std::map<u32, QWidget*>& rows) {
     set(values.nvidia_dlss.Id(), tr("NVIDIA DLSS"),
         tr("NVIDIA's upscaler, RTX cards only.\nNeeds NVIDIA's files: use the download button."));
     set(values.nvidia_dlss_preset.Id(), tr("DLSS model:"),
-        tr("The letters are NVIDIA's names. What the picked one is for shows under the "
-           "choice.\nAutomatic is the safe choice."));
+        tr("Which DLSS model rebuilds the picture.\nAutomatic is the safe choice."));
     set(values.nvidia_dlss_quality.Id(), tr("DLSS priority:"),
         tr("What matters most. The base is the size the game draws before DLSS rebuilds it.\n"
            "Picture: the best trade. FPS: a smaller base for cards that struggle.\nEdges only "

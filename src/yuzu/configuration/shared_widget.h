@@ -84,6 +84,11 @@ public:
      */
     bool Valid() const;
 
+    /// The setting this row shows (Cervin: its card text is looked up by its name).
+    Settings::BasicSetting& GetSetting() const {
+        return setting;
+    }
+
     /**
      * Creates a button to appear when a setting has been modified. This exists for custom
      * configurations and wasn't designed to work for the global configuration. It has public access
@@ -177,10 +182,5 @@ private:
     QWidget* parent;
     const bool runtime_lock;
 };
-
-/// Cervin: every setting row on `page` with a tooltip gets it as a short grey line under it
-/// (what the setting does and what it costs), shown and hidden with the row and updated when its
-/// tooltip changes. Call once the rows sit in their layouts; a row in a grid is left as it is.
-void AddRowHints(QWidget* page);
 
 } // namespace ConfigurationShared

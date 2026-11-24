@@ -154,6 +154,9 @@ add_executable(yuzu
     configuration/input_profiles.h
     configuration/shared_widget.cpp
     configuration/shared_widget.h
+    configuration/setting_cards.cpp
+    configuration/setting_cards.h
+    configuration/setting_guide.cpp
     debugger/console.cpp
     debugger/console.h
     debugger/controller.cpp

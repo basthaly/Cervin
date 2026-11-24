@@ -36,7 +36,7 @@ hr { height: 1px; border-width: 0; }
 li.unchecked::marker { content: "\2610"; }
 li.checked::marker { content: "\2612"; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Noto Sans'; font-size:9pt; font-weight:400; font-style:normal;"&gt;
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-family:'MS Shell Dlg 2'; font-size:12pt;"&gt;Cervin est un émulateur expérimental et open source de la Nintendo Switch et de la Switch 2. &lt;br /&gt;&lt;br /&gt;Cervin est une version modifiée de logiciels sous licence GPL (Fritchii par Frizti, avec le travail de performance de Trudy par joshpack et des correctifs d'Eglantine) : voir sa licence et les mentions de copyright dans son code source. Dynamic FPS par Dark, inclus avec son autorisation. Shader precompile system by Frizti (Fritchii). Logo de Cervin : une petite montagne. &lt;br /&gt;&lt;br /&gt;Ce logiciel ne doit pas être utilisé pour jouer à des jeux que vous n'avez pas obtenus légalement.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-family:'MS Shell Dlg 2'; font-size:12pt;"&gt;Cervin est un émulateur expérimental et open source de la Nintendo Switch et de la Switch 2. &lt;br /&gt;&lt;br /&gt;Cervin est une version modifiée de logiciels sous licence GPL (Fritchii par Frizti, avec le travail de performance de Trudy par joshpack et des correctifs d'Eglantine) : voir sa licence et les mentions de copyright dans son code source. Dynamic FPS par Dark, inclus avec son autorisation. Shader precompile system by Frizti (Fritchii). Logo de Cervin : une petite montagne. &lt;br /&gt;&lt;br /&gt;Ce logiciel ne doit pas être utilisé pour jouer à des jeux que tu n'as pas obtenus légalement.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
         </message>
         <message>
             <location line="+33" />
@@ -47,6 +47,92 @@ li.checked::marker { content: "\2612"; }
             <location line="+16" />
             <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=" font-size:7pt;"&gt;&amp;quot;Nintendo Switch&amp;quot; is a trademark of Nintendo. Cervin is not affiliated with Nintendo in any way.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
             <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=" font-size:7pt;"&gt;« Nintendo Switch » est une marque de Nintendo. Cervin n'est affilié à Nintendo d'aucune manière.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        </message>
+    </context>
+    <context>
+        <name>AmdFsr4Panel</name>
+        <message>
+            <location filename="../../src/yuzu/configuration/amd_fsr4_panel.cpp" line="+115" />
+            <source>Open Folder</source>
+            <translation>Ouvrir le dossier</translation>
+        </message>
+        <message>
+            <location line="+5" />
+            <source>Where do these files come from?</source>
+            <translation>D'où viennent ces fichiers ?</translation>
+        </message>
+        <message>
+            <location line="+3" />
+            <source>AMD's FidelityFX SDK release on GitHub. The files are in Kits\FidelityFX\signedbin.</source>
+            <translation>La version du FidelityFX SDK d'AMD sur GitHub. Les fichiers sont dans Kits\FidelityFX\signedbin.</translation>
+        </message>
+        <message>
+            <location line="+32" />
+            <source>&lt;b&gt;Ready.&lt;/b&gt; Found AMD's FidelityFX runtime from FidelityFX SDK %1. FSR 4 runs if AMD's driver offers it for this GPU; otherwise FSR 3.1 does.</source>
+            <translation>&lt;b&gt;Prêt.&lt;/b&gt; Le runtime FidelityFX d'AMD (FidelityFX SDK %1) est trouvé. FSR 4 tourne si le pilote d'AMD le propose pour cette carte ; sinon, c'est FSR 3.1.</translation>
+        </message>
+        <message>
+            <location line="+3" />
+            <source>&lt;b&gt;AMD's files needed:&lt;/b&gt; the FidelityFX runtime from AMD's FidelityFX SDK %1 (amd_fidelityfx_loader_vk.dll and amd_fidelityfx_upscaler_vk.dll). Until then, FSR 3.1 is used.</source>
+            <translation>&lt;b&gt;Fichiers d'AMD nécessaires :&lt;/b&gt; le runtime FidelityFX du FidelityFX SDK %1 d'AMD (amd_fidelityfx_loader_vk.dll et amd_fidelityfx_upscaler_vk.dll). En attendant, FSR 3.1 est utilisé.</translation>
+        </message>
+        <message>
+            <location line="+4" />
+            <source>Folder: %1</source>
+            <translation>Dossier : %1</translation>
+        </message>
+        <message>
+            <location line="+2" />
+            <source>Download from AMD (%1 MB)</source>
+            <translation>Télécharger depuis AMD (%1 Mo)</translation>
+        </message>
+        <message>
+            <location line="+8" />
+            <location line="+10" />
+            <location line="+40" />
+            <location line="+72" />
+            <source>AMD FSR 4</source>
+            <translation>AMD FSR 4</translation>
+        </message>
+        <message>
+            <location line="-121" />
+            <source>Could not download AMD's files: %1. FSR 3.1 is used.</source>
+            <translation>Impossible de télécharger les fichiers d'AMD : %1. FSR 3.1 est utilisé.</translation>
+        </message>
+        <message>
+            <location line="+8" />
+            <source>Contacting AMD's download...</source>
+            <translation>Connexion au téléchargement d'AMD...</translation>
+        </message>
+        <message>
+            <location line="+14" />
+            <source>Download AMD FSR 4</source>
+            <translation>Télécharger AMD FSR 4</translation>
+        </message>
+        <message>
+            <location line="+3" />
+            <source>Cervin will download amd_fidelityfx_loader_vk.dll and amd_fidelityfx_upscaler_vk.dll from AMD's FidelityFX SDK %1 release on GitHub into %2.&lt;br&gt;These files are AMD's, under AMD's licence terms below. Cervin checks AMD's signature before using them.</source>
+            <translation>Cervin va télécharger amd_fidelityfx_loader_vk.dll et amd_fidelityfx_upscaler_vk.dll depuis la version %1 du FidelityFX SDK d'AMD sur GitHub, dans %2.&lt;br&gt;Ces fichiers appartiennent à AMD et suivent la licence d'AMD ci-dessous. Cervin vérifie la signature d'AMD avant de les utiliser.</translation>
+        </message>
+        <message>
+            <location line="+12" />
+            <source>Accept and Download</source>
+            <translation>Accepter et télécharger</translation>
+        </message>
+        <message>
+            <location line="+11" />
+            <source>Downloading AMD's FSR 4 files...</source>
+            <translation>Téléchargement des fichiers FSR 4 d'AMD...</translation>
+        </message>
+        <message>
+            <location line="+0" />
+            <source>Cancel</source>
+            <translation>Annuler</translation>
+        </message>
+        <message>
+            <location line="+74" />
+            <source>AMD's FSR 4 runtime is ready. It is used the next time a game starts.</source>
+            <translation>Le runtime FSR 4 d'AMD est prêt. Il sera utilisé au prochain lancement d'un jeu.</translation>
         </message>
     </context>
     <context>
@@ -64,12 +150,12 @@ li.checked::marker { content: "\2612"; }
         <message>
             <location line="+18" />
             <source>Touch the top left corner &lt;br&gt;of your touchpad.</source>
-            <translation>Touchez le coin supérieur gauche &lt;br&gt;de votre pavé tactile.</translation>
+            <translation>Touche le coin supérieur gauche &lt;br&gt;de ton pavé tactile.</translation>
         </message>
         <message>
             <location line="+3" />
             <source>Now touch the bottom right corner &lt;br&gt;of your touchpad.</source>
-            <translation>Maintenant, touchez le coin inférieur droit &lt;br&gt;de votre pavé tactile.</translation>
+            <translation>Maintenant, touche le coin inférieur droit &lt;br&gt;de ton pavé tactile.</translation>
         </message>
         <message>
             <location line="+3" />
@@ -80,6 +166,64 @@ li.checked::marker { content: "\2612"; }
             <location line="+8" />
             <source>OK</source>
             <translation>OK</translation>
+        </message>
+    </context>
+    <context>
+        <name>CardsState</name>
+        <message>
+            <location filename="../../src/yuzu/configuration/setting_cards.cpp" line="+97" />
+            <source>&lt;b&gt;In game:&lt;/b&gt; %1</source>
+            <translation>&lt;b&gt;En jeu :&lt;/b&gt; %1</translation>
+        </message>
+        <message>
+            <location line="+311" />
+            <source>Explanations shown</source>
+            <translation>Explications visibles</translation>
+        </message>
+        <message>
+            <location line="+1" />
+            <source>Compact list</source>
+            <translation>Liste compacte</translation>
+        </message>
+        <message>
+            <location line="+29" />
+            <source>+ FPS</source>
+            <translation>+ FPS</translation>
+        </message>
+        <message>
+            <location line="+0" />
+            <source>a gain</source>
+            <translation>un gain</translation>
+        </message>
+        <message>
+            <location line="+1" />
+            <source>− picture</source>
+            <translation>− image</translation>
+        </message>
+        <message>
+            <location line="+0" />
+            <source>a cost</source>
+            <translation>un coût</translation>
+        </message>
+        <message>
+            <location line="+1" />
+            <source>info</source>
+            <translation>info</translation>
+        </message>
+        <message>
+            <location line="+0" />
+            <source>good to know</source>
+            <translation>à savoir</translation>
+        </message>
+        <message>
+            <location line="+176" />
+            <source>output %1</source>
+            <translation>sortie %1</translation>
+        </message>
+        <message>
+            <location line="+4" />
+            <source>base %1</source>
+            <translation>base %1</translation>
         </message>
     </context>
     <context>
@@ -143,7 +287,7 @@ li.checked::marker { content: "\2612"; }
         <message>
             <location line="+1" />
             <source>When you block a player, you will no longer receive chat messages from them.&lt;br&gt;&lt;br&gt;Are you sure you would like to block %1?</source>
-            <translation>Lorsque vous bloquez un joueur, vous ne recevrez plus de messages de chat de sa part.&lt;br&gt;&lt;br&gt;Êtes-vous sûr de vouloir bloquer %1 ?</translation>
+            <translation>Quand tu bloques un joueur, tu ne recevras plus de messages de chat de sa part.&lt;br&gt;&lt;br&gt;Veux-tu vraiment bloquer %1 ?</translation>
         </message>
         <message>
             <location line="+13" />
@@ -163,7 +307,7 @@ li.checked::marker { content: "\2612"; }
         <message>
             <location line="+1" />
             <source>Are you sure you would like to &lt;b&gt;kick&lt;/b&gt; %1?</source>
-            <translation>Êtes-vous sûr de vouloir &lt;b&gt;expluser&lt;/b&gt; %1 ?</translation>
+            <translation>Veux-tu vraiment &lt;b&gt;expulser&lt;/b&gt; %1 ?</translation>
         </message>
         <message>
             <location line="+8" />
@@ -175,7 +319,7 @@ li.checked::marker { content: "\2612"; }
             <source>Are you sure you would like to &lt;b&gt;kick and ban&lt;/b&gt; %1?
 
 This would ban both their forum username and their IP address.</source>
-            <translation>Êtes-vous sûr de vouloir &lt;b&gt;expluser et bannir&lt;/b&gt; %1 ?
+            <translation>Veux-tu vraiment &lt;b&gt;expulser et bannir&lt;/b&gt; %1 ?
 
 Cela bannirait à la fois son nom d'utilisateur du forum et son adresse IP.</translation>
         </message>
@@ -311,7 +455,7 @@ Cela bannirait à la fois son nom d'utilisateur du forum et son adresse IP.</tra
         <message>
             <location line="+1" />
             <source>Enables Horizon's built-in overlay applet. Press and hold the home button for 1 second to show it.</source>
-            <translation>Active l'applet d'overlay intégré d'Horizon. Maintenez le bouton Home enfoncé pendant 1 seconde pour l'afficher.</translation>
+            <translation>Active l'applet d'overlay intégré d'Horizon. Maintiens le bouton Home enfoncé pendant 1 seconde pour l'afficher.</translation>
         </message>
         <message>
             <location line="+4" />
@@ -372,7 +516,7 @@ Il s’agit principalement d’une option de débogage et elle ne devrait pas ê
 Disabling it means unlocking the framerate to the maximum your PC can reach.</source>
             <translation>Contrôle la vitesse de rendu maximale du jeu, mais c’est chaque jeu qui décide s’il peut tourner plus vite ou non.
 À 200 %, un jeu prévu pour 30 FPS tournera à 60 FPS, et un jeu prévu pour 60 FPS passera à 120 FPS.
-Désactiver cette option signifie débloquer le framerate jusqu’au maximum que votre PC peut atteindre.</translation>
+Désactiver cette option signifie débloquer le framerate jusqu’au maximum que ton PC peut atteindre.</translation>
         </message>
         <message>
             <location line="+5" />
@@ -442,7 +586,7 @@ Les CPU moins puissants peuvent perdre en performances, et certains jeux peuvent
         <message>
             <location line="+1" />
             <source>Set a custom value of CPU ticks. Higher values can increase performance, but may cause deadlocks. A range of 77-21000 is recommended.</source>
-            <translation>Définissez une valeur personnalisée pour les cycles CPU. Des valeurs plus élevées peuvent améliorer les performances, mais risquent de provoquer des blocages. Une plage de 77-21000 est recommandée.</translation>
+            <translation>Définis une valeur personnalisée pour les cycles CPU. Des valeurs plus élevées peuvent améliorer les performances, mais risquent de provoquer des blocages. Une plage de 77-21000 est recommandée.</translation>
         </message>
         <message>
             <location line="+8" />
@@ -498,7 +642,7 @@ Désactiver cela force tous les accès mémoire à utiliser l'émulation logicie
             <source>This option improves speed by removing NaN checking.
 Please note this also reduces accuracy of certain floating-point instructions.</source>
             <translation>Cette option améliore la vitesse en supprimant la vérification des NaN.
-Veuillez noter que cela réduit également la précision de certaines instructions en virgule flottante.</translation>
+Note que cela réduit également la précision de certaines instructions en virgule flottante.</translation>
         </message>
         <message>
             <location line="+2" />
@@ -522,7 +666,7 @@ La désactiver peut permettre l’exécution de code arbitraire.</translation>
             <source>This option improves speed by relying only on the semantics of cmpxchg to ensure safety of exclusive access instructions.
 Please note this may result in deadlocks and other race conditions.</source>
             <translation>Cette option améliore la vitesse en se basant uniquement sur la sémantique de cmpxchg pour garantir la sécurité des instructions d'accès exclusif.
-Veuillez noter que cela peut entraîner des blocages et d'autres conditions de concurrence.</translation>
+Note que cela peut entraîner des blocages et d'autres conditions de concurrence.</translation>
         </message>
         <message>
             <location line="+5" />
@@ -895,7 +1039,7 @@ Plafond 64 Kio marque au plus 64 Kio, ce qui peut manquer des données réelleme
             <source>Accelerates BCn 3D texture decoding using GPU compute.
 Disable if experiencing crashes or graphical glitches.</source>
             <translation>Accélère le décodage des textures 3D BCn avec des compute shaders sur le GPU.
-Désactivez-le en cas de plantages ou de problèmes graphiques.</translation>
+Désactive-le en cas de plantages ou de problèmes graphiques.</translation>
         </message>
         <message>
             <location line="+2" />
@@ -909,7 +1053,7 @@ While the GPU is faster for medium and large textures, the CPU may be more effic
 Adjust this to find the balance between GPU acceleration and CPU overhead.</source>
             <translation>Définit la taille maximale (Mio) des textures désentrelacées par le GPU.
 Le GPU est plus rapide pour les textures moyennes et grandes, mais le CPU peut être plus efficace pour les toutes petites.
-Ajustez pour trouver l'équilibre entre accélération GPU et surcoût CPU.</translation>
+Ajuste pour trouver l'équilibre entre accélération GPU et surcoût CPU.</translation>
         </message>
         <message>
             <location line="+4" />
@@ -1929,7 +2073,7 @@ Fire Emblem: Fortune's Weave also needs EDEN_NX2_DLSS_REPLACEMENT=dlss. Without 
 In The Legend of Zelda: Ocarina of Time it replaces the game's upscaler at 1x resolution scale.
 Takes effect when a game starts.</source>
             <translation>Utilise NVIDIA DLSS sur les cartes GeForce RTX à la place du DLSS propre à un jeu Switch 2, au lieu d'AMD FSR 3.1.
-Nécessite le chargeur Streamline de NVIDIA, et NVIDIA DLSS sauf si l'application NVIDIA l'a déjà téléchargé ; Cervin ne fournit pas les fichiers de NVIDIA. Utilisez le bouton de téléchargement ci-dessous.
+Nécessite le chargeur Streamline de NVIDIA, et NVIDIA DLSS sauf si l'application NVIDIA l'a déjà téléchargé ; Cervin ne fournit pas les fichiers de NVIDIA. Utilise le bouton de téléchargement ci-dessous.
 Fire Emblem: Fortune's Weave nécessite aussi EDEN_NX2_DLSS_REPLACEMENT=dlss. Sans cette option, son contournement spatial reste actif.
 Dans The Legend of Zelda: Ocarina of Time, il remplace l'upscaler du jeu à l'échelle de résolution 1x.
 Prend effet au lancement d'un jeu.</translation>
@@ -1963,7 +2107,7 @@ Prend effet au lancement du jeu.</translation>
             <location line="+1" />
             <source>Auto matches OoT's render and output sizes. Sharper goes half a step further. Custom uses the LOD bias you set.
 Takes effect when the game starts.</source>
-            <translation>Auto s'adapte aux tailles de rendu et de sortie d'OoT. Plus net va un demi-cran plus loin. Personnalisé utilise le biais de LOD que vous définissez.
+            <translation>Auto s'adapte aux tailles de rendu et de sortie d'OoT. Plus net va un demi-cran plus loin. Personnalisé utilise le biais de LOD que tu définis.
 Prend effet au lancement du jeu.</translation>
         </message>
         <message>
@@ -2738,7 +2882,7 @@ Prend effet au lancement du jeu.</translation>
         <message>
             <location line="+12" />
             <source>Select where the image of the emulated camera comes from. It may be a virtual camera or a real camera.</source>
-            <translation>Sélectionnez d'où provient l'image de la caméra émulée. Il peut s'agir d'une caméra virtuelle ou d'une caméra réelle.</translation>
+            <translation>Choisis d'où provient l'image de la caméra émulée. Il peut s'agir d'une caméra virtuelle ou d'une caméra réelle.</translation>
         </message>
         <message>
             <location line="+26" />
@@ -2821,12 +2965,12 @@ Prend effet au lancement du jeu.</translation>
         <message>
             <location line="+3" />
             <source>Your GPU threads already have their own P-cores.</source>
-            <translation>Vos threads GPU ont déjà leurs propres P-cores.</translation>
+            <translation>Tes threads GPU ont déjà leurs propres P-cores.</translation>
         </message>
         <message>
             <location line="+3" />
             <source>Close the game to change it.</source>
-            <translation>Fermez le jeu pour le modifier.</translation>
+            <translation>Ferme le jeu pour le modifier.</translation>
         </message>
     </context>
     <context>
@@ -2849,7 +2993,7 @@ Prend effet au lancement du jeu.</translation>
         <message>
             <location line="+6" />
             <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=" font-weight:600;"&gt;For debugging only.&lt;/span&gt;&lt;br/&gt;If you're not sure what these do, keep all of these enabled. &lt;br/&gt;These settings, when disabled, only take effect when CPU Debugging is enabled. &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-            <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=" font-weight:600;"&gt;Pour le débogage seulement.&lt;/span&gt;&lt;br/&gt;Si vous n'êtes pas sûr(e) de ce qu'ils font, gardez les tous activés.&lt;br/&gt;Ces paramètres, lorsque désactivés, prennent effet seulement quand le Débogage CPU est activé. &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+            <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=" font-weight:600;"&gt;Pour le débogage seulement.&lt;/span&gt;&lt;br/&gt;Si tu n'es pas sûr(e) de ce qu'ils font, garde-les tous activés.&lt;br/&gt;Ces paramètres, lorsque désactivés, prennent effet seulement quand le Débogage CPU est activé. &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
         </message>
         <message>
             <location line="+10" />
@@ -3223,7 +3367,7 @@ Prend effet au lancement du jeu.</translation>
         <message>
             <location line="+39" />
             <source>Enables Cervin to check for a working Vulkan environment when the program starts up. Disable this if this is causing issues with external programs seeing Cervin.</source>
-            <translation>Permet à Cervin de vérifier au démarrage qu'un environnement Vulkan fonctionne. Désactivez-le si cela empêche des programmes externes de voir Cervin.</translation>
+            <translation>Permet à Cervin de vérifier au démarrage qu'un environnement Vulkan fonctionne. Désactive-le si cela empêche des programmes externes de voir Cervin.</translation>
         </message>
         <message>
             <location line="+299" />
@@ -3338,12 +3482,12 @@ Prend effet au lancement du jeu.</translation>
         <message>
             <location line="+29" />
             <source>Enable this to output the latest generated audio command list to the console. Only affects games using the audio renderer.</source>
-            <translation>Activez cette option pour afficher la dernière liste de commandes audio générée sur la console. N'affecte que les jeux utilisant le moteur de rendu audio.</translation>
+            <translation>Active cette option pour afficher la dernière liste de commandes audio générée sur la console. N'affecte que les jeux utilisant le moteur de rendu audio.</translation>
         </message>
         <message>
             <location line="+3" />
             <source>Dump Audio Commands To Console**</source>
-            <translation>Déversez les commandes audio à la console**</translation>
+            <translation>Envoie les commandes audio à la console**</translation>
         </message>
         <message>
             <location line="+7" />
@@ -3691,7 +3835,7 @@ Prend effet au lancement du jeu.</translation>
         <message>
             <location line="+1" />
             <source>Choose an action for the save data directory:</source>
-            <translation>Choisissez une action pour le dossier des données de sauvegarde :</translation>
+            <translation>Choisis une action pour le dossier des données de sauvegarde :</translation>
         </message>
         <message>
             <location line="+2" />
@@ -3717,7 +3861,7 @@ WARNING: This will overwrite any conflicting saves in the new location!</source>
 Ancien : %1
 Nouveau : %2
 
-Voulez-vous migrer les sauvegardes depuis l'ancien emplacement ?
+Veux-tu migrer les sauvegardes depuis l'ancien emplacement ?
 ATTENTION : les sauvegardes en conflit au nouvel emplacement seront écrasées !</translation>
         </message>
         <message>
@@ -3726,7 +3870,7 @@ ATTENTION : les sauvegardes en conflit au nouvel emplacement seront écrasées !
 
 From: %1
 To: %2</source>
-            <translation>Voulez-vous migrer vos données de sauvegarde vers le nouvel emplacement ?
+            <translation>Veux-tu migrer tes données de sauvegarde vers le nouvel emplacement ?
 
 De : %1
 Vers : %2</translation>
@@ -3776,7 +3920,7 @@ Vers : %2</translation>
 Would you like to delete the old save data?</source>
             <translation>Les données de sauvegarde ont été migrées.
 
-Voulez-vous supprimer les anciennes données de sauvegarde ?</translation>
+Veux-tu supprimer les anciennes données de sauvegarde ?</translation>
         </message>
     </context>
     <context>
@@ -3850,7 +3994,7 @@ Voulez-vous supprimer les anciennes données de sauvegarde ?</translation>
 Your current settings are saved first: Restore Settings brings them back. Controls and game folders stay.</source>
             <translation>Remettre tous les paramètres aux valeurs par défaut de Cervin ?
 
-Vos paramètres actuels sont d'abord enregistrés : Restaurer les paramètres permet de les retrouver. Les commandes et les dossiers de jeux sont conservés.</translation>
+Tes paramètres actuels sont d'abord enregistrés : Restaurer les paramètres permet de les retrouver. Les commandes et les dossiers de jeux sont conservés.</translation>
         </message>
         <message>
             <location line="+2" />
@@ -3911,25 +4055,25 @@ Vos paramètres actuels sont d'abord enregistrés : Restaurer les paramètres pe
             <translation>Couleur de l’arrière plan :</translation>
         </message>
         <message>
-            <location filename="../../src/yuzu/configuration/configure_graphics.cpp" line="+270" />
+            <location filename="../../src/yuzu/configuration/configure_graphics.cpp" line="+358" />
             <source>%</source>
             <comment>FSR/SGSR sharpening percentage (e.g. 50%)</comment>
             <translation>%</translation>
         </message>
         <message>
-            <location line="+107" />
+            <location line="+109" />
             <source>Configure Effects...</source>
             <translation>Configurer les effets...</translation>
         </message>
         <message>
-            <location line="+157" />
+            <location line="+170" />
             <location line="+16" />
-            <location line="+427" />
+            <location line="+416" />
             <source>Off</source>
             <translation>Désactivé</translation>
         </message>
         <message>
-            <location line="-441" />
+            <location line="-430" />
             <source>On (recommended)</source>
             <translation>Activé (recommandé)</translation>
         </message>
@@ -3964,17 +4108,17 @@ Vos paramètres actuels sont d'abord enregistrés : Restaurer les paramètres pe
             <translation>VSync Activée</translation>
         </message>
         <message>
-            <location line="+159" />
+            <location line="-419" />
             <source>Cervin picks: K on most cards, the lighter E on cards with little video memory. The safe choice.</source>
             <translation>Cervin choisit : K sur la plupart des cartes, E plus léger sur les cartes avec peu de mémoire vidéo. Le choix sûr.</translation>
         </message>
         <message>
-            <location line="+4" />
+            <location line="+3" />
             <source>NVIDIA picks a model for each DLSS mode. Its picks for the FPS modes can draw thin lines.</source>
             <translation>NVIDIA choisit un modèle pour chaque mode DLSS. Ses choix pour les modes FPS peuvent dessiner des lignes fines.</translation>
         </message>
         <message>
-            <location line="+4" />
+            <location line="+3" />
             <source>DLSS 4, the most tested in Cervin. Sharp and steady, little trailing.
 Best for: Picture or Balanced priority. GPU cost: medium.</source>
             <translation>DLSS 4, le plus testé dans Cervin. Net et stable, peu de traînées.
@@ -4002,14 +4146,64 @@ Best for: Max FPS priority in 4K. GPU cost: high.</source>
 Pour : priorité FPS max en 4K. Coût GPU : élevé.</translation>
         </message>
         <message>
-            <location line="+4" />
+            <location line="+3" />
             <source>The older model (DLSS 3). The lightest, softer in motion.
 Best for: small cards with little video memory. GPU cost: low.</source>
             <translation>L'ancien modèle (DLSS 3). Le plus léger, plus flou en mouvement.
 Pour : petites cartes avec peu de mémoire vidéo. Coût GPU : faible.</translation>
         </message>
         <message>
-            <location line="+217" />
+            <location line="+18" />
+            <source>Sharpness %1  ·  Steadiness %2</source>
+            <translation>Netteté %1  ·  Stabilité %2</translation>
+        </message>
+        <message>
+            <location line="+6" />
+            <source>Automatic (recommended)</source>
+            <translation>Automatique (recommandé)</translation>
+        </message>
+        <message>
+            <location line="+3" />
+            <source>NVIDIA's choice</source>
+            <translation>Le choix de NVIDIA</translation>
+        </message>
+        <message>
+            <location line="+3" />
+            <source>K · The all-rounder</source>
+            <translation>K · Le polyvalent</translation>
+        </message>
+        <message>
+            <location line="+4" />
+            <source>M · For a small base</source>
+            <translation>M · Pour une petite base</translation>
+        </message>
+        <message>
+            <location line="+4" />
+            <source>L · 4K from very low</source>
+            <translation>L · La 4K depuis très bas</translation>
+        </message>
+        <message>
+            <location line="+4" />
+            <source>J · A bit sharper</source>
+            <translation>J · Un peu plus net</translation>
+        </message>
+        <message>
+            <location line="+4" />
+            <source>E · The lightest</source>
+            <translation>E · Le plus léger</translation>
+        </message>
+        <message>
+            <location line="+273" />
+            <source>Each setting says what it does and what you gain or lose in game.</source>
+            <translation>Chaque réglage dit ce qu'il fait et ce que tu gagnes ou perds en jeu.</translation>
+        </message>
+        <message>
+            <location line="+424" />
+            <source>Result</source>
+            <translation>Résultat</translation>
+        </message>
+        <message>
+            <location line="+41" />
             <source>Off (up to 1080p)</source>
             <translation>Désactivé (jusqu'à 1080p)</translation>
         </message>
@@ -4024,7 +4218,7 @@ Pour : petites cartes avec peu de mémoire vidéo. Coût GPU : faible.</translat
             <translation>Résolution max. :</translation>
         </message>
         <message>
-            <location line="+1" />
+            <location line="+2" />
             <source>On: sharper, needs about an RTX 3070 / RX 6800 (8 GB).
 Off: like the Switch 2, more fps on weaker PCs.</source>
             <translation>Activé : plus net, demande environ une RTX 3070 / RX 6800 (8 Go).
@@ -4036,13 +4230,13 @@ Désactivé : comme la Switch 2, plus de FPS sur les PC moins puissants.</transl
             <translation>Résolution :</translation>
         </message>
         <message>
-            <location line="+5" />
-            <location line="+1009" />
+            <location line="+6" />
+            <location line="+1125" />
             <source>Upscaler:</source>
             <translation>Upscaler :</translation>
         </message>
         <message>
-            <location line="-1008" />
+            <location line="-1123" />
             <source>Makes a sharp picture from a smaller one, so the game runs faster.
 DLSS: NVIDIA RTX cards. FSR 4: Radeon RX 6000 and newer. FSR 3.1: any card.
 OoT only. Off keeps the game's own look.</source>
@@ -4057,12 +4251,12 @@ OoT uniquement. Désactivé garde le rendu d'origine du jeu.</translation>
         </message>
         <message>
             <location line="+1" />
-            <location line="+323" />
+            <location line="+348" />
             <source>FSR 3.1</source>
             <translation>FSR 3.1</translation>
         </message>
         <message>
-            <location line="-322" />
+            <location line="-347" />
             <source>FSR 4</source>
             <translation>FSR 4</translation>
         </message>
@@ -4077,7 +4271,7 @@ OoT uniquement. Désactivé garde le rendu d'origine du jeu.</translation>
             <translation>Agrandir à :</translation>
         </message>
         <message>
-            <location line="+5" />
+            <location line="+6" />
             <source>Picture (base at 2/3 of the output)</source>
             <translation>Image (base aux 2/3 de la sortie)</translation>
         </message>
@@ -4107,14 +4301,24 @@ OoT uniquement. Désactivé garde le rendu d'origine du jeu.</translation>
             <translation>Priorité :</translation>
         </message>
         <message>
-            <location line="+2" />
+            <location line="+3" />
             <source>What matters most to you. Cervin picks the size the game draws from it.
 Picture: the best trade. FPS: for cards that struggle. Edges only: the game draws at the output size and the upscaler only smooths it, no FPS gain.</source>
             <translation>Ce qui compte le plus pour toi. Cervin en déduit la taille que le jeu dessine.
 Image : le meilleur compromis. FPS : pour les cartes à la peine. Lissage seul : le jeu dessine à la taille de sortie et l'agrandisseur ne fait que lisser, aucun gain de FPS.</translation>
         </message>
         <message>
-            <location line="+158" />
+            <location line="+38" />
+            <source>Like the Switch 2. More FPS on weaker PCs.</source>
+            <translation>Comme la Switch 2. Plus de FPS sur les PC modestes.</translation>
+        </message>
+        <message>
+            <location line="+3" />
+            <source>Sharper. Needs about an RTX 3070 / RX 6800 (8 GB).</source>
+            <translation>Plus net. Demande environ une RTX 3070 / RX 6800 (8 Go).</translation>
+        </message>
+        <message>
+            <location line="+140" />
             <source>game's size</source>
             <translation>taille du jeu</translation>
         </message>
@@ -4138,7 +4342,102 @@ Avec FSR ou DLSS activé, OoT ignore ce réglage : c'est l'upscaler qui choisit 
             <translation>L'upscaler</translation>
         </message>
         <message>
-            <location line="+334" />
+            <location line="+236" />
+            <source>The finest picture. NVIDIA RTX cards.</source>
+            <translation>La plus belle image. Cartes NVIDIA RTX.</translation>
+        </message>
+        <message>
+            <location line="+4" />
+            <source>The game's own look and anti-aliasing.</source>
+            <translation>Le rendu du jeu, avec son propre anticrénelage.</translation>
+        </message>
+        <message>
+            <location line="+3" />
+            <source>The game's own look, without its sharpening.</source>
+            <translation>Le rendu du jeu, sans son accentuation de netteté.</translation>
+        </message>
+        <message>
+            <location line="+3" />
+            <source>Works on every card. A little less fine than DLSS.</source>
+            <translation>Marche sur toutes les cartes. Un peu moins fin que DLSS.</translation>
+        </message>
+        <message>
+            <location line="+3" />
+            <source>Radeon RX 6000 and newer. Finer than FSR 3.1.</source>
+            <translation>Radeon RX 6000 et plus récentes. Plus fin que FSR 3.1.</translation>
+        </message>
+        <message>
+            <location line="+12" />
+            <source>Your screen's size.</source>
+            <translation>La taille de ton écran.</translation>
+        </message>
+        <message>
+            <location line="+2" />
+            <source>Sharper, shrunk to fit your screen. Heavier.</source>
+            <translation>Plus fin, réduit à la taille de ton écran. Plus lourd.</translation>
+        </message>
+        <message>
+            <location line="+2" />
+            <source>Lighter, stretched to fit your screen.</source>
+            <translation>Plus léger, agrandi à la taille de ton écran.</translation>
+        </message>
+        <message>
+            <location line="+10" />
+            <source>Picture</source>
+            <translation>Image</translation>
+        </message>
+        <message>
+            <location line="+1" />
+            <source>The best trade.</source>
+            <translation>Le meilleur compromis.</translation>
+        </message>
+        <message>
+            <location line="+3" />
+            <source>Balanced</source>
+            <translation>Équilibre</translation>
+        </message>
+        <message>
+            <location line="+1" />
+            <source>A little more FPS.</source>
+            <translation>Un peu plus de FPS.</translation>
+        </message>
+        <message>
+            <location line="+3" />
+            <source>FPS</source>
+            <translation>FPS</translation>
+        </message>
+        <message>
+            <location line="+1" />
+            <source>For cards that struggle.</source>
+            <translation>Pour les cartes à la peine.</translation>
+        </message>
+        <message>
+            <location line="+3" />
+            <source>Max FPS</source>
+            <translation>FPS max</translation>
+        </message>
+        <message>
+            <location line="+1" />
+            <source>Mostly for 4K.</source>
+            <translation>Surtout pour la 4K.</translation>
+        </message>
+        <message>
+            <location line="+3" />
+            <source>Edges only</source>
+            <translation>Lissage seul</translation>
+        </message>
+        <message>
+            <location line="+1" />
+            <source>No FPS gain: only smooths the edges (DLAA).</source>
+            <translation>Aucun gain de FPS : lisse seulement les bords (DLAA).</translation>
+        </message>
+        <message>
+            <location line="+6" />
+            <source>Base %1. %2</source>
+            <translation>Base %1. %2</translation>
+        </message>
+        <message>
+            <location line="+114" />
             <source>Up to 1080p (Max Resolution off)</source>
             <translation>Jusqu'à 1080p (Résolution max. désactivée)</translation>
         </message>
@@ -4146,7 +4445,7 @@ Avec FSR ou DLSS activé, OoT ignore ce réglage : c'est l'upscaler qui choisit 
             <location line="+6" />
             <location line="+9" />
             <source>Close the game to change it.</source>
-            <translation>Fermez le jeu pour le modifier.</translation>
+            <translation>Ferme le jeu pour le modifier.</translation>
         </message>
         <message>
             <location line="-8" />
@@ -4163,17 +4462,17 @@ Avec FSR ou DLSS activé, OoT ignore ce réglage : c'est l'upscaler qui choisit 
         <message>
             <location line="+4" />
             <source>%1 (your screen)</source>
-            <translation>%1 (votre écran)</translation>
+            <translation>%1 (ton écran)</translation>
         </message>
         <message>
             <location line="+7" />
             <source>Close the game to pick other sizes.</source>
-            <translation>Fermez le jeu pour choisir d'autres tailles.</translation>
+            <translation>Ferme le jeu pour choisir d'autres tailles.</translation>
         </message>
         <message>
             <location line="+2" />
             <source>The size you see. Bigger is sharper, smaller runs faster.</source>
-            <translation>La taille que vous voyez. Plus grand = plus net, plus petit = plus rapide.</translation>
+            <translation>La taille que tu vois. Plus grand = plus net, plus petit = plus rapide.</translation>
         </message>
         <message>
             <location line="+2" />
@@ -4191,9 +4490,9 @@ Avec FSR ou DLSS activé, OoT ignore ce réglage : c'est l'upscaler qui choisit 
             <translation>%1 (portable %2)</translation>
         </message>
         <message>
-            <location line="+25" />
+            <location line="+27" />
             <source>This card can't run DLSS. Pick FSR 3.1.</source>
-            <translation>Cette carte ne peut pas utiliser DLSS. Choisissez FSR 3.1.</translation>
+            <translation>Cette carte ne peut pas utiliser DLSS. Choisis FSR 3.1.</translation>
         </message>
         <message>
             <location line="+5" />
@@ -4201,7 +4500,7 @@ Avec FSR ou DLSS activé, OoT ignore ce réglage : c'est l'upscaler qui choisit 
             <translation>jusqu'à 1080p</translation>
         </message>
         <message>
-            <location line="+2" />
+            <location line="+4" />
             <source>The game draws %1, %2 smooths the edges.</source>
             <translation>Le jeu dessine en %1, %2 lisse les contours.</translation>
         </message>
@@ -4223,7 +4522,7 @@ Avec FSR ou DLSS activé, OoT ignore ce réglage : c'est l'upscaler qui choisit 
         <message>
             <location line="+6" />
             <source>Below %1: set Upscaler to Off.</source>
-            <translation>En dessous de %1 : mettez Upscaler sur Désactivé.</translation>
+            <translation>En dessous de %1 : mets Upscaler sur Désactivé.</translation>
         </message>
         <message>
             <location line="+11" />
@@ -4238,22 +4537,22 @@ Avec FSR ou DLSS activé, OoT ignore ce réglage : c'est l'upscaler qui choisit 
         <message>
             <location line="+1" />
             <source>Pick the sizes in the main Graphics settings.</source>
-            <translation>Choisissez les tailles dans les paramètres Graphismes principaux.</translation>
+            <translation>Choisis les tailles dans les paramètres Graphismes principaux.</translation>
         </message>
         <message>
             <location line="+1" />
             <source>Dock the console to pick the sizes.</source>
-            <translation>Mettez la console en mode TV pour choisir les tailles.</translation>
+            <translation>Mets la console en mode TV pour choisir les tailles.</translation>
         </message>
         <message>
             <location line="+6" />
             <source>Close the game to change the rest.</source>
-            <translation>Fermez le jeu pour modifier le reste.</translation>
+            <translation>Ferme le jeu pour modifier le reste.</translation>
         </message>
         <message>
             <location line="+1" />
             <source>Close the game to change these.</source>
-            <translation>Fermez le jeu pour modifier ces réglages.</translation>
+            <translation>Ferme le jeu pour modifier ces réglages.</translation>
         </message>
         <message>
             <location line="+3" />
@@ -4261,9 +4560,9 @@ Avec FSR ou DLSS activé, OoT ignore ce réglage : c'est l'upscaler qui choisit 
             <translation>Les shaders seront préparés à nouveau au prochain lancement.</translation>
         </message>
         <message>
-            <location line="+16" />
+            <location line="+23" />
             <source>Cleanest when the picture is bigger than your screen. A bit soft when stretching a smaller one.</source>
-            <translation>Le plus propre quand l'image est plus grande que votre écran. Un peu doux quand on agrandit une image plus petite.</translation>
+            <translation>Le plus propre quand l'image est plus grande que ton écran. Un peu doux quand on agrandit une image plus petite.</translation>
         </message>
         <message>
             <location line="+3" />
@@ -4333,22 +4632,22 @@ Avec FSR ou DLSS activé, OoT ignore ce réglage : c'est l'upscaler qui choisit 
         <message>
             <location line="+45" />
             <source>Your picture (%1) is bigger than your screen (%2): Area looks best.</source>
-            <translation>Votre image (%1) est plus grande que votre écran (%2) : Area donne le meilleur rendu.</translation>
+            <translation>Ton image (%1) est plus grande que ton écran (%2) : Area donne le meilleur rendu.</translation>
         </message>
         <message>
             <location line="+3" />
             <source>Your picture (%1) is smaller than your screen (%2): FSR 1 looks best, ScaleForce is softer.</source>
-            <translation>Votre image (%1) est plus petite que votre écran (%2) : FSR 1 donne le meilleur rendu, ScaleForce est plus doux.</translation>
+            <translation>Ton image (%1) est plus petite que ton écran (%2) : FSR 1 donne le meilleur rendu, ScaleForce est plus doux.</translation>
         </message>
         <message>
             <location line="+4" />
             <source>Your picture matches your screen (%1): every filter looks the same.</source>
-            <translation>Votre image correspond à votre écran (%1) : tous les filtres donnent le même rendu.</translation>
+            <translation>Ton image correspond à ton écran (%1) : tous les filtres donnent le même rendu.</translation>
         </message>
         <message>
-            <location line="+6" />
+            <location line="+10" />
             <source>Auto uses %1 for you now, and switches by itself.</source>
-            <translation>Auto utilise %1 pour vous en ce moment, et change tout seul.</translation>
+            <translation>Auto utilise %1 pour toi en ce moment, et change tout seul.</translation>
         </message>
         <message>
             <location line="+1" />
@@ -4363,15 +4662,15 @@ Avec FSR ou DLSS activé, OoT ignore ce réglage : c'est l'upscaler qui choisit 
         <message>
             <location line="+1" />
             <source>Area when the picture is bigger than your screen, ScaleForce when it is smaller.</source>
-            <translation>Area quand l'image est plus grande que votre écran, ScaleForce quand elle est plus petite.</translation>
+            <translation>Area quand l'image est plus grande que ton écran, ScaleForce quand elle est plus petite.</translation>
         </message>
         <message>
-            <location line="+8" />
+            <location line="+5" />
             <source>Or pick Auto.</source>
-            <translation>Ou choisissez Auto.</translation>
+            <translation>Ou choisis Auto.</translation>
         </message>
         <message>
-            <location line="+36" />
+            <location line="+37" />
             <source>Graphics API:</source>
             <translation>API graphique :</translation>
         </message>
@@ -4380,7 +4679,7 @@ Avec FSR ou DLSS activé, OoT ignore ce réglage : c'est l'upscaler qui choisit 
             <source>How the picture is drawn.
 Vulkan is fastest. Try OpenGL only if Vulkan fails.</source>
             <translation>Comment l'image est dessinée.
-Vulkan est le plus rapide. N'essayez OpenGL que si Vulkan ne fonctionne pas.</translation>
+Vulkan est le plus rapide. N'essaie OpenGL que si Vulkan ne fonctionne pas.</translation>
         </message>
         <message>
             <location line="+1" />
@@ -4418,13 +4717,19 @@ Auto : Area quand l'image est plus grande que ton écran, ScaleForce quand elle 
         </message>
         <message>
             <location line="+12" />
-            <source>The letters are NVIDIA's names. What the picked one is for shows under the choice.
+            <source>Which DLSS model rebuilds the picture.
 Automatic is the safe choice.</source>
-            <translation>Les lettres sont les noms de NVIDIA. À quoi sert le modèle choisi s'affiche sous le choix.
+            <translation>Le modèle DLSS qui reconstruit l'image.
 Automatique est le choix sûr.</translation>
         </message>
         <message>
-            <location line="+2" />
+            <source>The letters are NVIDIA's names. What the picked one is for shows under the choice.
+Automatic is the safe choice.</source>
+            <translation type="vanished">Les lettres sont les noms de NVIDIA. À quoi sert le modèle choisi s'affiche sous le choix.
+Automatique est le choix sûr.</translation>
+        </message>
+        <message>
+            <location line="+1" />
             <source>DLSS priority:</source>
             <translation>Priorité DLSS :</translation>
         </message>
@@ -4448,7 +4753,7 @@ Auto: Area when the picture is bigger than your screen, FSR 1 when it is smaller
 Auto : Area quand l'image est plus grande que votre écran, FSR 1 quand elle est plus petite.</translation>
         </message>
         <message>
-            <location line="-12" />
+            <location line="-11" />
             <source>Use the game's own DLSS</source>
             <translation>Utiliser le DLSS du jeu</translation>
         </message>
@@ -4481,7 +4786,7 @@ Trop élevé donne un aspect granuleux. Utilisé aussi par les filtres de fenêt
             <source>NVIDIA's upscaler, RTX cards only.
 Needs NVIDIA's files: use the download button.</source>
             <translation>L'upscaler de NVIDIA, cartes RTX uniquement.
-Nécessite les fichiers de NVIDIA : utilisez le bouton de téléchargement.</translation>
+Nécessite les fichiers de NVIDIA : utilise le bouton de téléchargement.</translation>
         </message>
         <message>
             <location line="+1" />
@@ -4505,7 +4810,7 @@ Native only smooths edges, no upscaling.</source>
 Natif lisse seulement les contours, sans agrandissement.</translation>
         </message>
         <message>
-            <location line="+7" />
+            <location line="+6" />
             <source>DLSS jitter</source>
             <translation>Jitter DLSS</translation>
         </message>
@@ -4514,7 +4819,7 @@ Natif lisse seulement les contours, sans agrandissement.</translation>
             <source>Sharper fine detail with DLSS.
 Turn off if the picture shakes.</source>
             <translation>Détails fins plus nets avec DLSS.
-Désactivez-le si l'image tremble.</translation>
+Désactive-le si l'image tremble.</translation>
         </message>
         <message>
             <location line="+1" />
@@ -4632,6 +4937,11 @@ Exclusif peut réduire un peu la latence.</translation>
             <source>Advanced Graphics Settings</source>
             <translation>Paramètres Vidéo Avancés</translation>
         </message>
+        <message>
+            <location filename="../../src/yuzu/configuration/configure_graphics_advanced.cpp" line="+78" />
+            <source>Each setting says what it does and what you gain or lose in game.</source>
+            <translation>Chaque réglage dit ce qu'il fait et ce que tu gagnes ou perds en jeu.</translation>
+        </message>
     </context>
     <context>
         <name>ConfigureGraphicsExtensions</name>
@@ -4692,7 +5002,7 @@ Exclusif peut réduire un peu la latence.</translation>
         <message>
             <location line="+8" />
             <source>Double-click on a binding to change it.</source>
-            <translation>Double-cliquez sur un raccourci pour le changer.</translation>
+            <translation>Double-clique sur un raccourci pour le changer.</translation>
         </message>
         <message>
             <location line="+20" />
@@ -4750,7 +5060,7 @@ Exclusif peut réduire un peu la latence.</translation>
         <message>
             <location line="+1" />
             <source>An error occurred. Please report this issue on github.</source>
-            <translation>Une erreur s'est produite. Veuillez signaler ce problème sur GitHub.</translation>
+            <translation>Une erreur s'est produite. Signale ce problème sur GitHub.</translation>
         </message>
         <message>
             <location line="+40" />
@@ -5129,7 +5439,7 @@ Exclusif peut réduire un peu la latence.</translation>
         <message>
             <location line="+7" />
             <source>Allows unlimited uses of the same Amiibo in games that would otherwise limit you to one use.</source>
-            <translation>Permet des utilisations illimitées du même Amiibo dans des jeux qui vous limitent à une seule utilisation.</translation>
+            <translation>Permet des utilisations illimitées du même Amiibo dans des jeux qui te limitent à une seule utilisation.</translation>
         </message>
         <message>
             <location line="+9" />
@@ -5527,7 +5837,7 @@ Exclusif peut réduire un peu la latence.</translation>
             <location line="-53" />
             <location line="+53" />
             <source>Choose a value between 0% and 100%</source>
-            <translation>Choisissez une valeur entre 0% et 100%</translation>
+            <translation>Choisis une valeur entre 0% et 100%</translation>
         </message>
         <message>
             <location line="-41" />
@@ -5553,8 +5863,8 @@ Exclusif peut réduire un peu la latence.</translation>
             <location line="+1" />
             <source>After pressing OK, first move your joystick horizontally, and then vertically.
 To invert the axes, first move your joystick vertically, and then horizontally.</source>
-            <translation>Après avoir appuyé sur OK, bougez d'abord votre joystick horizontalement, puis verticalement.
-Pour inverser les axes, bougez d'abord votre joystick verticalement, puis horizontalement.</translation>
+            <translation>Après avoir appuyé sur OK, bouge d'abord ton joystick horizontalement, puis verticalement.
+Pour inverser les axes, bouge d'abord ton joystick verticalement, puis horizontalement.</translation>
         </message>
         <message>
             <location line="+68" />
@@ -5652,7 +5962,7 @@ Pour inverser les axes, bougez d'abord votre joystick verticalement, puis horizo
         <message>
             <location line="+101" />
             <source>Shake!</source>
-            <translation>Secouez !</translation>
+            <translation>Secoue !</translation>
         </message>
         <message>
             <location line="+2" />
@@ -5667,7 +5977,7 @@ Pour inverser les axes, bougez d'abord votre joystick verticalement, puis horizo
         <message>
             <location line="+0" />
             <source>Enter a profile name:</source>
-            <translation>Entrez un nom de profil :</translation>
+            <translation>Entre un nom de profil :</translation>
         </message>
         <message>
             <location line="+8" />
@@ -5744,7 +6054,7 @@ Pour inverser les axes, bougez d'abord votre joystick verticalement, puis horizo
         <message>
             <location line="+2" />
             <source>Choose the microphone used by games. Start a test and speak to check the input level.</source>
-            <translation>Choisissez le microphone utilisé par les jeux. Lancez un test et parlez pour vérifier le niveau d'entrée.</translation>
+            <translation>Choisis le microphone utilisé par les jeux. Lance un test et parle pour vérifier le niveau d'entrée.</translation>
         </message>
         <message>
             <location line="+7" />
@@ -5786,7 +6096,7 @@ Pour inverser les axes, bougez d'abord votre joystick verticalement, puis horizo
         <message>
             <location line="+26" />
             <source>Stop emulation to change the microphone input device or volume.</source>
-            <translation>Arrêtez l'émulation pour changer le périphérique ou le volume du microphone.</translation>
+            <translation>Arrête l'émulation pour changer le périphérique ou le volume du microphone.</translation>
         </message>
         <message>
             <location line="+16" />
@@ -5811,12 +6121,12 @@ Pour inverser les axes, bougez d'abord votre joystick verticalement, puis horizo
         <message>
             <location line="+6" />
             <source>Microphone input is unavailable. Choose an available input device.</source>
-            <translation>L'entrée microphone est indisponible. Choisissez un périphérique d'entrée disponible.</translation>
+            <translation>L'entrée microphone est indisponible. Choisis un périphérique d'entrée disponible.</translation>
         </message>
         <message>
             <location line="+12" />
             <source>Unable to open the microphone. Check the device and microphone permissions in your operating system.</source>
-            <translation>Impossible d'ouvrir le microphone. Vérifiez le périphérique et les autorisations du microphone dans votre système d'exploitation.</translation>
+            <translation>Impossible d'ouvrir le microphone. Vérifie le périphérique et les autorisations du microphone dans ton système d'exploitation.</translation>
         </message>
         <message>
             <location line="+4" />
@@ -5826,7 +6136,7 @@ Pour inverser les axes, bougez d'abord votre joystick verticalement, puis horizo
         <message>
             <location line="+1" />
             <source>Listening. Speak into your microphone.</source>
-            <translation>À l'écoute. Parlez dans votre microphone.</translation>
+            <translation>À l'écoute. Parle dans ton microphone.</translation>
         </message>
     </context>
     <context>
@@ -5871,7 +6181,7 @@ Pour inverser les axes, bougez d'abord votre joystick verticalement, puis horizo
         <message>
             <location line="+6" />
             <source>You may use any Cemuhook compatible UDP input source to provide motion and touch input.</source>
-            <translation>Vous pouvez utiliser n'importe quelle source d'entrée UDP compatible Cemuhook pour fournir le contrôle par mouvement et l'entrée tactile</translation>
+            <translation>Tu peux utiliser n'importe quelle source d'entrée UDP compatible Cemuhook pour fournir le contrôle par mouvement et l'entrée tactile</translation>
         </message>
         <message>
             <location line="+43" />
@@ -5967,12 +6277,12 @@ Pour inverser les axes, bougez d'abord votre joystick verticalement, puis horizo
         <message>
             <location line="+1" />
             <source>Could not receive valid data from the server.&lt;br&gt;Please verify that the server is set up correctly and the address and port are correct.</source>
-            <translation>Impossible de recevoir des données valides du serveur.&lt;br&gt;Veuillez vérifier que le serveur est correctement configuré et que l'adresse et le port sont corrects.</translation>
+            <translation>Impossible de recevoir des données valides du serveur.&lt;br&gt;Vérifie que le serveur est correctement configuré et que l'adresse et le port sont corrects.</translation>
         </message>
         <message>
             <location line="+28" />
             <source>UDP Test or calibration configuration is in progress.&lt;br&gt;Please wait for them to finish.</source>
-            <translation>Le test UDP ou la configuration de l'étalonnage est en cours.&lt;br&gt;Veuillez attendre qu'ils se terminent.</translation>
+            <translation>Le test UDP ou la configuration de l'étalonnage est en cours.&lt;br&gt;Attends qu'ils se terminent.</translation>
         </message>
     </context>
     <context>
@@ -6071,7 +6381,7 @@ Les valeurs actuelles sont respectivement de %1% et %2%.</translation>
         <message>
             <location line="+1" />
             <source>Real mouse input and mouse panning are incompatible. Please disable the emulated mouse in input advanced settings to allow mouse panning.</source>
-            <translation>La saisie réelle de la souris et le panoramique de la souris sont incompatibles. Veuillez désactiver la souris émulée dans les paramètres avancés d'entrée pour permettre le panoramique de la souris.</translation>
+            <translation>La saisie réelle de la souris et le panoramique de la souris sont incompatibles. Désactive la souris émulée dans les paramètres avancés d'entrée pour permettre le panoramique de la souris.</translation>
         </message>
     </context>
     <context>
@@ -6445,12 +6755,12 @@ Les valeurs actuelles sont respectivement de %1% et %2%.</translation>
         <message>
             <location line="+16" />
             <source>Game settings are now merged with the main Settings. Change them there.</source>
-            <translation>Les paramètres du jeu sont désormais fusionnés avec les Paramètres principaux. Modifiez-les là-bas.</translation>
+            <translation>Les paramètres du jeu sont désormais fusionnés avec les Paramètres principaux. Modifie-les là-bas.</translation>
         </message>
         <message>
             <location line="+158" />
             <source>Enter game name...</source>
-            <translation>Saisissez le nom du jeu...</translation>
+            <translation>Saisis le nom du jeu...</translation>
         </message>
         <message>
             <location line="+2" />
@@ -6475,12 +6785,12 @@ Les valeurs actuelles sont respectivement de %1% et %2%.</translation>
         <message>
             <location line="+1" />
             <source>Select a PNG, JPEG, BMP or WebP image up to 8 MiB, 8192 pixels per side and 16 megapixels.</source>
-            <translation>Choisissez une image PNG, JPEG, BMP ou WebP de 8 Mio maximum, 8192 pixels par côté et 16 mégapixels.</translation>
+            <translation>Choisis une image PNG, JPEG, BMP ou WebP de 8 Mio maximum, 8192 pixels par côté et 16 mégapixels.</translation>
         </message>
         <message>
             <location line="+27" />
             <source>Please enter a game name first so the icon can be detected.</source>
-            <translation>Saisissez d'abord un nom de jeu pour que l'icône puisse être détectée.</translation>
+            <translation>Saisis d'abord un nom de jeu pour que l'icône puisse être détectée.</translation>
         </message>
         <message>
             <location line="+5" />
@@ -6501,7 +6811,7 @@ Les valeurs actuelles sont respectivement de %1% et %2%.</translation>
         <message>
             <location line="-21" />
             <source>Stop emulation before changing NUP metadata.</source>
-            <translation>Arrêtez l'émulation avant de modifier les métadonnées NUP.</translation>
+            <translation>Arrête l'émulation avant de modifier les métadonnées NUP.</translation>
         </message>
         <message>
             <location line="+22" />
@@ -6565,7 +6875,7 @@ Les valeurs actuelles sont respectivement de %1% et %2%.</translation>
 Check the log for details.</source>
             <translation>Impossible d'installer les mods suivants :
 	%1
-Consultez le journal pour plus de détails.</translation>
+Consulte le journal pour plus de détails.</translation>
         </message>
         <message>
             <location line="+19" />
@@ -6598,7 +6908,7 @@ Pour supprimer des mises à jour installées dans la NAND, faites un clic droit 
             <location line="+6" />
             <source>You are about to delete the following installed mods:
 </source>
-            <translation>Vous êtes sur le point de supprimer les mods installés suivants :
+            <translation>Tu es sur le point de supprimer les mods installés suivants :
 </translation>
         </message>
         <message>
@@ -6606,7 +6916,7 @@ Pour supprimer des mises à jour installées dans la NAND, faites un clic droit 
             <source>
 Once deleted, these can NOT be recovered. Are you 100% sure you want to delete them?</source>
             <translation>
-Une fois supprimés, ils ne pourront PAS être récupérés. Êtes-vous absolument sûr de vouloir les supprimer ?</translation>
+Une fois supprimés, ils ne pourront PAS être récupérés. Veux-tu vraiment les supprimer ?</translation>
         </message>
         <message>
             <location line="+5" />
@@ -6734,17 +7044,17 @@ Une fois supprimés, ils ne pourront PAS être récupérés. Êtes-vous absolume
         <message>
             <location line="+29" />
             <source>No effects in use. Pick a preset and press Apply, or add effects one by one.</source>
-            <translation>Aucun effet utilisé. Choisissez un preset et appuyez sur Appliquer, ou ajoutez des effets un par un.</translation>
+            <translation>Aucun effet utilisé. Choisis un preset et appuie sur Appliquer, ou ajoute des effets un par un.</translation>
         </message>
         <message>
             <location line="+4" />
             <source>Custom chain. Pick a preset above and press Apply to replace it.</source>
-            <translation>Chaîne personnalisée. Choisissez un preset ci-dessus et appuyez sur Appliquer pour la remplacer.</translation>
+            <translation>Chaîne personnalisée. Choisis un preset ci-dessus et appuie sur Appliquer pour la remplacer.</translation>
         </message>
         <message>
             <location line="+6" />
             <source>Active preset: %1 (modified). Press Reset Values to go back to how it ships.</source>
-            <translation>Preset actif : %1 (modifié). Appuyez sur Réinitialiser les valeurs pour revenir à l'original.</translation>
+            <translation>Preset actif : %1 (modifié). Appuie sur Réinitialiser les valeurs pour revenir à l'original.</translation>
         </message>
         <message>
             <location line="+5" />
@@ -6781,7 +7091,7 @@ Une fois supprimés, ils ne pourront PAS être récupérés. Êtes-vous absolume
         <message>
             <location line="+41" />
             <source>No usable ReShade FX effects were found. Place .fx files in the post_shaders folder.</source>
-            <translation>Aucun effet ReShade FX utilisable n'a été trouvé. Placez des fichiers .fx dans le dossier post_shaders.</translation>
+            <translation>Aucun effet ReShade FX utilisable n'a été trouvé. Place des fichiers .fx dans le dossier post_shaders.</translation>
         </message>
     </context>
     <context>
@@ -6920,7 +7230,7 @@ UUID : %2</translation>
         <message>
             <location line="+12" />
             <source>To use Ring-Con, configure player 1 as right Joy-Con (both physical and emulated), and player 2 as left Joy-Con (left physical and dual emulated) before starting the game.</source>
-            <translation>Pour utiliser le Ring-Con, configurez le joueur 1 comme Joy-Con droit (à la fois physique et émulé), et le joueur 2 comme Joy-Con gauche (gauche physique et double émulé) avant de démarrer le jeu.</translation>
+            <translation>Pour utiliser le Ring-Con, configure le joueur 1 comme Joy-Con droit (à la fois physique et émulé), et le joueur 2 comme Joy-Con gauche (gauche physique et double émulé) avant de démarrer le jeu.</translation>
         </message>
         <message>
             <location line="+26" />
@@ -7082,12 +7392,12 @@ UUID : %2</translation>
         <message>
             <location line="+6" />
             <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Reads controller input from scripts in the same format as TAS-nx scripts.&lt;br/&gt;For a more detailed explanation, please consult the user handbook.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-            <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Lit les entrées de manette depuis des scripts au même format que les scripts TAS-nx.&lt;br/&gt;Pour une explication plus détaillée, consultez le manuel d'utilisation.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+            <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Lit les entrées de manette depuis des scripts au même format que les scripts TAS-nx.&lt;br/&gt;Pour une explication plus détaillée, consulte le manuel d'utilisation.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
         </message>
         <message>
             <location line="+10" />
             <source>To check which hotkeys control the playback/recording, please refer to the Hotkey settings (Configure -&gt; General -&gt; Hotkeys).</source>
-            <translation>Pour vérifier quelles touches de raccourci contrôlent la lecture/l'enregistrement, veuillez vous reporter aux paramètres des touches de raccourci (Configurer -&gt; Général -&gt; Touches de raccourci).</translation>
+            <translation>Pour vérifier quelles touches de raccourci contrôlent la lecture/l'enregistrement, reporte-toi aux paramètres des touches de raccourci (Configurer -&gt; Général -&gt; Touches de raccourci).</translation>
         </message>
         <message>
             <location line="+10" />
@@ -7179,8 +7489,8 @@ UUID : %2</translation>
             <location line="+18" />
             <source>Click the bottom area to add a point, then press a button to bind.
 Drag points to change position, or double-click table cells to edit values.</source>
-            <translation>Cliquez sur la zone inférieure pour ajouter un point, puis appuyez sur un bouton pour lier.
-Faites glisser les points pour modifier la position ou double-cliquez sur les cellules du tableau pour modifier les valeurs.</translation>
+            <translation>Clique sur la zone inférieure pour ajouter un point, puis appuie sur un bouton pour lier.
+Fais glisser les points pour modifier la position ou double-clique sur les cellules du tableau pour modifier les valeurs.</translation>
         </message>
         <message>
             <location line="+24" />
@@ -7212,7 +7522,7 @@ Faites glisser les points pour modifier la position ou double-cliquez sur les ce
         <message>
             <location line="+0" />
             <source>Enter the name for the new profile.</source>
-            <translation>Saisissez le nom du nouveau profil.</translation>
+            <translation>Saisis le nom du nouveau profil.</translation>
         </message>
         <message>
             <location line="+11" />
@@ -7237,7 +7547,7 @@ Faites glisser les points pour modifier la position ou double-cliquez sur les ce
         <message>
             <location line="+12" />
             <source>[press key]</source>
-            <translation>[appuyez sur une touche]</translation>
+            <translation>[appuie sur une touche]</translation>
         </message>
     </context>
     <context>
@@ -7250,7 +7560,7 @@ Faites glisser les points pour modifier la position ou double-cliquez sur les ce
         <message>
             <location line="+12" />
             <source>Warning: The settings in this page affect the inner workings of Cervin's emulated touchscreen. Changing them may result in undesirable behavior, such as the touchscreen partially or not working. You should only use this page if you know what you are doing.</source>
-            <translation>Attention : les paramètres de cette page modifient le fonctionnement interne de l'écran tactile émulé de Cervin. Les changer peut provoquer un comportement indésirable, comme un écran tactile qui fonctionne partiellement ou plus du tout. N'utilisez cette page que si vous savez ce que vous faites.</translation>
+            <translation>Attention : les paramètres de cette page modifient le fonctionnement interne de l'écran tactile émulé de Cervin. Les changer peut provoquer un comportement indésirable, comme un écran tactile qui fonctionne partiellement ou plus du tout. N'utilise cette page que si tu sais ce que tu fais.</translation>
         </message>
         <message>
             <location line="+26" />
@@ -7342,7 +7652,7 @@ Faites glisser les points pour modifier la position ou double-cliquez sur les ce
         <message>
             <location line="+8" />
             <source>Note: Changing language will apply your configuration.</source>
-            <translation>Note : Changer la langue appliquera votre configuration.</translation>
+            <translation>Note : Changer la langue appliquera ta configuration.</translation>
         </message>
         <message>
             <location line="+12" />
@@ -7427,7 +7737,7 @@ Faites glisser les points pour modifier la position ou double-cliquez sur les ce
         <message>
             <location filename="../../src/yuzu/configuration/configure_ui.cpp" line="+86" />
             <source>Select Screenshots Path...</source>
-            <translation>Sélectionnez le chemin du dossier des captures d'écran...</translation>
+            <translation>Choisis le chemin du dossier des captures d'écran...</translation>
         </message>
         <message>
             <location line="+95" />
@@ -7456,7 +7766,7 @@ Faites glisser les points pour modifier la position ou double-cliquez sur les ce
         <message>
             <location line="+9" />
             <source>Press any controller button to vibrate the controller.</source>
-            <translation>Appuyez sur n'importe quel bouton du contrôleur pour faire vibrer le contrôleur.</translation>
+            <translation>Appuie sur n'importe quel bouton du contrôleur pour faire vibrer le contrôleur.</translation>
         </message>
         <message>
             <location line="+7" />
@@ -7659,7 +7969,7 @@ Faites glisser les points pour modifier la position ou double-cliquez sur les ce
         <message>
             <location line="+48" />
             <source>Open with your system file manager</source>
-            <translation>Ouvrir avec votre gestionnaire de fichiers système</translation>
+            <translation>Ouvrir avec ton gestionnaire de fichiers système</translation>
         </message>
         <message>
             <location line="+36" />
@@ -7781,7 +8091,7 @@ Faites glisser les points pour modifier la position ou double-cliquez sur les ce
         <message>
             <location line="+2" />
             <source>Username is already in use or not valid. Please choose another.</source>
-            <translation>Nom d'utilisateur déjà utilisé ou non valide. Veuillez en choisir un autre.</translation>
+            <translation>Nom d'utilisateur déjà utilisé ou non valide. Choisis-en un autre.</translation>
         </message>
         <message>
             <location line="+2" />
@@ -7796,17 +8106,17 @@ Faites glisser les points pour modifier la position ou double-cliquez sur les ce
         <message>
             <location line="+1" />
             <source>You must choose a Preferred Game to host a room. If you do not have any games in your game list yet, add a game folder by clicking on the plus icon in the game list.</source>
-            <translation>Vous devez choisir un jeu préféré pour héberger un salon. Si vous n'avez pas encore de jeux dans votre liste, ajoutez un dossier de jeux en cliquant sur l'icône plus dans la liste des jeux.</translation>
+            <translation>Tu dois choisir un jeu préféré pour héberger un salon. Si tu n'as pas encore de jeux dans ta liste, ajoute un dossier de jeux en cliquant sur l'icône plus dans la liste des jeux.</translation>
         </message>
         <message>
             <location line="+4" />
             <source>Unable to find an internet connection. Check your internet settings.</source>
-            <translation>Impossible de trouver une connexion Internet. Vérifiez vos paramètres Internet.</translation>
+            <translation>Impossible de trouver une connexion Internet. Vérifie tes paramètres Internet.</translation>
         </message>
         <message>
             <location line="+2" />
             <source>Unable to connect to the host. Verify that the connection settings are correct. If you still cannot connect, contact the room host and verify that the host is properly configured with the external port forwarded.</source>
-            <translation>Impossible de se connecter au salon. Vérifiez que les paramètres de connexion sont corrects. Si vous ne pouvez toujours pas vous connecter, contactez l'hôte du salon et vérifiez que l'hôte est correctement configuré avec le port externe redirigé.</translation>
+            <translation>Impossible de se connecter au salon. Vérifie que les paramètres de connexion sont corrects. Si tu ne peux toujours pas te connecter, contacte l'hôte du salon et vérifie que l'hôte est correctement configuré avec le port externe redirigé.</translation>
         </message>
         <message>
             <location line="+4" />
@@ -7816,17 +8126,17 @@ Faites glisser les points pour modifier la position ou double-cliquez sur les ce
         <message>
             <location line="+2" />
             <source>Creating a room failed. Please retry. Restarting Cervin might be necessary.</source>
-            <translation>La création du salon a échoué. Réessayez. Il peut être nécessaire de redémarrer Cervin.</translation>
+            <translation>La création du salon a échoué. Réessaie. Il peut être nécessaire de redémarrer Cervin.</translation>
         </message>
         <message>
             <location line="+5" />
             <source>Version mismatch! Please update to the latest version of Cervin. If the problem persists, contact the room host and ask them to update the server.</source>
-            <translation>Versions incompatibles ! Mettez Cervin à jour vers la dernière version. Si le problème persiste, contactez l'hôte du salon et demandez-lui de mettre à jour le serveur.</translation>
+            <translation>Versions incompatibles ! Mets Cervin à jour vers la dernière version. Si le problème persiste, contacte l'hôte du salon et demande-lui de mettre à jour le serveur.</translation>
         </message>
         <message>
             <location line="-3" />
             <source>The host of the room has banned you. Speak with the host to unban you or try a different room.</source>
-            <translation>L'hôte du salon vous a banni. Parlez avec l'hôte pour être débanni ou essayez un autre salon.</translation>
+            <translation>L'hôte du salon t'a banni. Parle avec l'hôte pour être débanni ou essaie un autre salon.</translation>
         </message>
         <message>
             <location line="+5" />
@@ -7836,33 +8146,33 @@ Faites glisser les points pour modifier la position ou double-cliquez sur les ce
         <message>
             <location line="+1" />
             <source>An unknown error occurred. If this error continues to occur, please open an issue</source>
-            <translation>Une erreur inconnue est survenue. Si cette erreur persiste, veuillez ouvrir un ticket.</translation>
+            <translation>Une erreur inconnue est survenue. Si cette erreur persiste, ouvre un ticket.</translation>
         </message>
         <message>
             <location line="+3" />
             <source>Connection to room lost. Try to reconnect.</source>
-            <translation>Connexion au salon perdue. Essayez de vous reconnecter.</translation>
+            <translation>Connexion au salon perdue. Essaie de te reconnecter.</translation>
         </message>
         <message>
             <location line="+2" />
             <source>You have been kicked by the room host.</source>
-            <translation>Vous avez été expulsé par l'hôte du salon.</translation>
+            <translation>Tu as été expulsé par l'hôte du salon.</translation>
         </message>
         <message>
             <location line="+2" />
             <source>IP address is already in use. Please choose another.</source>
-            <translation>L'adresse IP est déjà utilisée. Veuillez en choisir une autre.</translation>
+            <translation>L'adresse IP est déjà utilisée. Choisis-en une autre.</translation>
         </message>
         <message>
             <location line="+2" />
             <source>You do not have enough permission to perform this action.</source>
-            <translation>Vous n'avez pas suffisamment de permissions pour effectuer cette action.</translation>
+            <translation>Tu n'as pas assez de permissions pour effectuer cette action.</translation>
         </message>
         <message>
             <location line="+1" />
             <source>The user you are trying to kick/ban could not be found.
 They may have left the room.</source>
-            <translation>L'utilisateur que vous essayez d'expulser/banir n'a pas pu être trouvé.
+            <translation>L'utilisateur que tu essaies d'expulser/bannir n'a pas pu être trouvé.
 Il se peut qu'il ait quitté le salon.</translation>
         </message>
         <message>
@@ -7870,7 +8180,7 @@ Il se peut qu'il ait quitté le salon.</translation>
             <source>No valid network interface is selected.
 Please go to Configure -&gt; System -&gt; Network and make a selection.</source>
             <translation>Aucune interface réseau valide n'est sélectionnée.
-Veuillez aller dans Configurer -&gt; Système -&gt; Réseau puis en choisir une.</translation>
+Va dans Configurer -&gt; Système -&gt; Réseau puis en choisir une.</translation>
         </message>
         <message>
             <location line="+11" />
@@ -8124,7 +8434,7 @@ Veuillez aller dans Configurer -&gt; Système -&gt; Réseau puis en choisir une.
         <message>
             <location line="-27" />
             <source>Your GPU may not support OpenGL, or you do not have the latest graphics driver.</source>
-            <translation>Votre GPU peut ne pas prendre en charge OpenGL, ou vous n'avez pas les derniers pilotes graphiques.</translation>
+            <translation>Ton GPU ne prend peut-être pas en charge OpenGL, ou tu n'as pas les derniers pilotes graphiques.</translation>
         </message>
         <message>
             <location line="+9" />
@@ -8134,12 +8444,12 @@ Veuillez aller dans Configurer -&gt; Système -&gt; Réseau puis en choisir une.
         <message>
             <location line="+1" />
             <source>Your GPU may not support OpenGL 4.6, or you do not have the latest graphics driver.&lt;br&gt;&lt;br&gt;GL Renderer:&lt;br&gt;%1</source>
-            <translation>Votre GPU peut ne pas prendre en charge OpenGL 4.6 ou vous ne disposez pas du dernier pilote graphique: %1</translation>
+            <translation>Ton GPU ne prend peut-être pas en charge OpenGL 4.6, ou tu ne disposes pas du dernier pilote graphique: %1</translation>
         </message>
         <message>
             <location line="+8" />
             <source>Your GPU may not support one or more required OpenGL extensions. Please ensure you have the latest graphics driver.&lt;br&gt;&lt;br&gt;GL Renderer:&lt;br&gt;%1&lt;br&gt;&lt;br&gt;Unsupported extensions:&lt;br&gt;%2</source>
-            <translation>Votre GPU peut ne pas prendre en charge une ou plusieurs extensions OpenGL requises. Veuillez vous assurer que vous disposez du dernier pilote graphique.&lt;br&gt;&lt;br&gt;GL Renderer :&lt;br&gt;%1&lt;br&gt;&lt;br&gt;Extensions non prises en charge :&lt;br&gt;%2</translation>
+            <translation>Ton GPU ne prend peut-être pas en charge une ou plusieurs extensions OpenGL requises. Vérifie que tu as le dernier pilote graphique.&lt;br&gt;&lt;br&gt;GL Renderer :&lt;br&gt;%1&lt;br&gt;&lt;br&gt;Extensions non prises en charge :&lt;br&gt;%2</translation>
         </message>
         <message>
             <location line="+10" />
@@ -8512,7 +8822,7 @@ Veuillez aller dans Configurer -&gt; Système -&gt; Réseau puis en choisir une.
         <message>
             <location filename="../../src/yuzu/game/game_list.cpp" line="+142" />
             <source>Double-click to add a new folder to the game list</source>
-            <translation>Double-cliquez pour ajouter un nouveau dossier à la liste de jeux</translation>
+            <translation>Double-clique pour ajouter un nouveau dossier à la liste de jeux</translation>
         </message>
     </context>
     <context>
@@ -8533,7 +8843,7 @@ Veuillez aller dans Configurer -&gt; Système -&gt; Réseau puis en choisir une.
         <message>
             <location line="+1" />
             <source>Enter pattern to filter</source>
-            <translation>Entrez un motif à filtrer</translation>
+            <translation>Entre un motif à filtrer</translation>
         </message>
     </context>
     <context>
@@ -8588,7 +8898,7 @@ Veuillez aller dans Configurer -&gt; Système -&gt; Réseau puis en choisir une.
             <translation>Sauvegardes</translation>
         </message>
         <message>
-            <location line="+122" />
+            <location line="+125" />
             <source>Show its quick settings</source>
             <translation>Voir ses réglages rapides</translation>
         </message>
@@ -8830,7 +9140,7 @@ Veuillez aller dans Configurer -&gt; Système -&gt; Réseau puis en choisir une.
             <location line="+1" />
             <source>Failed to announce the room to the public lobby. In order to host a room publicly, you must have a valid Cervin account configured in Emulation -&gt; Configure -&gt; Web. If you do not want to publish a room in the public lobby, then select Unlisted instead.
 Debug Message: </source>
-            <translation>Impossible d'annoncer le salon dans le hall public. Pour héberger un salon public, vous devez avoir un compte Cervin valide configuré dans Émulation -&gt; Configurer -&gt; Web. Si vous ne voulez pas publier le salon dans le hall public, choisissez plutôt Non répertorié.
+            <translation>Impossible d'annoncer le salon dans le hall public. Pour héberger un salon public, tu dois avoir un compte Cervin valide configuré dans Émulation -&gt; Configurer -&gt; Web. Si tu ne veux pas publier le salon dans le hall public, choisis plutôt Non répertorié.
 Message de débogage : </translation>
         </message>
     </context>
@@ -9043,24 +9353,24 @@ Message de débogage : </translation>
         <message>
             <location filename="../../src/yuzu/nup_dialogs.cpp" line="+156" />
             <source>Drop an image here or click to browse</source>
-            <translation>Déposez une image ici ou cliquez pour parcourir</translation>
+            <translation>Dépose une image ici ou clique pour parcourir</translation>
         </message>
         <message>
             <location line="+20" />
             <source>Drop to replace</source>
-            <translation>Déposez pour remplacer</translation>
+            <translation>Dépose pour remplacer</translation>
         </message>
         <message>
             <location line="+13" />
             <source>Release to use this image</source>
-            <translation>Relâchez pour utiliser cette image</translation>
+            <translation>Relâche pour utiliser cette image</translation>
         </message>
         <message>
             <location line="+1" />
             <source>Drop an icon here
 or click to browse</source>
-            <translation>Déposez une icône ici
-ou cliquez pour parcourir</translation>
+            <translation>Dépose une icône ici
+ou clique pour parcourir</translation>
         </message>
     </context>
     <context>
@@ -9074,7 +9384,7 @@ ou cliquez pour parcourir</translation>
         <message>
             <location line="-150" />
             <source>Please enter a game name first so the icon can be found.</source>
-            <translation>Saisissez d'abord un nom de jeu pour que l'icône puisse être trouvée.</translation>
+            <translation>Saisis d'abord un nom de jeu pour que l'icône puisse être trouvée.</translation>
         </message>
         <message>
             <location line="+22" />
@@ -9084,7 +9394,7 @@ ou cliquez pour parcourir</translation>
         <message>
             <location line="+3" />
             <source>SteamGridDB has several icons for this game. Pick one:</source>
-            <translation>SteamGridDB propose plusieurs icônes pour ce jeu. Choisissez-en une :</translation>
+            <translation>SteamGridDB propose plusieurs icônes pour ce jeu. Choisis-en une :</translation>
         </message>
         <message>
             <location line="+34" />
@@ -9099,7 +9409,7 @@ ou cliquez pour parcourir</translation>
         <message>
             <location line="+3" />
             <source>Create a free key on the &lt;a href="%1"&gt;SteamGridDB API preferences&lt;/a&gt; page.</source>
-            <translation>Créez une clé gratuite sur la page &lt;a href="%1"&gt;préférences API de SteamGridDB&lt;/a&gt;.</translation>
+            <translation>Crée une clé gratuite sur la page &lt;a href="%1"&gt;préférences API de SteamGridDB&lt;/a&gt;.</translation>
         </message>
         <message>
             <location line="+4" />
@@ -9114,17 +9424,17 @@ ou cliquez pour parcourir</translation>
         <message>
             <location line="+47" />
             <source>No matching icon was found on switchiconshowdown.com or SteamGridDB. Try a different game name or choose an icon file.</source>
-            <translation>Aucune icône correspondante n'a été trouvée sur switchiconshowdown.com ni sur SteamGridDB. Essayez un autre nom de jeu ou choisissez un fichier d'icône.</translation>
+            <translation>Aucune icône correspondante n'a été trouvée sur switchiconshowdown.com ni sur SteamGridDB. Essaie un autre nom de jeu ou choisis un fichier d'icône.</translation>
         </message>
         <message>
             <location line="+10" />
             <source>Searching for an icon took longer than %1 seconds and was stopped. Check your connection and try again.</source>
-            <translation>La recherche d'icône a dépassé %1 secondes et a été arrêtée. Vérifiez votre connexion et réessayez.</translation>
+            <translation>La recherche d'icône a dépassé %1 secondes et a été arrêtée. Vérifie ta connexion et réessaie.</translation>
         </message>
         <message>
             <location line="+5" />
             <source>Could not reach the icon sources (%1). Check your connection and try again.</source>
-            <translation>Impossible de joindre les sources d'icônes (%1). Vérifiez votre connexion et réessayez.</translation>
+            <translation>Impossible de joindre les sources d'icônes (%1). Vérifie ta connexion et réessaie.</translation>
         </message>
         <message>
             <location line="+6" />
@@ -9137,7 +9447,7 @@ ou cliquez pour parcourir</translation>
         <message>
             <location filename="../../src/yuzu/install_dialog.cpp" line="+31" />
             <source>Please confirm these are the files you wish to install.</source>
-            <translation>Veuillez confirmer que ce sont les fichiers que vous souhaitez installer.</translation>
+            <translation>Confirme que ce sont bien les fichiers que tu veux installer.</translation>
         </message>
         <message>
             <location line="+3" />
@@ -9773,7 +10083,7 @@ ou cliquez pour parcourir</translation>
         <message>
             <location line="+1" />
             <source>OoT's own settings are now your main settings.</source>
-            <translation>Les paramètres propres à OoT sont désormais vos paramètres principaux.</translation>
+            <translation>Les paramètres propres à OoT sont désormais tes paramètres principaux.</translation>
         </message>
         <message>
             <location line="+14" />
@@ -9793,7 +10103,7 @@ ou cliquez pour parcourir</translation>
         <message>
             <location line="+1" />
             <source>Your own changes would be replaced.</source>
-            <translation>Vos propres modifications seraient remplacées.</translation>
+            <translation>Tes propres modifications seraient remplacées.</translation>
         </message>
         <message>
             <location line="+6" />
@@ -9810,7 +10120,7 @@ ou cliquez pour parcourir</translation>
         <message>
             <location line="-7" />
             <source>You can switch later in Settings &gt; General.</source>
-            <translation>Vous pourrez changer plus tard dans Paramètres &gt; Général.</translation>
+            <translation>Tu pourras changer plus tard dans Paramètres &gt; Général.</translation>
         </message>
         <message>
             <location line="+215" />
@@ -9831,7 +10141,7 @@ Switch any time with the 60 FPS / 30 FPS button at the bottom of the window.</so
             <translation>60 FPS demande un CPU rapide et récent.
 30 FPS est pour les PC modestes. Le jeu garde sa vitesse normale dans les deux cas.
 
-Changez à tout moment avec le bouton 60 FPS / 30 FPS en bas de la fenêtre.</translation>
+Change à tout moment avec le bouton 60 FPS / 30 FPS en bas de la fenêtre.</translation>
         </message>
         <message>
             <location line="+3" />
@@ -9859,7 +10169,7 @@ Changez à tout moment avec le bouton 60 FPS / 30 FPS en bas de la fenêtre.</tr
             <location line="+1" />
             <source>Disabling the web applet can lead to undefined behavior and should only be used with Super Mario 3D All-Stars. Are you sure you want to disable the web applet?
 (This can be re-enabled in the Debug settings.)</source>
-            <translation>Désactiver l'applet web peut entraîner un comportement imprévisible et ne doit être fait qu'avec Super Mario 3D All-Stars. Voulez-vous vraiment désactiver l'applet web ?
+            <translation>Désactiver l'applet web peut entraîner un comportement imprévisible et ne doit être fait qu'avec Super Mario 3D All-Stars. Veux-tu vraiment désactiver l'applet web ?
 (Elle peut être réactivée dans les paramètres de débogage.)</translation>
         </message>
         <message>
@@ -9922,7 +10232,7 @@ La préparation se fait pendant que le jeu est en pause. Émulation &gt; Prépar
         <message>
             <location line="+115" />
             <source>Ocarina of Time frame rate. Click to switch between 60 FPS and 30 FPS (lower-end PCs); it takes effect at once.</source>
-            <translation>Fréquence d'images d'Ocarina of Time. Cliquez pour basculer entre 60 FPS et 30 FPS (PC modestes) ; l'effet est immédiat.</translation>
+            <translation>Fréquence d'images d'Ocarina of Time. Clique pour basculer entre 60 FPS et 30 FPS (PC modestes) ; l'effet est immédiat.</translation>
         </message>
         <message>
             <location line="+68" />
@@ -9975,12 +10285,12 @@ La préparation se fait pendant que le jeu est en pause. Émulation &gt; Prépar
             <location line="+3" />
             <source>%1&lt;br&gt;Please redump your files or ask on Discord/Stoat for help.</source>
             <comment>%1 signifies an error string.</comment>
-            <translation>%1&lt;br&gt;Refaites le dump de vos fichiers ou demandez de l'aide sur Discord/Stoat.</translation>
+            <translation>%1&lt;br&gt;Refais le dump de tes fichiers ou demande de l'aide sur Discord/Stoat.</translation>
         </message>
         <message>
             <location line="+9" />
             <source>An unknown error occurred. Please see the log for more details.</source>
-            <translation>Une erreur inconnue s'est produite. Consultez le journal pour plus de détails.</translation>
+            <translation>Une erreur inconnue s'est produite. Consulte le journal pour plus de détails.</translation>
         </message>
         <message>
             <location line="+278" />
@@ -10116,12 +10426,12 @@ La préparation se fait pendant que le jeu est en pause. Émulation &gt; Prépar
         <message>
             <location line="+1" />
             <source>Please select the how you would like the RomFS dumped.&lt;br&gt;Full will copy all of the files into the new directory while &lt;br&gt;skeleton will only create the directory structure.</source>
-            <translation>Choisissez comment extraire la RomFS.&lt;br&gt;Complet copie tous les fichiers dans le nouveau dossier, tandis que &lt;br&gt;Squelette crée seulement l'arborescence des dossiers.</translation>
+            <translation>Choisis comment extraire la RomFS.&lt;br&gt;Complet copie tous les fichiers dans le nouveau dossier, tandis que &lt;br&gt;Squelette crée seulement l'arborescence des dossiers.</translation>
         </message>
         <message>
             <location line="+23" />
             <source>There is not enough free space at %1 to extract the RomFS. Please free up space or select a different dump directory at Emulation &gt; Configure &gt; System &gt; Filesystem &gt; Dump Root</source>
-            <translation>Il n'y a pas assez d'espace libre dans %1 pour extraire la RomFS. Libérez de l'espace ou choisissez un autre dossier d'extraction dans Émulation &gt; Configurer &gt; Système &gt; Système de fichiers &gt; Racine d'extraction</translation>
+            <translation>Il n'y a pas assez d'espace libre dans %1 pour extraire la RomFS. Libère de l'espace ou choisis un autre dossier d'extraction dans Émulation &gt; Configurer &gt; Système &gt; Système de fichiers &gt; Racine d'extraction</translation>
         </message>
         <message>
             <location line="+7" />
@@ -10193,7 +10503,7 @@ La préparation se fait pendant que le jeu est en pause. Émulation &gt; Prépar
         <message>
             <location line="-1178" />
             <source>This is usually caused by outdated GPU drivers. Please see the log for more details.</source>
-            <translation>C'est généralement dû à des pilotes GPU obsolètes. Consultez le journal pour plus de détails.</translation>
+            <translation>C'est généralement dû à des pilotes GPU obsolètes. Consulte le journal pour plus de détails.</translation>
         </message>
         <message>
             <location line="+53" />
@@ -10205,7 +10515,7 @@ La préparation se fait pendant que le jeu est en pause. Émulation &gt; Prépar
         <message>
             <location line="-2440" />
             <source>Wait for the NX metadata edit to finish before starting a game.</source>
-            <translation>Attendez la fin de la modification des métadonnées NX avant de lancer un jeu.</translation>
+            <translation>Attends la fin de la modification des métadonnées NX avant de lancer un jeu.</translation>
         </message>
         <message>
             <location line="+5" />
@@ -10225,7 +10535,7 @@ La préparation se fait pendant que le jeu est en pause. Émulation &gt; Prépar
         <message>
             <location line="+1" />
             <source>Games cannot be started while the shader warm-up is being prepared. Wait for it to finish or cancel it.</source>
-            <translation>Aucun jeu ne peut être lancé pendant la préparation des shaders. Attendez qu'elle se termine ou annulez-la.</translation>
+            <translation>Aucun jeu ne peut être lancé pendant la préparation des shaders. Attends qu'elle se termine ou annule-la.</translation>
         </message>
         <message>
             <source>Recommended Mario Kart World settings</source>
@@ -10256,7 +10566,7 @@ Ils s'appliquent à Mario Kart World jusqu'à la fermeture de Cervin. Vos param�
         <message>
             <location line="+1" />
             <source>Game preparation failed. See the log for details.</source>
-            <translation>La préparation du jeu a échoué. Consultez le journal pour plus de détails.</translation>
+            <translation>La préparation du jeu a échoué. Consulte le journal pour plus de détails.</translation>
         </message>
         <message>
             <location line="+992" />
@@ -10292,7 +10602,7 @@ Ils s'appliquent à Mario Kart World jusqu'à la fermeture de Cervin. Vos param�
             <source>To avoid possible conflicts, we discourage users from installing base games to the NAND.
 Please, only use this feature to install updates and DLC.</source>
             <translation>Pour éviter d'éventuels conflits, nous déconseillons d'installer des jeux de base dans la NAND.
-N'utilisez cette fonction que pour installer des mises à jour et des DLC.</translation>
+N'utilise cette fonction que pour installer des mises à jour et des DLC.</translation>
         </message>
         <message numerus="yes">
             <location line="+6" />
@@ -10381,7 +10691,7 @@ N'utilisez cette fonction que pour installer des mises à jour et des DLC.</tran
             <location line="+1" />
             <source>Please select the type of title you would like to install this NCA as:
 (In most instances, the default 'Game' is fine.)</source>
-            <translation>Choisissez le type de titre sous lequel installer ce NCA :
+            <translation>Choisis le type de titre sous lequel installer ce NCA :
 (Dans la plupart des cas, « Jeu » par défaut convient.)</translation>
         </message>
         <message>
@@ -10417,7 +10727,7 @@ N'utilisez cette fonction que pour installer des mises à jour et des DLC.</tran
         <message>
             <location line="+1" />
             <source>Compatibility list reporting is currently disabled. Check back later!</source>
-            <translation>Le signalement à la liste de compatibilité est actuellement désactivé. Revenez plus tard !</translation>
+            <translation>Le signalement à la liste de compatibilité est actuellement désactivé. Reviens plus tard !</translation>
         </message>
         <message>
             <location line="+42" />
@@ -10521,22 +10831,22 @@ N'utilisez cette fonction que pour installer des mises à jour et des DLC.</tran
         <message>
             <location line="-8" />
             <source>Restart Cervin to turn profiling mode on.</source>
-            <translation>Redémarrez Cervin pour activer le mode profilage.</translation>
+            <translation>Redémarre Cervin pour activer le mode profilage.</translation>
         </message>
         <message>
             <location line="+1" />
             <source>Restart Cervin to turn profiling mode off.</source>
-            <translation>Redémarrez Cervin pour désactiver le mode profilage.</translation>
+            <translation>Redémarre Cervin pour désactiver le mode profilage.</translation>
         </message>
         <message>
             <location line="+2" />
             <source>Save your game first.</source>
-            <translation>Sauvegardez d'abord votre partie.</translation>
+            <translation>Sauvegarde d'abord ta partie.</translation>
         </message>
         <message>
             <location line="+3" />
             <source>Then play as usual and send us Help &gt; Export Log.</source>
-            <translation>Ensuite, jouez normalement et envoyez-nous Aide &gt; Exporter le journal.</translation>
+            <translation>Ensuite, joue normalement et envoie-nous Aide &gt; Exporter le journal.</translation>
         </message>
         <message>
             <location line="+4" />
@@ -10571,12 +10881,12 @@ N'utilisez cette fonction que pour installer des mises à jour et des DLC.</tran
         <message>
             <location line="+106" />
             <source>Stop emulation before editing NX metadata.</source>
-            <translation>Arrêtez l'émulation avant de modifier les métadonnées NX.</translation>
+            <translation>Arrête l'émulation avant de modifier les métadonnées NX.</translation>
         </message>
         <message>
             <location line="+26" />
             <source>Stop the game before changing its NX archive.</source>
-            <translation>Arrêtez le jeu avant de modifier son archive NX.</translation>
+            <translation>Arrête le jeu avant de modifier son archive NX.</translation>
         </message>
         <message>
             <location line="+14" />
@@ -10618,7 +10928,7 @@ N'utilisez cette fonction que pour installer des mises à jour et des DLC.</tran
         <message>
             <location line="+2" />
             <source>The NUP was created. You can delete the loose folder if you no longer need it.</source>
-            <translation>Le NUP a été créé. Vous pouvez supprimer le dossier non compressé si vous n'en avez plus besoin.</translation>
+            <translation>Le NUP a été créé. Tu peux supprimer le dossier non compressé si tu n'en as plus besoin.</translation>
         </message>
         <message>
             <location line="+6" />
@@ -10644,12 +10954,12 @@ N'utilisez cette fonction que pour installer des mises à jour et des DLC.</tran
         <message>
             <location line="-4" />
             <source>Close the running game first.</source>
-            <translation>Fermez d'abord le jeu en cours.</translation>
+            <translation>Ferme d'abord le jeu en cours.</translation>
         </message>
         <message>
             <location line="+5" />
             <source>This game is being converted. Try again when it is done.</source>
-            <translation>Ce jeu est en cours de conversion. Réessayez quand ce sera terminé.</translation>
+            <translation>Ce jeu est en cours de conversion. Réessaie quand ce sera terminé.</translation>
         </message>
         <message>
             <location line="+32" />
@@ -10661,12 +10971,12 @@ N'utilisez cette fonction que pour installer des mises à jour et des DLC.</tran
         <message>
             <location line="-13" />
             <source>Shaders are being prepared. Try again when it is done.</source>
-            <translation>Les shaders sont en cours de préparation. Réessayez quand ce sera terminé.</translation>
+            <translation>Les shaders sont en cours de préparation. Réessaie quand ce sera terminé.</translation>
         </message>
         <message>
             <location line="+6" />
             <source>Delete the shader warm-up files of this game? You can prepare them again at any time.</source>
-            <translation>Supprimer les fichiers de préparation des shaders de ce jeu ? Vous pourrez les préparer à nouveau à tout moment.</translation>
+            <translation>Supprimer les fichiers de préparation des shaders de ce jeu ? Tu pourras les préparer à nouveau à tout moment.</translation>
         </message>
         <message>
             <location line="+8" />
@@ -10686,7 +10996,7 @@ N'utilisez cette fonction que pour installer des mises à jour et des DLC.</tran
 To make one, close the game, right-click it in the game list and choose Prepare shaders (warm-up). A warm-up that ran to the end runs again only after a driver update.</source>
             <translation>Il ne reste aucun shader à préparer pour ce jeu.
 
-Pour en créer, fermez le jeu, faites un clic droit dessus dans la liste des jeux et choisissez Préparer les shaders. Une préparation menée jusqu'au bout ne se relance qu'après une mise à jour du pilote.</translation>
+Pour en créer, ferme le jeu, fais un clic droit dessus dans la liste des jeux et choisis Préparer les shaders. Une préparation menée jusqu'au bout ne se relance qu'après une mise à jour du pilote.</translation>
         </message>
         <message>
             <location line="+10" />
@@ -10760,7 +11070,7 @@ Pour en créer, fermez le jeu, faites un clic droit dessus dans la liste des jeu
         <message>
             <location line="+1" />
             <source>The NUP was extracted. You can delete the NUP file if you no longer need it.</source>
-            <translation>Le NUP a été extrait. Vous pouvez supprimer le fichier NUP si vous n'en avez plus besoin.</translation>
+            <translation>Le NUP a été extrait. Tu peux supprimer le fichier NUP si tu n'en as plus besoin.</translation>
         </message>
         <message>
             <location line="+10" />
@@ -10815,7 +11125,7 @@ Pour en créer, fermez le jeu, faites un clic droit dessus dans la liste des jeu
         <message>
             <location line="+1" />
             <source>Applet not found. Please reinstall firmware.</source>
-            <translation>Applet introuvable. Réinstallez le firmware.</translation>
+            <translation>Applet introuvable. Réinstalle le firmware.</translation>
         </message>
         <message>
             <location line="+39" />
@@ -10840,7 +11150,7 @@ Pour en créer, fermez le jeu, faites un clic droit dessus dans la liste des jeu
         <message>
             <location line="+3" />
             <source>Could not check for updates. Check your internet connection.</source>
-            <translation>Impossible de rechercher des mises à jour. Vérifiez votre connexion Internet.</translation>
+            <translation>Impossible de rechercher des mises à jour. Vérifie ta connexion Internet.</translation>
         </message>
         <message>
             <location line="+5" />
@@ -10851,12 +11161,12 @@ Pour en créer, fermez le jeu, faites un clic droit dessus dans la liste des jeu
         <message>
             <location line="+1" />
             <source>You have the latest version (%1 %2).</source>
-            <translation>Vous avez la dernière version (%1 %2).</translation>
+            <translation>Tu as la dernière version (%1 %2).</translation>
         </message>
         <message>
             <location line="+15" />
             <source>%1 is available. It will be offered when the game closes.</source>
-            <translation>%1 est disponible. Elle vous sera proposée à la fermeture du jeu.</translation>
+            <translation>%1 est disponible. Elle te sera proposée à la fermeture du jeu.</translation>
         </message>
         <message>
             <location line="+134" />
@@ -10931,7 +11241,7 @@ Pour en créer, fermez le jeu, faites un clic droit dessus dans la liste des jeu
         <message>
             <location line="+3" />
             <source>(waits while you play)</source>
-            <translation>(en attente pendant que vous jouez)</translation>
+            <translation>(en attente pendant que tu joues)</translation>
         </message>
         <message>
             <location line="+11" />
@@ -11019,12 +11329,12 @@ Pour en créer, fermez le jeu, faites un clic droit dessus dans la liste des jeu
         <message>
             <location line="+3" />
             <source>High refresh: busy, try again</source>
-            <translation>Haute fréquence : occupé, réessayez</translation>
+            <translation>Haute fréquence : occupé, réessaie</translation>
         </message>
         <message>
             <location line="+5" />
             <source>High refresh can't turn on: the mod "%1" changes the same game code. Turn the mod off in Add-Ons to use it.</source>
-            <translation>La haute fréquence ne peut pas s'activer : le mod « %1 » modifie le même code du jeu. Désactivez le mod dans les modules pour l'utiliser.</translation>
+            <translation>La haute fréquence ne peut pas s'activer : le mod « %1 » modifie le même code du jeu. Désactive le mod dans les modules pour l'utiliser.</translation>
         </message>
         <message>
             <location line="+7" />
@@ -11086,7 +11396,7 @@ Would you like to force it for future launches?</source>
             <translation>Wayland est connu pour avoir d'importants problèmes de performances et des bugs mystérieux.
 Il est recommandé d'utiliser X11 à la place.
 
-Voulez-vous le forcer pour les prochains lancements ?</translation>
+Veux-tu le forcer pour les prochains lancements ?</translation>
         </message>
         <message>
             <location line="+5" />
@@ -11111,7 +11421,7 @@ Voulez-vous le forcer pour les prochains lancements ?</translation>
         <message>
             <location line="+1" />
             <source>Restart Cervin to apply the X11 backend.</source>
-            <translation>Redémarrez Cervin pour appliquer le backend X11.</translation>
+            <translation>Redémarre Cervin pour appliquer le backend X11.</translation>
         </message>
         <message>
             <location line="+38" />
@@ -11146,12 +11456,12 @@ Voulez-vous le forcer pour les prochains lancements ?</translation>
         <message>
             <location line="+1" />
             <source>Please select which RomFS you would like to dump.</source>
-            <translation>Choisissez quelle RomFS vous voulez extraire.</translation>
+            <translation>Choisis quelle RomFS tu veux extraire.</translation>
         </message>
         <message>
             <location line="+23" />
             <source>Are you sure you want to close Cervin?</source>
-            <translation>Voulez-vous vraiment fermer Cervin ?</translation>
+            <translation>Veux-tu vraiment fermer Cervin ?</translation>
         </message>
         <message>
             <location filename="../../src/yuzu/main.ui" line="-613" />
@@ -11165,7 +11475,7 @@ Voulez-vous le forcer pour les prochains lancements ?</translation>
         <message>
             <location filename="../../src/yuzu/main_window.cpp" line="-11" />
             <source>Are you sure you want to stop the emulation? Any unsaved progress will be lost.</source>
-            <translation>Voulez-vous vraiment arrêter l'émulation ? Toute progression non sauvegardée sera perdue.</translation>
+            <translation>Veux-tu vraiment arrêter l'émulation ? Toute progression non sauvegardée sera perdue.</translation>
         </message>
         <message>
             <location line="+8" />
@@ -11174,7 +11484,7 @@ Voulez-vous le forcer pour les prochains lancements ?</translation>
 Would you like to bypass this and exit anyway?</source>
             <translation>L'application en cours a demandé à Cervin de ne pas quitter.
 
-Voulez-vous passer outre et quitter quand même ?</translation>
+Veux-tu passer outre et quitter quand même ?</translation>
         </message>
         <message>
             <location filename="../../src/qt_common/config/shared_translation.h" line="+1" />
@@ -11381,7 +11691,7 @@ Voulez-vous passer outre et quitter quand même ?</translation>
         <message>
             <location line="+2" />
             <source>Stop the game first.</source>
-            <translation>Arrêtez d'abord le jeu.</translation>
+            <translation>Arrête d'abord le jeu.</translation>
         </message>
         <message>
             <location line="+4" />
@@ -11432,7 +11742,7 @@ Les données et les paramètres sont partagés avec %1. Le cache de shaders sour
 The old profile was retained in backup directories at its old location. Keep these backups until you have checked your saves.</source>
             <translation>
 
-L'ancien profil a été conservé dans des dossiers de sauvegarde à son ancien emplacement. Gardez ces copies jusqu'à ce que vous ayez vérifié vos sauvegardes.</translation>
+L'ancien profil a été conservé dans des dossiers de sauvegarde à son ancien emplacement. Garde ces copies jusqu'à ce que tu aies vérifié tes sauvegardes.</translation>
         </message>
         <message>
             <location line="+3" />
@@ -11441,14 +11751,14 @@ L'ancien profil a été conservé dans des dossiers de sauvegarde à son ancien 
 The original %1 profile is unchanged. Keep it until you have checked your saves.</source>
             <translation>
 
-Le profil %1 d'origine n'a pas été modifié. Gardez-le jusqu'à ce que vous ayez vérifié vos sauvegardes.</translation>
+Le profil %1 d'origine n'a pas été modifié. Garde-le jusqu'à ce que tu aies vérifié tes sauvegardes.</translation>
         </message>
         <message>
             <location line="+6" />
             <source>Import did not complete. Your source and previous destination data have been kept. Close Cervin and launch it again to retry or recover.
 
 %1</source>
-            <translation>L'importation ne s'est pas terminée. Vos données source et de destination précédentes ont été conservées. Fermez Cervin et relancez-le pour réessayer ou récupérer.
+            <translation>L'importation ne s'est pas terminée. Tes données source et de destination précédentes ont été conservées. Ferme Cervin et relance-le pour réessayer ou récupérer.
 
 %1</translation>
         </message>
@@ -11463,7 +11773,7 @@ Le profil %1 d'origine n'a pas été modifié. Gardez-le jusqu'à ce que vous ay
         <message>
             <location line="+6" />
             <source>The specified folder or archive contains the following mods. Select which ones to install.</source>
-            <translation>Le dossier ou l'archive indiqué contient les mods suivants. Choisissez ceux à installer.</translation>
+            <translation>Le dossier ou l'archive indiqué contient les mods suivants. Choisis ceux à installer.</translation>
         </message>
     </context>
     <context>
@@ -11525,7 +11835,7 @@ Le profil %1 d'origine n'a pas été modifié. Gardez-le jusqu'à ce que vous ay
         <message>
             <location line="+27" />
             <source>Not Connected. Click here to find a room!</source>
-            <translation>Pas connecté. Cliquez ici pour trouver un salon !</translation>
+            <translation>Pas connecté. Clique ici pour trouver un salon !</translation>
         </message>
         <message>
             <location line="+6" />
@@ -11551,7 +11861,7 @@ Le profil %1 d'origine n'a pas été modifié. Gardez-le jusqu'à ce que vous ay
             <location line="+1" />
             <source>Failed to update the room information. Please check your Internet connection and try hosting the room again.
 Debug Message: </source>
-            <translation>Impossible de mettre à jour les informations du salon. Veuillez vérifier votre connexion internet et d'héberger le salon à nouveau.
+            <translation>Impossible de mettre à jour les informations du salon. Vérifie ta connexion internet et héberge le salon à nouveau.
 Message de Débogage :</translation>
         </message>
     </context>
@@ -11577,7 +11887,7 @@ Continuer quand même ?</translation>
         <message>
             <location line="+1" />
             <source>You are about to close the room. Any network connections will be closed.</source>
-            <translation>Vous êtes sur le point de fermer le salon. Toutes les connexions réseau seront fermées.</translation>
+            <translation>Tu es sur le point de fermer le salon. Toutes les connexions réseau seront fermées.</translation>
         </message>
         <message>
             <location line="+5" />
@@ -11587,7 +11897,7 @@ Continuer quand même ?</translation>
         <message>
             <location line="+1" />
             <source>You are about to leave the room. Any network connections will be closed.</source>
-            <translation>Vous êtes sur le point de quitter le salon. Toutes les connexions réseau seront fermées.</translation>
+            <translation>Tu es sur le point de quitter le salon. Toutes les connexions réseau seront fermées.</translation>
         </message>
     </context>
     <context>
@@ -11651,7 +11961,7 @@ Continuer quand même ?</translation>
         <message>
             <location line="+1" />
             <source>Please install the firmware to use firmware avatars.</source>
-            <translation>Installez le firmware pour utiliser les avatars du firmware.</translation>
+            <translation>Installe le firmware pour utiliser les avatars du firmware.</translation>
         </message>
         <message>
             <location line="+5" />
@@ -11662,12 +11972,12 @@ Continuer quand même ?</translation>
         <message>
             <location line="-6" />
             <source>Archive is not available. Please install/reinstall firmware.</source>
-            <translation>L'archive n'est pas disponible. Installez ou réinstallez le firmware.</translation>
+            <translation>L'archive n'est pas disponible. Installe ou réinstalle le firmware.</translation>
         </message>
         <message>
             <location line="+7" />
             <source>Could not locate RomFS. Your file or decryption keys may be corrupted.</source>
-            <translation>RomFS introuvable. Votre fichier ou vos clés de déchiffrement sont peut-être corrompus.</translation>
+            <translation>RomFS introuvable. Ton fichier ou tes clés de déchiffrement sont peut-être corrompus.</translation>
         </message>
         <message>
             <location line="+6" />
@@ -11677,7 +11987,7 @@ Continuer quand même ?</translation>
         <message>
             <location line="+1" />
             <source>Could not extract RomFS. Your file or decryption keys may be corrupted.</source>
-            <translation>Impossible d'extraire la RomFS. Votre fichier ou vos clés de déchiffrement sont peut-être corrompus.</translation>
+            <translation>Impossible d'extraire la RomFS. Ton fichier ou tes clés de déchiffrement sont peut-être corrompus.</translation>
         </message>
         <message>
             <location line="+5" />
@@ -11920,7 +12230,7 @@ Continuer quand même ?</translation>
         <message>
             <location line="+2" />
             <source>No icon in the NUP. Add one, or it will have none.</source>
-            <translation>Aucune icône dans le NUP. Ajoutez-en une, sinon il n'en aura pas.</translation>
+            <translation>Aucune icône dans le NUP. Ajoutes-en une, sinon il n'en aura pas.</translation>
         </message>
     </context>
     <context>
@@ -12043,7 +12353,7 @@ Continuer quand même ?</translation>
         <message>
             <location line="+2" />
             <source>No icon found in the dump. Add one, or the NUP will have none.</source>
-            <translation>Aucune icône trouvée dans le dump. Ajoutez-en une, sinon le NUP n'en aura pas.</translation>
+            <translation>Aucune icône trouvée dans le dump. Ajoutes-en une, sinon le NUP n'en aura pas.</translation>
         </message>
     </context>
     <context>
@@ -12082,6 +12392,123 @@ Continuer quand même ?</translation>
         </message>
     </context>
     <context>
+        <name>NvidiaDlssPanel</name>
+        <message>
+            <location filename="../../src/yuzu/configuration/nvidia_dlss_panel.cpp" line="+328" />
+            <source>Open Folder</source>
+            <translation>Ouvrir le dossier</translation>
+        </message>
+        <message>
+            <location line="+3" />
+            <source>Where do these files come from?</source>
+            <translation>D'où viennent ces fichiers ?</translation>
+        </message>
+        <message>
+            <location line="+3" />
+            <source>NVIDIA's Streamline releases on GitHub. The files are in bin\x64 of the release zip.</source>
+            <translation>Les versions de Streamline de NVIDIA sur GitHub. Les fichiers sont dans bin\x64 du zip de la version.</translation>
+        </message>
+        <message>
+            <location line="+31" />
+            <source>%1 from the NVIDIA app</source>
+            <translation>%1 de l'application NVIDIA</translation>
+        </message>
+        <message>
+            <location line="+7" />
+            <source>&lt;b&gt;Ready.&lt;/b&gt; Found %1 and %2.&lt;br&gt;DLSS and the settings below apply only when a game uses its own DLSS. While DLSS runs, the status bar shows DLSS, its mode and its preset.</source>
+            <translation>&lt;b&gt;Prêt.&lt;/b&gt; %1 et %2 sont trouvés.&lt;br&gt;DLSS et les réglages ci-dessous ne s'appliquent que quand un jeu utilise son propre DLSS. Pendant que DLSS tourne, la barre d'état affiche DLSS, son mode et son modèle.</translation>
+        </message>
+        <message>
+            <location line="+5" />
+            <source>&lt;b&gt;One file needed:&lt;/b&gt; NVIDIA's Streamline loader (sl.interposer.dll). %1 will be used. Until then, games use AMD FSR 3.1.</source>
+            <translation>&lt;b&gt;Un fichier nécessaire :&lt;/b&gt; le chargeur Streamline de NVIDIA (sl.interposer.dll). %1 sera utilisé. En attendant, les jeux utilisent AMD FSR 3.1.</translation>
+        </message>
+        <message>
+            <location line="+3" />
+            <source>Download from NVIDIA (1 MB)</source>
+            <translation>Télécharger depuis NVIDIA (1 Mo)</translation>
+        </message>
+        <message>
+            <location line="+2" />
+            <source>&lt;b&gt;One file needed:&lt;/b&gt; NVIDIA DLSS (nvngx_dlss.dll). Until then, games use AMD FSR 3.1.</source>
+            <translation>&lt;b&gt;Un fichier nécessaire :&lt;/b&gt; NVIDIA DLSS (nvngx_dlss.dll). En attendant, les jeux utilisent AMD FSR 3.1.</translation>
+        </message>
+        <message>
+            <location line="+2" />
+            <source>Download from NVIDIA (31 MB)</source>
+            <translation>Télécharger depuis NVIDIA (31 Mo)</translation>
+        </message>
+        <message>
+            <location line="+2" />
+            <source>&lt;b&gt;NVIDIA's files needed:&lt;/b&gt; the Streamline loader and DLSS (sl.interposer.dll and nvngx_dlss.dll). Until then, games use AMD FSR 3.1.</source>
+            <translation>&lt;b&gt;Fichiers de NVIDIA nécessaires :&lt;/b&gt; le chargeur Streamline et DLSS (sl.interposer.dll et nvngx_dlss.dll). En attendant, les jeux utilisent AMD FSR 3.1.</translation>
+        </message>
+        <message>
+            <location line="+2" />
+            <source>Download from NVIDIA (32 MB)</source>
+            <translation>Télécharger depuis NVIDIA (32 Mo)</translation>
+        </message>
+        <message>
+            <location line="+6" />
+            <source>Folder: %1</source>
+            <translation>Dossier : %1</translation>
+        </message>
+        <message>
+            <location line="+20" />
+            <location line="+10" />
+            <location line="+13" />
+            <location line="+58" />
+            <location line="+61" />
+            <source>NVIDIA DLSS</source>
+            <translation>NVIDIA DLSS</translation>
+        </message>
+        <message>
+            <location line="-141" />
+            <source>Could not download NVIDIA's files: %1</source>
+            <translation>Impossible de télécharger les fichiers de NVIDIA : %1</translation>
+        </message>
+        <message>
+            <location line="+8" />
+            <source>Contacting NVIDIA's download...</source>
+            <translation>Connexion au téléchargement de NVIDIA...</translation>
+        </message>
+        <message>
+            <location line="+12" />
+            <source>NVIDIA Streamline</source>
+            <translation>NVIDIA Streamline</translation>
+        </message>
+        <message>
+            <location line="+23" />
+            <source>Download NVIDIA DLSS</source>
+            <translation>Télécharger NVIDIA DLSS</translation>
+        </message>
+        <message>
+            <location line="+3" />
+            <source>Cervin will download %1 from NVIDIA's Streamline %2 release on GitHub into %3.&lt;br&gt;These files are NVIDIA's, under NVIDIA's licence terms below.</source>
+            <translation>Cervin va télécharger %1 depuis la version %2 de Streamline de NVIDIA sur GitHub, dans %3.&lt;br&gt;Ces fichiers appartiennent à NVIDIA et suivent la licence de NVIDIA ci-dessous.</translation>
+        </message>
+        <message>
+            <location line="+10" />
+            <source>Accept and Download</source>
+            <translation>Accepter et télécharger</translation>
+        </message>
+        <message>
+            <location line="+22" />
+            <source>Downloading NVIDIA's DLSS files...</source>
+            <translation>Téléchargement des fichiers DLSS de NVIDIA...</translation>
+        </message>
+        <message>
+            <location line="+0" />
+            <source>Cancel</source>
+            <translation>Annuler</translation>
+        </message>
+        <message>
+            <location line="+64" />
+            <source>NVIDIA DLSS is ready. It is used the next time a game starts.</source>
+            <translation>NVIDIA DLSS est prêt. Il sera utilisé au prochain lancement d'un jeu.</translation>
+        </message>
+    </context>
+    <context>
         <name>NxTools</name>
         <message>
             <location filename="../../src/yuzu/nx_tools.cpp" line="+373" />
@@ -12090,7 +12517,7 @@ Continuer quand même ?</translation>
 Check that your keys are installed.</source>
             <translation>%1 ne peut pas être déchiffré : %2
 
-Vérifiez que vos clés sont installées.</translation>
+Vérifie que tes clés sont installées.</translation>
         </message>
         <message>
             <location line="+52" />
@@ -12202,7 +12629,7 @@ Ceux qui sont cochés sont ajoutés à l'archive NX :</translation>
         <message>
             <location line="+7" />
             <source>Select the content to remove from the archive:</source>
-            <translation>Choisissez le contenu à retirer de l'archive :</translation>
+            <translation>Choisis le contenu à retirer de l'archive :</translation>
         </message>
         <message>
             <location line="+4" />
@@ -12369,7 +12796,7 @@ It may be in use. You can delete it yourself.</source>
             <translation>L'original n'a pas pu être placé dans la Corbeille :
 %1
 
-Il est peut-être en cours d'utilisation. Vous pouvez le supprimer vous-même.</translation>
+Il est peut-être en cours d'utilisation. Tu peux le supprimer toi-même.</translation>
         </message>
         <message>
             <location line="+11" />
@@ -12746,7 +13173,7 @@ p, li { white-space: pre-wrap; }
         <message>
             <location line="+4" />
             <source>Turn it off in Help</source>
-            <translation>Désactivez-le dans Aide</translation>
+            <translation>Désactive-le dans Aide</translation>
         </message>
     </context>
     <context>
@@ -12799,8 +13226,8 @@ Déplacer conserve une sauvegarde de récupération et nécessite l'espace d'une
 Lier partage les paramètres et les sauvegardes avec l'émulateur source.
 Les données Cervin existantes sont conservées dans des dossiers de sauvegarde, ni fusionnées ni supprimées.
 
-Fermez l'émulateur source, puis choisissez son profil ci-dessous.
-Fermez cette fenêtre pour décider au prochain lancement.</translation>
+Ferme l'émulateur source, puis choisis son profil ci-dessous.
+Ferme cette fenêtre pour décider au prochain lancement.</translation>
         </message>
         <message>
             <location line="+7" />
@@ -12816,7 +13243,7 @@ Fermez cette fenêtre pour décider au prochain lancement.</translation>
         <message>
             <location line="-366" />
             <source>Cervin will use its own profile. Your old emulator data has not been changed.</source>
-            <translation>Cervin utilisera son propre profil. Les données de votre ancien émulateur n'ont pas été modifiées.</translation>
+            <translation>Cervin utilisera son propre profil. Les données de ton ancien émulateur n'ont pas été modifiées.</translation>
         </message>
         <message>
             <location line="+187" />
@@ -12832,7 +13259,7 @@ Fermez cette fenêtre pour décider au prochain lancement.</translation>
             <location line="+147" />
             <source>Copy your data from another folder?
 Fritchii restarts and copies it over its own. What it has now is kept as a backup.</source>
-            <translation>Copier vos données depuis un autre dossier ?
+            <translation>Copier tes données depuis un autre dossier ?
 Cervin redémarre et les copie par-dessus les siennes. Ce qu'il contient actuellement est conservé en sauvegarde.</translation>
         </message>
         <message>
@@ -12840,7 +13267,7 @@ Cervin redémarre et les copie par-dessus les siennes. Ce qu'il contient actuell
             <source>Cervin keeps its data in its own folder now.
 Copy your data from another emulator folder?</source>
             <translation>Cervin garde désormais ses données dans son propre dossier.
-Copier vos données depuis le dossier d'un autre émulateur ?</translation>
+Copier tes données depuis le dossier d'un autre émulateur ?</translation>
         </message>
         <message>
             <location line="+12" />
@@ -12875,12 +13302,12 @@ Copier vos données depuis le dossier d'un autre émulateur ?</translation>
         <message>
             <location line="+8" />
             <source>Copying your shader cache from %1 (%2)...</source>
-            <translation>Copie de votre cache de shaders depuis %1 (%2)...</translation>
+            <translation>Copie de ton cache de shaders depuis %1 (%2)...</translation>
         </message>
         <message>
             <location line="+49" />
             <source>Copied your shader cache from %1 (%2), so games don't have to build their shaders again.</source>
-            <translation>Votre cache de shaders a été copié depuis %1 (%2), les jeux n'auront donc pas à recompiler leurs shaders.</translation>
+            <translation>Ton cache de shaders a été copié depuis %1 (%2), les jeux n'auront donc pas à recompiler leurs shaders.</translation>
         </message>
         <message>
             <location line="+49" />
@@ -12890,7 +13317,7 @@ Copier vos données depuis le dossier d'un autre émulateur ?</translation>
         <message>
             <location line="+6" />
             <source>Copying your data from the %1 folder to Cervin's own folder (%2 GB)...</source>
-            <translation>Copie de vos données du dossier %1 vers le dossier de Cervin (%2 Go)...</translation>
+            <translation>Copie de tes données du dossier %1 vers le dossier de Cervin (%2 Go)...</translation>
         </message>
         <message>
             <location line="+72" />
@@ -12925,7 +13352,7 @@ Copier vos données depuis le dossier d'un autre émulateur ?</translation>
 %1 was too big to copy, so it is shared with the old folder. Keep that folder.</source>
             <translation>
 
-%1 était trop volumineux pour être copié, il est donc partagé avec l'ancien dossier. Conservez ce dossier.</translation>
+%1 était trop volumineux pour être copié, il est donc partagé avec l'ancien dossier. Garde ce dossier.</translation>
         </message>
         <message>
             <location line="+6" />
@@ -12970,7 +13397,7 @@ Les shaders seront préparés à nouveau au premier lancement d'un jeu.</transla
             <source>
 Your old folder was not changed: %1</source>
             <translation>
-Votre ancien dossier n'a pas été modifié : %1</translation>
+Ton ancien dossier n'a pas été modifié : %1</translation>
         </message>
         <message>
             <location line="+3" />
@@ -12984,11 +13411,11 @@ Votre ancien dossier n'a pas été modifié : %1</translation>
 %2
 
 Close any emulator or program using it, then start Cervin again.</source>
-            <translation>Vos données du dossier %1 n'ont pas pu être copiées dans le dossier de Cervin. Rien n'a été modifié.
+            <translation>Tes données du dossier %1 n'ont pas pu être copiées dans le dossier de Cervin. Rien n'a été modifié.
 
 %2
 
-Fermez tout émulateur ou programme qui l'utilise, puis relancez Cervin.</translation>
+Ferme tout émulateur ou programme qui l'utilise, puis relance Cervin.</translation>
         </message>
         <message>
             <location line="+5" />
@@ -13538,7 +13965,7 @@ Fermez tout émulateur ou programme qui l'utilise, puis relancez Cervin.</transl
         <message>
             <location line="+1" />
             <source>The fps drop on Intel CPUs with P-cores and E-cores is fixed. You don't need EDEN_HYBRID_CORES=0 any more: if you had added it, Cervin turned it off for you.</source>
-            <translation>La chute de FPS sur les CPU Intel avec P-cores et E-cores est corrigée. Vous n'avez plus besoin de EDEN_HYBRID_CORES=0 : si vous l'aviez ajouté, Cervin l'a désactivé pour vous.</translation>
+            <translation>La chute de FPS sur les CPU Intel avec P-cores et E-cores est corrigée. Tu n'as plus besoin de EDEN_HYBRID_CORES=0 : si tu l'avais ajouté, Cervin l'a désactivé pour toi.</translation>
         </message>
         <message>
             <location line="+5" />
@@ -13558,7 +13985,7 @@ Fermez tout émulateur ou programme qui l'utilise, puis relancez Cervin.</transl
         <message>
             <location line="+1" />
             <source>The game can crash right after a loading screen. Keep an fps cap, or VSync on.</source>
-            <translation>Le jeu peut planter juste après un écran de chargement. Gardez un plafond de FPS, ou la VSync activée.</translation>
+            <translation>Le jeu peut planter juste après un écran de chargement. Garde un plafond de FPS, ou la VSync activée.</translation>
         </message>
         <message>
             <location line="+2" />
@@ -13599,7 +14026,7 @@ Fermez tout émulateur ou programme qui l'utilise, puis relancez Cervin.</transl
         <message>
             <location line="+1" />
             <source>A mod that changes the same game code as Cervin can turn off high refresh. Ctrl+U tells you which one.</source>
-            <translation>Un mod qui modifie le même code du jeu que Cervin peut désactiver la haute fréquence. Ctrl+U vous indique lequel.</translation>
+            <translation>Un mod qui modifie le même code du jeu que Cervin peut désactiver la haute fréquence. Ctrl+U t'indique lequel.</translation>
         </message>
         <message>
             <location line="+2" />
@@ -13609,7 +14036,7 @@ Fermez tout émulateur ou programme qui l'utilise, puis relancez Cervin.</transl
         <message>
             <location line="+1" />
             <source>Keep Max Resolution off and pick a lower Resolution in Graphics, like 810p.</source>
-            <translation>Laissez Résolution max. désactivée et choisissez une résolution plus basse dans Graphismes, comme 810p.</translation>
+            <translation>Laisse Résolution max. désactivée et choisis une résolution plus basse dans Graphismes, comme 810p.</translation>
         </message>
         <message>
             <location line="+4" />
@@ -13619,7 +14046,7 @@ Fermez tout émulateur ou programme qui l'utilise, puis relancez Cervin.</transl
         <message>
             <location line="+1" />
             <source>Close your browser and other programs while playing. When memory runs out, the game freezes for seconds.</source>
-            <translation>Fermez votre navigateur et les autres programmes pendant que vous jouez. Quand la mémoire est épuisée, le jeu se fige pendant plusieurs secondes.</translation>
+            <translation>Ferme ton navigateur et les autres programmes pendant que tu joues. Quand la mémoire est épuisée, le jeu se fige pendant plusieurs secondes.</translation>
         </message>
         <message>
             <location line="+4" />
@@ -13639,7 +14066,7 @@ Fermez tout émulateur ou programme qui l'utilise, puis relancez Cervin.</transl
         <message>
             <location line="+1" />
             <source>Anything else: Help &gt; Export Log, then send it to us.</source>
-            <translation>Pour tout le reste : Aide &gt; Exporter le journal, puis envoyez-le-nous.</translation>
+            <translation>Pour tout le reste : Aide &gt; Exporter le journal, puis envoie-le-nous.</translation>
         </message>
         <message>
             <location line="+22" />
@@ -13662,22 +14089,22 @@ Fermez tout émulateur ou programme qui l'utilise, puis relancez Cervin.</transl
         <message>
             <location filename="../../src/yuzu/fritchii/max_resolution.cpp" line="-104" />
             <source>Your graphics are built into the processor: keep it off.</source>
-            <translation>Votre carte graphique est intégrée au processeur : laissez-la désactivée.</translation>
+            <translation>Ta carte graphique est intégrée au processeur : laisse-la désactivée.</translation>
         </message>
         <message>
             <location line="+10" />
             <source>Your %1 has %2 GB: keep it off.</source>
-            <translation>Votre %1 a %2 Go : laissez-la désactivée.</translation>
+            <translation>Ta %1 a %2 Go : laisse-la désactivée.</translation>
         </message>
         <message>
             <location line="+4" />
             <source>Your %1 (%2 GB) may be too slow for it: keep it off.</source>
-            <translation>Votre %1 (%2 Go) est peut-être trop lente : laissez-la désactivée.</translation>
+            <translation>Ta %1 (%2 Go) est peut-être trop lente : laisse-la désactivée.</translation>
         </message>
         <message>
             <location line="+5" />
             <source>Your %1 (%2 GB) handles it.</source>
-            <translation>Votre %1 (%2 Go) la gère sans problème.</translation>
+            <translation>Ta %1 (%2 Go) la gère sans problème.</translation>
         </message>
         <message>
             <location line="+38" />
@@ -13824,7 +14251,7 @@ Les sauvegardes qui s'y trouvaient avant sont conservées dans :
             <location line="+77" />
             <location filename="../../src/yuzu/fritchii/switches_window.cpp" line="+232" />
             <source>Close the game first.</source>
-            <translation>Fermez d'abord le jeu.</translation>
+            <translation>Ferme d'abord le jeu.</translation>
         </message>
         <message>
             <location line="-36" />
@@ -13854,7 +14281,7 @@ Les sauvegardes présentes sont d'abord mises de côté dans :
         <message>
             <location line="+4" />
             <source>Tick the games whose saves Cervin should take. The other emulator is never changed, and Cervin's saves are backed up first.</source>
-            <translation>Cochez les jeux dont Cervin doit reprendre les sauvegardes. L'autre émulateur n'est jamais modifié, et les sauvegardes de Cervin sont d'abord mises de côté.</translation>
+            <translation>Coche les jeux dont Cervin doit reprendre les sauvegardes. L'autre émulateur n'est jamais modifié, et les sauvegardes de Cervin sont d'abord mises de côté.</translation>
         </message>
         <message>
             <location line="+8" />
@@ -13869,7 +14296,7 @@ Les sauvegardes présentes sont d'abord mises de côté dans :
         <message>
             <location line="+1" />
             <source>A portable emulator, or one kept in another folder: pick its folder (the one with user/ or portable/ inside).</source>
-            <translation>Un émulateur portable, ou rangé dans un autre dossier : choisissez son dossier (celui qui contient user/ ou portable/).</translation>
+            <translation>Un émulateur portable, ou rangé dans un autre dossier : choisis son dossier (celui qui contient user/ ou portable/).</translation>
         </message>
         <message>
             <location line="+8" />
@@ -13904,7 +14331,7 @@ Les sauvegardes présentes sont d'abord mises de côté dans :
         <message>
             <location line="+24" />
             <source>No other emulator was found in the usual folders. For a portable one, use Other folder...</source>
-            <translation>Aucun autre émulateur n'a été trouvé dans les dossiers habituels. Pour un émulateur portable, utilisez Autre dossier...</translation>
+            <translation>Aucun autre émulateur n'a été trouvé dans les dossiers habituels. Pour un émulateur portable, utilise Autre dossier...</translation>
         </message>
         <message>
             <location line="+24" />
@@ -13939,17 +14366,17 @@ Les sauvegardes présentes sont d'abord mises de côté dans :
         <message>
             <location line="+8" />
             <source>No saves were found in that folder. Pick the emulator's own folder (with user/ or portable/ inside), or its save folder.</source>
-            <translation>Aucune sauvegarde n'a été trouvée dans ce dossier. Choisissez le dossier de l'émulateur lui-même (qui contient user/ ou portable/), ou son dossier de sauvegardes.</translation>
+            <translation>Aucune sauvegarde n'a été trouvée dans ce dossier. Choisis le dossier de l'émulateur lui-même (qui contient user/ ou portable/), ou son dossier de sauvegardes.</translation>
         </message>
         <message>
             <location line="+24" />
             <source>Tick at least one game.</source>
-            <translation>Cochez au moins un jeu.</translation>
+            <translation>Coche au moins un jeu.</translation>
         </message>
         <message>
             <location line="+6" />
             <source>Cervin has no user profile yet. Start a game once in Cervin, then copy the saves.</source>
-            <translation>Cervin n'a pas encore de profil utilisateur. Lancez un jeu une fois dans Cervin, puis copiez les sauvegardes.</translation>
+            <translation>Cervin n'a pas encore de profil utilisateur. Lance un jeu une fois dans Cervin, puis copie les sauvegardes.</translation>
         </message>
         <message numerus="yes">
             <location line="+7" />
@@ -13967,7 +14394,7 @@ Les sauvegardes présentes sont d'abord mises de côté dans :
         <message>
             <location line="+1" />
             <source>Your saves to a .zip file</source>
-            <translation>Vos sauvegardes dans un fichier .zip</translation>
+            <translation>Tes sauvegardes dans un fichier .zip</translation>
         </message>
         <message>
             <location line="+8" />
@@ -14052,7 +14479,7 @@ Les sauvegardes présentes sont d'abord mises de côté dans :
             <location line="-182" />
             <location line="+186" />
             <source> Close %1 first.</source>
-            <translation> Fermez d'abord %1.</translation>
+            <translation> Ferme d'abord %1.</translation>
         </message>
         <message>
             <location line="+16" />
@@ -14077,7 +14504,7 @@ Les sauvegardes présentes sont d'abord mises de côté dans :
         <message>
             <location line="+9" />
             <source>Move the saves that don't show up into your Cervin profile?</source>
-            <translation>Déplacer les sauvegardes qui n'apparaissent pas dans votre profil Cervin ?</translation>
+            <translation>Déplacer les sauvegardes qui n'apparaissent pas dans ton profil Cervin ?</translation>
         </message>
         <message>
             <location line="-379" />
@@ -14094,7 +14521,7 @@ Les sauvegardes présentes sont d'abord mises de côté dans :
             <location line="+3" />
             <location line="+64" />
             <source>Your file</source>
-            <translation>Votre fichier</translation>
+            <translation>Ton fichier</translation>
         </message>
         <message>
             <location line="-61" />
@@ -14135,7 +14562,7 @@ Les sauvegardes présentes sont d'abord mises de côté dans :
         <message>
             <location line="+26" />
             <source>Saved. Restart to use it.</source>
-            <translation>Enregistré. Redémarrez pour l'utiliser.</translation>
+            <translation>Enregistré. Redémarre pour l'utiliser.</translation>
         </message>
         <message>
             <location line="+5" />
@@ -14150,12 +14577,12 @@ Les sauvegardes présentes sont d'abord mises de côté dans :
         <message>
             <location line="+8" />
             <source>Close the game first</source>
-            <translation>Fermez d'abord le jeu</translation>
+            <translation>Ferme d'abord le jeu</translation>
         </message>
         <message>
             <location line="+40" />
             <source>Save your changes?</source>
-            <translation>Enregistrer vos modifications ?</translation>
+            <translation>Enregistrer tes modifications ?</translation>
         </message>
         <message>
             <location line="+59" />
@@ -14230,7 +14657,7 @@ Les sauvegardes présentes sont d'abord mises de côté dans :
             <source>Couldn't save the log to %1.
 Try another folder.</source>
             <translation>Impossible d'enregistrer le journal dans %1.
-Essayez un autre dossier.</translation>
+Essaie un autre dossier.</translation>
         </message>
         <message>
             <location line="+9" />
@@ -14245,7 +14672,7 @@ Essayez un autre dossier.</translation>
         <message>
             <location line="+1" />
             <source>Attach this file to your Cervin issue report.&lt;br&gt;&lt;br&gt;What's inside:&lt;ul style='margin-left:-20px'&gt;&lt;li&gt;Your log from this session and the one before&lt;/li&gt;&lt;li&gt;Your Cervin version and the settings that matter for support&lt;/li&gt;&lt;li&gt;A short summary of your PC: Windows version, CPU, graphics card and driver, RAM and screen&lt;/li&gt;&lt;/ul&gt;Your Windows user name and PC name are removed. Nothing else from your PC is in it.</source>
-            <translation>Glissez ce fichier dans votre message de signalement de problème Cervin.&lt;br&gt;&lt;br&gt;Contenu :&lt;ul style='margin-left:-20px'&gt;&lt;li&gt;Votre journal de cette session et de la précédente&lt;/li&gt;&lt;li&gt;Votre version de Cervin et les paramètres utiles pour l'assistance&lt;/li&gt;&lt;li&gt;Un court résumé de votre PC : version de Windows, CPU, carte graphique et pilote, RAM et écran&lt;/li&gt;&lt;/ul&gt;Votre nom d'utilisateur Windows et le nom de votre PC sont retirés. Rien d'autre de votre PC n'y figure.</translation>
+            <translation>Glisse ce fichier dans ton message de signalement de problème Cervin.&lt;br&gt;&lt;br&gt;Contenu :&lt;ul style='margin-left:-20px'&gt;&lt;li&gt;Ton journal de cette session et de la précédente&lt;/li&gt;&lt;li&gt;Ta version de Cervin et les paramètres utiles pour l'assistance&lt;/li&gt;&lt;li&gt;Un court résumé de ton PC : version de Windows, CPU, carte graphique et pilote, RAM et écran&lt;/li&gt;&lt;/ul&gt;Ton nom d'utilisateur Windows et le nom de ton PC sont retirés. Rien d'autre de ton PC n'y figure.</translation>
         </message>
         <message>
             <location filename="../../src/qt_common/game_list/worker.cpp" line="-276" />
@@ -14363,7 +14790,7 @@ Essayez un autre dossier.</translation>
         <message>
             <location line="+3" />
             <source>Do you wish to restore this amiibo?</source>
-            <translation>Voulez-vous restaurer cet Amiibo ?</translation>
+            <translation>Veux-tu restaurer cet Amiibo ?</translation>
         </message>
     </context>
     <context>
@@ -14376,7 +14803,7 @@ Essayez un autre dossier.</translation>
         <message>
             <location line="+1" />
             <source>This game may require firmware to function properly, and you don't have any installed. Please install firmware before launching, or press "OK" to launch anyways.</source>
-            <translation>Ce jeu peut avoir besoin du firmware pour fonctionner correctement, et aucun n'est installé. Installez le firmware avant de lancer le jeu, ou appuyez sur « OK » pour le lancer quand même.</translation>
+            <translation>Ce jeu peut avoir besoin du firmware pour fonctionner correctement, et aucun n'est installé. Installe le firmware avant de lancer le jeu, ou appuie sur « OK » pour le lancer quand même.</translation>
         </message>
         <message>
             <location line="+13" />
@@ -14479,7 +14906,7 @@ Essayez un autre dossier.</translation>
         <message>
             <location line="+1" />
             <source>UNEXPECTED BAD THINGS MAY HAPPEN IF YOU DON'T READ THIS!&lt;br&gt;Cervin has detected the following save directories with no attached profile:&lt;br&gt;%1&lt;br&gt;&lt;br&gt;The following profiles are valid:&lt;br&gt;%2&lt;br&gt;&lt;br&gt;Click "OK" to open your save folder and fix up your profiles.&lt;br&gt;Hint: copy the contents of the largest or last-modified folder elsewhere, delete all orphaned profiles, and move your copied contents to the good profile.&lt;br&gt;</source>
-            <translation>DES CHOSES GRAVES INATTENDUES PEUVENT SURVENIR SI VOUS NE LISEZ PAS CECI !&lt;br&gt;Cervin a détecté les dossiers de sauvegarde suivants sans profil associé :&lt;br&gt;%1&lt;br&gt;&lt;br&gt;Les profils suivants sont valides :&lt;br&gt;%2&lt;br&gt;&lt;br&gt;Cliquez sur « OK » pour ouvrir votre dossier de sauvegardes et réparer vos profils.&lt;br&gt;Astuce : copiez ailleurs le contenu du dossier le plus volumineux ou le plus récemment modifié, supprimez tous les profils orphelins, puis déplacez le contenu copié dans le bon profil.&lt;br&gt;</translation>
+            <translation>DES CHOSES GRAVES INATTENDUES PEUVENT SURVENIR SI TU NE LIS PAS CECI !&lt;br&gt;Cervin a détecté les dossiers de sauvegarde suivants sans profil associé :&lt;br&gt;%1&lt;br&gt;&lt;br&gt;Les profils suivants sont valides :&lt;br&gt;%2&lt;br&gt;&lt;br&gt;Clique sur « OK » pour ouvrir ton dossier de sauvegardes et réparer tes profils.&lt;br&gt;Astuce : copie ailleurs le contenu du dossier le plus volumineux ou le plus récemment modifié, supprime tous les profils orphelins, puis déplace le contenu copié dans le bon profil.&lt;br&gt;</translation>
         </message>
         <message>
             <location line="+16" />
@@ -14494,14 +14921,14 @@ Essayez un autre dossier.</translation>
         <message>
             <location line="+5" />
             <source>Are you REALLY sure?</source>
-            <translation>Êtes-vous VRAIMENT sûr ?</translation>
+            <translation>Tu es VRAIMENT sûr ?</translation>
         </message>
         <message>
             <location line="+1" />
             <source>Once deleted, your data will NOT come back!
 Only do this if you're 100% sure you want to delete this data.</source>
-            <translation>Une fois supprimées, vos données NE POURRONT PAS être récupérées !
-Ne faites cela que si vous êtes sûr à 100 % de vouloir supprimer ces données.</translation>
+            <translation>Une fois supprimées, tes données NE POURRONT PAS être récupérées !
+Ne fais cela que si tu es sûr à 100 % de vouloir supprimer ces données.</translation>
         </message>
         <message>
             <location line="+7" />
@@ -14563,7 +14990,7 @@ Ne faites cela que si vous êtes sûr à 100 % de vouloir supprimer ces donné
         <message>
             <location line="+1" />
             <source>Ensure you have write permissions on the targeted directory and try again.</source>
-            <translation>Assurez-vous d’avoir les permissions d’écriture sur le répertoire ciblé et réessayez.</translation>
+            <translation>Vérifie que tu as les permissions d’écriture sur le répertoire ciblé et réessaie.</translation>
         </message>
         <message>
             <location line="+19" />
@@ -14578,7 +15005,7 @@ Ne faites cela que si vous êtes sûr à 100 % de vouloir supprimer ces donné
         <message>
             <location line="+1" />
             <source>All previous data in this directory will be deleted. Are you sure you wish to proceed?</source>
-            <translation>Toutes les données précédentes de ce répertoire seront supprimées. Êtes-vous sûr de vouloir continuer ?</translation>
+            <translation>Toutes les données précédentes de ce répertoire seront supprimées. Veux-tu vraiment continuer ?</translation>
         </message>
         <message>
             <location line="+8" />
@@ -14618,7 +15045,7 @@ Ne faites cela que si vous êtes sûr à 100 % de vouloir supprimer ces donné
         <message>
             <location line="+1" />
             <source>Ensure you have read permissions on the targeted directory and try again.</source>
-            <translation>Assurez-vous d’avoir les permissions de lecture sur le répertoire ciblé et réessayez.</translation>
+            <translation>Vérifie que tu as les permissions de lecture sur le répertoire ciblé et réessaie.</translation>
         </message>
         <message>
             <location line="+17" />
@@ -14628,7 +15055,7 @@ Ne faites cela que si vous êtes sûr à 100 % de vouloir supprimer ces donné
         <message>
             <location line="+1" />
             <source>Install decryption keys and restart Cervin before attempting to install firmware.</source>
-            <translation>Installez les clés de déchiffrement et redémarrez Cervin avant d'installer le firmware.</translation>
+            <translation>Installe les clés de déchiffrement et redémarre Cervin avant d'installer le firmware.</translation>
         </message>
         <message>
             <location line="+12" />
@@ -14651,7 +15078,7 @@ Ne faites cela que si vous êtes sûr à 100 % de vouloir supprimer ces donné
 Check write permissions in the system temp directory and try again.
 OS reported error: %1</source>
             <translation>Impossible de nettoyer le cache du firmware extrait.
-Vérifiez les droits d'écriture dans le dossier temporaire du système et réessayez.
+Vérifie les droits d'écriture dans le dossier temporaire du système et réessaie.
 Erreur signalée par le système : %1</translation>
         </message>
     </context>
@@ -14691,7 +15118,7 @@ To:
         <message>
             <location line="+1" />
             <source>This title is already linked to Ryujinx. Would you like to unlink it?</source>
-            <translation>Ce titre est déjà lié à Ryujinx. Voulez‑vous le délier ?</translation>
+            <translation>Ce titre est déjà lié à Ryujinx. Veux-tu le délier ?</translation>
         </message>
         <message>
             <location line="+27" />
@@ -14874,7 +15301,7 @@ To:
         <message>
             <location line="+0" />
             <source>Do you want to launch the game in fullscreen?</source>
-            <translation>Voulez-vous lancer le jeu en plein écran ?</translation>
+            <translation>Veux-tu lancer le jeu en plein écran ?</translation>
         </message>
         <message>
             <location line="+4" />
@@ -14894,7 +15321,7 @@ To:
         <message>
             <location line="+1" />
             <source>This will create a shortcut to the current AppImage. This may not work well if you update. Continue?</source>
-            <translation>Cela créera un raccourci vers l'AppImage actuel. Cela peut ne pas fonctionner correctement si vous effectuez une mise à jour. Continuer ?</translation>
+            <translation>Cela créera un raccourci vers l'AppImage actuel. Cela peut ne pas fonctionner correctement si tu fais une mise à jour. Continuer ?</translation>
         </message>
         <message>
             <location line="+6" />
@@ -14924,7 +15351,7 @@ To:
         <message>
             <location line="+1" />
             <source>Please install firmware to use the home menu.</source>
-            <translation>Veuillez installer un firmware pour utiliser le menu d'accueil</translation>
+            <translation>Installe un firmware pour utiliser le menu d'accueil</translation>
         </message>
         <message>
             <location line="+6" />
@@ -14934,7 +15361,7 @@ To:
         <message>
             <location line="+1" />
             <source>Home Menu is not available. Please reinstall firmware.</source>
-            <translation>Le menu d'accueil n'est pas disponible. Veuillez réinstaller le firmware</translation>
+            <translation>Le menu d'accueil n'est pas disponible. Réinstalle le firmware</translation>
         </message>
     </context>
     <context>
@@ -14974,7 +15401,7 @@ To:
             <source>Could not detect mod type automatically. Please manually specify the type of mod you downloaded.
 
 Most mods are RomFS mods, but patches (.pchtxt) are typically ExeFS mods.</source>
-            <translation>Impossible de détecter automatiquement le type du mod. Indiquez manuellement le type du mod téléchargé.
+            <translation>Impossible de détecter automatiquement le type du mod. Indique manuellement le type du mod téléchargé.
 
 La plupart des mods sont des mods RomFS, mais les patchs (.pchtxt) sont généralement des mods ExeFS.</translation>
         </message>
@@ -15005,7 +15432,7 @@ La plupart des mods sont des mods RomFS, mais les patchs (.pchtxt) sont généra
         <message>
             <location line="+1" />
             <source>Failed to create or open shader cache for this title, ensure your app data directory has write permissions.</source>
-            <translation>Impossible de créer ou d’ouvrir le cache des shaders pour ce titre. Assurez-vous que votre répertoire de données de l’application dispose des permissions d’écriture.</translation>
+            <translation>Impossible de créer ou d’ouvrir le cache des shaders pour ce titre. Vérifie que ton répertoire de données de l’application dispose des permissions d’écriture.</translation>
         </message>
     </context>
     <context>
@@ -15053,12 +15480,12 @@ La plupart des mods sont des mods RomFS, mais les patchs (.pchtxt) sont généra
         <message>
             <location line="+2" />
             <source>Verify your keys file has a .keys extension and try again.</source>
-            <translation>Vérifiez que votre fichier de clés a l’extension .keys et réessayez.</translation>
+            <translation>Vérifie que ton fichier de clés a l’extension .keys et réessaie.</translation>
         </message>
         <message>
             <location line="+2" />
             <source>Decryption Keys failed to initialize. Check that your dumping tools are up to date and re-dump keys.</source>
-            <translation>Échec de l’initialisation des Clés de Déchiffrement. Vérifiez que vos outils d’extraction sont à jour et ré-extrayez les clés.</translation>
+            <translation>Échec de l’initialisation des Clés de Déchiffrement. Vérifie que tes outils d’extraction sont à jour et ré-extrais les clés.</translation>
         </message>
         <message>
             <location line="+6" />
@@ -15083,15 +15510,15 @@ La plupart des mods sont des mods RomFS, mais les patchs (.pchtxt) sont généra
         <message>
             <location line="+2" />
             <source>Firmware installation cancelled, firmware may be in a bad state or corrupted. Restart Cervin or re-install firmware.</source>
-            <translation>Installation du firmware annulée, le firmware est peut-être dans un état incorrect ou corrompu. Redémarrez Cervin ou réinstallez le firmware.</translation>
+            <translation>Installation du firmware annulée, le firmware est peut-être dans un état incorrect ou corrompu. Redémarre Cervin ou réinstalle le firmware.</translation>
         </message>
         <message>
             <location line="+17" />
             <source>Would you like to migrate your data for use in Cervin?
 Select the corresponding button to migrate data from that emulator.
 This may take a while.</source>
-            <translation>Voulez-vous migrer vos données pour les utiliser dans Cervin ?
-Choisissez le bouton correspondant pour migrer les données de cet émulateur.
+            <translation>Veux-tu migrer tes données pour les utiliser dans Cervin ?
+Choisis le bouton correspondant pour migrer les données de cet émulateur.
 Cela peut prendre un moment.</translation>
         </message>
         <message>
@@ -15106,14 +15533,14 @@ Les versions précédentes gardaient leur propre cache dans un ancien dossier de
             <source>Copies and verifies the full profile before moving the source aside as a recovery backup.
 Requires enough free space for a full copy. Keep the backup until you have checked your saves.</source>
             <translation>Copie et vérifie le profil complet avant de mettre la source de côté comme sauvegarde de récupération.
-Nécessite assez d'espace libre pour une copie complète. Gardez la sauvegarde jusqu'à ce que vous ayez vérifié vos sauvegardes de jeu.</translation>
+Nécessite assez d'espace libre pour une copie complète. Garde la sauvegarde jusqu'à ce que tu aies vérifié tes sauvegardes de jeu.</translation>
         </message>
         <message>
             <location line="+5" />
             <source>Creates a filesystem link between the old directory and the Cervin directory.
 This is recommended if you want to share data between emulators.</source>
             <translation>Crée un lien de système de fichiers entre l'ancien dossier et le dossier de Cervin.
-Recommandé si vous voulez partager les données entre émulateurs.</translation>
+Recommandé si tu veux partager les données entre émulateurs.</translation>
         </message>
         <message>
             <location line="-26" />
@@ -15123,7 +15550,7 @@ Recommandé si vous voulez partager les données entre émulateurs.</translation
         <message>
             <location line="+3" />
             <source>Firmware reported as present, but was unable to be read. Check for decryption keys and redump firmware if necessary.</source>
-            <translation>Le firmware est signalé comme présent, mais n'a pas pu être lu. Vérifiez les clés de déchiffrement et refaites le dump du firmware si nécessaire.</translation>
+            <translation>Le firmware est signalé comme présent, mais n'a pas pu être lu. Vérifie les clés de déchiffrement et refais le dump du firmware si nécessaire.</translation>
         </message>
         <message>
             <location line="+7" />
@@ -15134,7 +15561,7 @@ Recommandé si vous voulez partager les données entre émulateurs.</translation
             <location line="+9" />
             <source>Keeps the old data directory. This is recommended if you aren't
 space-constrained and want to keep separate data for the old emulator.</source>
-            <translation>Conserve l’ancien répertoire de données. Cela est recommandé si vous n’avez pas de problème d’espace et que vous souhaitez conserver les données séparées pour l’ancien émulateur.</translation>
+            <translation>Conserve l’ancien répertoire de données. Cela est recommandé si tu n’as pas de problème d’espace et que tu veux conserver les données séparées pour l’ancien émulateur.</translation>
         </message>
         <message>
             <location line="+12" />
@@ -15436,14 +15863,14 @@ space-constrained and want to keep separate data for the old emulator.</source>
             <source>An error has occurred.
 Please try again or contact the developer of the software.</source>
             <translation>Une erreur s'est produite.
-Veuillez essayer à nouveau ou contactez le développeur du logiciel.</translation>
+Réessaie ou contacte le développeur du logiciel.</translation>
         </message>
         <message>
             <location line="+13" />
             <source>An error occurred on %1 at %2.
 Please try again or contact the developer of the software.</source>
             <translation>Une erreur s'est produite le %1 à %2.
-Veuillez essayer à nouveau ou contactez le développeur du logiciel.</translation>
+Réessaie ou contacte le développeur du logiciel.</translation>
         </message>
         <message>
             <location line="+15" />
@@ -15518,7 +15945,7 @@ Veuillez essayer à nouveau ou contactez le développeur du logiciel.</translati
         <message>
             <location line="+3" />
             <source>Select a user to link to a Nintendo Account.</source>
-            <translation>Sélectionnez un utilisateur à associer à un compte Nintendo.</translation>
+            <translation>Choisis un utilisateur à associer à un compte Nintendo.</translation>
         </message>
         <message>
             <location line="+3" />
@@ -15556,7 +15983,7 @@ Veuillez essayer à nouveau ou contactez le développeur du logiciel.</translati
         <message>
             <location line="+185" />
             <source>Enter Text</source>
-            <translation>Entrez texte</translation>
+            <translation>Entre un texte</translation>
         </message>
         <message>
             <location line="+280" />
@@ -15595,7 +16022,7 @@ p, li { white-space: pre-wrap; }
             <source>Linking save data to Ryujinx lets both Ryujinx and Cervin reference the same save files for your games.
 
 By selecting "From Fritchii", previous save data stored in Ryujinx will be deleted, and vice versa for "From Ryujinx".</source>
-            <translation>Lier les données de sauvegarde à Ryujinx permet à Ryujinx et à Cervin d'utiliser les mêmes fichiers de sauvegarde pour vos jeux.
+            <translation>Lier les données de sauvegarde à Ryujinx permet à Ryujinx et à Cervin d'utiliser les mêmes fichiers de sauvegarde pour tes jeux.
 
 En choisissant « Depuis Cervin », les sauvegardes précédentes stockées dans Ryujinx seront supprimées, et inversement pour « Depuis Ryujinx ».</translation>
         </message>
@@ -15630,7 +16057,7 @@ En choisissant « Depuis Cervin », les sauvegardes précédentes stockées dans
         <message>
             <location filename="../../src/yuzu/util/sequence_dialog/sequence_dialog.cpp" line="+10" />
             <source>Enter a hotkey</source>
-            <translation>Entrez un raccourci</translation>
+            <translation>Entre un raccourci</translation>
         </message>
     </context>
     <context>
@@ -15662,11 +16089,731 @@ En choisissant « Depuis Cervin », les sauvegardes précédentes stockées dans
         </message>
     </context>
     <context>
+        <name>SettingGuide</name>
+        <message>
+            <location filename="../../src/yuzu/configuration/setting_guide.cpp" line="+14" />
+            <location line="+10" />
+            <source>Rebuilds a sharp picture from a smaller one, so the game runs faster.</source>
+            <translation>Reconstruit une image nette à partir d'une plus petite, pour que le jeu tourne plus vite.</translation>
+        </message>
+        <message>
+            <location line="-9" />
+            <location line="+10" />
+            <source>More FPS for the same sharpness. OoT only: other games keep their own look.</source>
+            <translation>Plus de FPS pour la même netteté. Seulement dans OoT : les autres jeux gardent leur rendu.</translation>
+        </message>
+        <message>
+            <location line="-8" />
+            <location line="+10" />
+            <location line="+58" />
+            <location line="+137" />
+            <location line="+173" />
+            <source>+ FPS</source>
+            <translation>+ FPS</translation>
+        </message>
+        <message>
+            <location line="-377" />
+            <location line="+10" />
+            <source>OoT only</source>
+            <translation>OoT seulement</translation>
+        </message>
+        <message>
+            <location line="-8" />
+            <location line="+10" />
+            <source>Recommended: DLSS on an RTX card, else FSR 3.1</source>
+            <translation>Recommandé : DLSS sur une carte RTX, sinon FSR 3.1</translation>
+        </message>
+        <message>
+            <location line="+4" />
+            <source>The size of the final picture, the one you see.</source>
+            <translation>La taille de l'image finale, celle que tu vois.</translation>
+        </message>
+        <message>
+            <location line="+1" />
+            <source>Above your screen's size, Cervin shrinks it again: finer, but heavier for the graphics card.</source>
+            <translation>Au-dessus de la taille de ton écran, Cervin la réduit ensuite : plus fine, mais plus lourde pour la carte graphique.</translation>
+        </message>
+        <message>
+            <location line="+2" />
+            <source>− FPS if bigger</source>
+            <translation>− FPS si plus grande</translation>
+        </message>
+        <message>
+            <location line="+2" />
+            <source>Recommended: your screen's size</source>
+            <translation>Recommandé : la taille de ton écran</translation>
+        </message>
+        <message>
+            <location line="+4" />
+            <source>What matters most to you. Cervin picks the base: the size the game draws before the upscaler rebuilds it.</source>
+            <translation>Ce qui compte le plus pour toi. Cervin choisit la base : la taille que le jeu dessine avant que l'upscaler la reconstruise.</translation>
+        </message>
+        <message>
+            <location line="+1" />
+            <source>A smaller base gives more FPS and a slightly softer picture.</source>
+            <translation>Une base plus petite donne plus de FPS et une image un peu plus douce.</translation>
+        </message>
+        <message>
+            <location line="+2" />
+            <source>+ FPS with a smaller base</source>
+            <translation>+ FPS avec une base plus petite</translation>
+        </message>
+        <message>
+            <location line="+1" />
+            <source>− picture with a smaller base</source>
+            <translation>− image avec une base plus petite</translation>
+        </message>
+        <message>
+            <location line="+2" />
+            <source>Recommended: Picture</source>
+            <translation>Recommandé : Image</translation>
+        </message>
+        <message>
+            <location line="+4" />
+            <source>Lets OoT draw at 1440p instead of 1080p at most.</source>
+            <translation>Permet à OoT de dessiner en 1440p au lieu de 1080p au plus.</translation>
+        </message>
+        <message>
+            <location line="+1" />
+            <source>Sharper, but asks a lot more of the graphics card.</source>
+            <translation>Plus net, mais demande beaucoup plus à la carte graphique.</translation>
+        </message>
+        <message>
+            <location line="+2" />
+            <location line="+47" />
+            <location line="+10" />
+            <location line="+18" />
+            <location line="+153" />
+            <source>+ picture</source>
+            <translation>+ image</translation>
+        </message>
+        <message>
+            <location line="-227" />
+            <location line="+265" />
+            <source>− FPS</source>
+            <translation>− FPS</translation>
+        </message>
+        <message>
+            <location line="-263" />
+            <source>Recommended: On from about an RTX 3070 / RX 6800</source>
+            <translation>Recommandé : activé à partir d'une RTX 3070 / RX 6800 environ</translation>
+        </message>
+        <message>
+            <location line="+4" />
+            <source>The size the game draws.</source>
+            <translation>La taille que le jeu dessine.</translation>
+        </message>
+        <message>
+            <location line="+1" />
+            <source>Lower runs faster but looks softer.</source>
+            <translation>Plus bas, ça tourne plus vite mais c'est plus doux.</translation>
+        </message>
+        <message>
+            <location line="+2" />
+            <source>+ FPS if lower</source>
+            <translation>+ FPS si plus bas</translation>
+        </message>
+        <message>
+            <location line="+6" />
+            <source>The size the game draws, compared with the console.</source>
+            <translation>La taille que le jeu dessine, par rapport à la console.</translation>
+        </message>
+        <message>
+            <location line="+1" />
+            <source>Higher is sharper but costs FPS.</source>
+            <translation>Plus haut, c'est plus net mais ça coûte des FPS.</translation>
+        </message>
+        <message>
+            <location line="+2" />
+            <source>+ picture if higher</source>
+            <translation>+ image si plus haut</translation>
+        </message>
+        <message>
+            <location line="+1" />
+            <source>− FPS if higher</source>
+            <translation>− FPS si plus haut</translation>
+        </message>
+        <message>
+            <location line="+2" />
+            <source>Recommended: 1x, or an upscaler in OoT</source>
+            <translation>Recommandé : 1x, ou un upscaler dans OoT</translation>
+        </message>
+        <message>
+            <location line="+4" />
+            <source>NVIDIA's upscaler, for RTX cards.</source>
+            <translation>L'upscaler de NVIDIA, pour les cartes RTX.</translation>
+        </message>
+        <message>
+            <location line="+1" />
+            <source>The finest picture for the FPS. Needs NVIDIA's files (download button).</source>
+            <translation>La plus belle image pour les FPS. Demande les fichiers de NVIDIA (bouton de téléchargement).</translation>
+        </message>
+        <message>
+            <location line="+3" />
+            <source>RTX cards only</source>
+            <translation>cartes RTX seulement</translation>
+        </message>
+        <message>
+            <location line="+6" />
+            <source>Which DLSS model rebuilds the picture. The letters are NVIDIA's names.</source>
+            <translation>Le modèle DLSS qui reconstruit l'image. Les lettres sont les noms de NVIDIA.</translation>
+        </message>
+        <message>
+            <location line="+1" />
+            <source>Each one trades sharpness, steadiness and cost differently. Automatic picks for you.</source>
+            <translation>Chacun dose différemment netteté, stabilité et coût. Automatique choisit pour toi.</translation>
+        </message>
+        <message>
+            <location line="+3" />
+            <source>Recommended: Automatic</source>
+            <translation>Recommandé : Automatique</translation>
+        </message>
+        <message>
+            <location line="+4" />
+            <source>Moves the picture by tiny steps so DLSS sees more detail.</source>
+            <translation>Décale l'image par tout petits pas pour que DLSS voie plus de détails.</translation>
+        </message>
+        <message>
+            <location line="+1" />
+            <source>Sharper fine detail. Turn it off if the picture shakes.</source>
+            <translation>Détails fins plus nets. Désactive-le si l'image tremble.</translation>
+        </message>
+        <message>
+            <location line="+3" />
+            <location line="+64" />
+            <location line="+9" />
+            <source>no FPS cost</source>
+            <translation>aucun coût en FPS</translation>
+        </message>
+        <message>
+            <location line="-71" />
+            <location line="+118" />
+            <location line="+111" />
+            <location line="+9" />
+            <location line="+9" />
+            <source>Recommended: on</source>
+            <translation>Recommandé : activé</translation>
+        </message>
+        <message>
+            <location line="-243" />
+            <source>Sharper textures when FSR or DLSS is on.</source>
+            <translation>Des textures plus nettes avec FSR ou DLSS.</translation>
+        </message>
+        <message>
+            <location line="+1" />
+            <source>Sharper can make surfaces shimmer when you move.</source>
+            <translation>Plus net peut faire scintiller les surfaces quand tu bouges.</translation>
+        </message>
+        <message>
+            <location line="+3" />
+            <source>shimmers if too sharp</source>
+            <translation>scintille si trop net</translation>
+        </message>
+        <message>
+            <location line="+2" />
+            <location line="+54" />
+            <source>Recommended: Auto</source>
+            <translation>Recommandé : Auto</translation>
+        </message>
+        <message>
+            <location line="-50" />
+            <source>Your own texture sharpness value.</source>
+            <translation>Ta propre valeur de netteté des textures.</translation>
+        </message>
+        <message>
+            <location line="+1" />
+            <source>Lower is sharper. Too low makes textures shimmer.</source>
+            <translation>Plus bas, c'est plus net. Trop bas, les textures scintillent.</translation>
+        </message>
+        <message>
+            <location line="+7" />
+            <source>Switch 2 games with DLSS use the game's own upscaler instead of FSR 3.1.</source>
+            <translation>Les jeux Switch 2 avec DLSS utilisent leur propre upscaler au lieu de FSR 3.1.</translation>
+        </message>
+        <message>
+            <location line="+1" />
+            <source>Closer to the console's look, but can be slow on older cards.</source>
+            <translation>Plus proche du rendu de la console, mais peut être lent sur les cartes anciennes.</translation>
+        </message>
+        <message>
+            <location line="+3" />
+            <source>− FPS on older cards</source>
+            <translation>− FPS sur les cartes anciennes</translation>
+        </message>
+        <message>
+            <location line="+6" />
+            <source>How Cervin talks to your graphics card.</source>
+            <translation>La façon dont Cervin parle à ta carte graphique.</translation>
+        </message>
+        <message>
+            <location line="+1" />
+            <source>Vulkan is the fastest. OpenGL only if Vulkan fails.</source>
+            <translation>Vulkan est le plus rapide. OpenGL seulement si Vulkan ne marche pas.</translation>
+        </message>
+        <message>
+            <location line="+3" />
+            <source>Recommended: Vulkan</source>
+            <translation>Recommandé : Vulkan</translation>
+        </message>
+        <message>
+            <location line="+4" />
+            <source>The graphics card that runs the games.</source>
+            <translation>La carte graphique qui fait tourner les jeux.</translation>
+        </message>
+        <message>
+            <location line="+1" />
+            <source>On a laptop, pick the dedicated card (NVIDIA or AMD), not the built-in one.</source>
+            <translation>Sur un portable, choisis la carte dédiée (NVIDIA ou AMD), pas la carte intégrée.</translation>
+        </message>
+        <message>
+            <location line="+2" />
+            <source>only matters with several cards</source>
+            <translation>utile seulement avec plusieurs cartes</translation>
+        </message>
+        <message>
+            <location line="+6" />
+            <source>Waits for your screen before showing a picture.</source>
+            <translation>Attend ton écran avant d'afficher une image.</translation>
+        </message>
+        <message>
+            <location line="+1" />
+            <source>Off, the picture can tear but reacts faster. On, no tearing but a little lag.</source>
+            <translation>Désactivé, l'image peut se déchirer mais réagit plus vite. Activé, plus de déchirure mais un peu de délai.</translation>
+        </message>
+        <message>
+            <location line="+2" />
+            <source>does not change the game's FPS</source>
+            <translation>ne change pas les FPS du jeu</translation>
+        </message>
+        <message>
+            <location line="+1" />
+            <source>a little lag when on</source>
+            <translation>un peu de délai si activé</translation>
+        </message>
+        <message>
+            <location line="+6" />
+            <source>How the picture is fitted to your window or screen when their sizes differ.</source>
+            <translation>Comment l'image est ajustée à ta fenêtre ou ton écran quand leurs tailles diffèrent.</translation>
+        </message>
+        <message>
+            <location line="+1" />
+            <source>Only the final look changes: neither the FPS nor the game.</source>
+            <translation>Seul le rendu final change : ni les FPS, ni le jeu.</translation>
+        </message>
+        <message>
+            <location line="+8" />
+            <source>How much FSR sharpens the picture. 0% turns it off.</source>
+            <translation>À quel point FSR accentue l'image. 0 % la désactive.</translation>
+        </message>
+        <message>
+            <location line="+1" />
+            <source>Too high looks grainy. Also used by the FSR screen filters.</source>
+            <translation>Trop haut, l'image paraît granuleuse. Sert aussi aux filtres d'écran FSR.</translation>
+        </message>
+        <message>
+            <location line="+8" />
+            <source>The picture's shape.</source>
+            <translation>La forme de l'image.</translation>
+        </message>
+        <message>
+            <location line="+1" />
+            <source>16:9 fits most screens. The others stretch the picture.</source>
+            <translation>Le 16:9 convient à la plupart des écrans. Les autres étirent l'image.</translation>
+        </message>
+        <message>
+            <location line="+3" />
+            <source>Recommended: 16:9</source>
+            <translation>Recommandé : 16:9</translation>
+        </message>
+        <message>
+            <location line="+4" />
+            <source>Smooths jagged edges.</source>
+            <translation>Adoucit les bords en escalier.</translation>
+        </message>
+        <message>
+            <location line="+1" />
+            <source>Useless with DLSS or FSR, which already do it. Without them, SMAA looks best, FXAA is the lightest.</source>
+            <translation>Inutile avec DLSS ou FSR, qui le font déjà. Sans eux, SMAA est le plus beau, FXAA le plus léger.</translation>
+        </message>
+        <message>
+            <location line="+2" />
+            <source>useless with DLSS</source>
+            <translation>inutile avec DLSS</translation>
+        </message>
+        <message>
+            <location line="+1" />
+            <source>− FPS (light)</source>
+            <translation>− FPS (léger)</translation>
+        </message>
+        <message>
+            <location line="+6" />
+            <source>How OoT's title screen and cutscene videos are enlarged.</source>
+            <translation>Comment les vidéos de l'écran titre et des cinématiques d'OoT sont agrandies.</translation>
+        </message>
+        <message>
+            <location line="+1" />
+            <source>The game's own way looks best but is slow without an RTX card.</source>
+            <translation>La méthode du jeu est la plus belle, mais lente sans carte RTX.</translation>
+        </message>
+        <message>
+            <location line="+2" />
+            <source>slow without RTX</source>
+            <translation>lent sans RTX</translation>
+        </message>
+        <message>
+            <location line="+6" />
+            <source>Extra picture effects: sharpening, colors, retro looks.</source>
+            <translation>Des effets d'image en plus : netteté, couleurs, looks rétro.</translation>
+        </message>
+        <message>
+            <location line="+1" />
+            <source>Each effect costs some FPS.</source>
+            <translation>Chaque effet coûte quelques FPS.</translation>
+        </message>
+        <message>
+            <location line="+2" />
+            <source>− FPS per effect</source>
+            <translation>− FPS par effet</translation>
+        </message>
+        <message>
+            <location line="+6" />
+            <source>Uses one more processor thread for the graphics.</source>
+            <translation>Utilise un fil du processeur de plus pour les graphismes.</translation>
+        </message>
+        <message>
+            <location line="+1" />
+            <source>Much smoother. Keep it on.</source>
+            <translation>Beaucoup plus fluide. Laisse-le activé.</translation>
+        </message>
+        <message>
+            <location line="+8" />
+            <source>How Cervin fills the screen in fullscreen.</source>
+            <translation>Comment Cervin remplit l'écran en plein écran.</translation>
+        </message>
+        <message>
+            <location line="+1" />
+            <source>Borderless switches between windows faster. Exclusive can lower lag a little.</source>
+            <translation>Sans bordure passe plus vite d'une fenêtre à l'autre. Exclusif peut réduire un peu le délai.</translation>
+        </message>
+        <message>
+            <location line="+7" />
+            <source>How exactly Cervin imitates the console's graphics chip.</source>
+            <translation>À quel point Cervin imite exactement la puce graphique de la console.</translation>
+        </message>
+        <message>
+            <location line="+1" />
+            <source>The fastest mode suits almost every game. Higher fixes rare display bugs.</source>
+            <translation>Le mode le plus rapide suffit pour presque tous les jeux. Plus haut corrige de rares bugs d'affichage.</translation>
+        </message>
+        <message>
+            <location line="+2" />
+            <source>+ FPS when fast</source>
+            <translation>+ FPS en rapide</translation>
+        </message>
+        <message>
+            <location line="+1" />
+            <source>− FPS when accurate</source>
+            <translation>− FPS en précis</translation>
+        </message>
+        <message>
+            <location line="+6" />
+            <source>How carefully the console's memory copies are imitated.</source>
+            <translation>Avec quel soin les copies mémoire de la console sont imitées.</translation>
+        </message>
+        <message>
+            <location line="+1" />
+            <source>Safe can fix some games, Unsafe is faster. Default follows the GPU mode.</source>
+            <translation>Sûr peut réparer certains jeux, Non sûr est plus rapide. Par défaut suit le mode du GPU.</translation>
+        </message>
+        <message>
+            <location line="+2" />
+            <location line="+9" />
+            <location line="+65" />
+            <source>for problem games</source>
+            <translation>pour les jeux à problèmes</translation>
+        </message>
+        <message>
+            <location line="-68" />
+            <source>How strictly Cervin waits for the graphics chip to finish.</source>
+            <translation>À quel point Cervin attend que la puce graphique ait fini.</translation>
+        </message>
+        <message>
+            <location line="+1" />
+            <source>Immediate is the fastest but can cause glitches. Balanced and Accurate fix some games.</source>
+            <translation>Immédiat est le plus rapide mais peut causer des bugs. Équilibré et Précis réparent certains jeux.</translation>
+        </message>
+        <message>
+            <location line="+8" />
+            <source>How much video memory Cervin may use.</source>
+            <translation>Combien de mémoire vidéo Cervin peut utiliser.</translation>
+        </message>
+        <message>
+            <location line="+1" />
+            <source>Aggressive keeps more textures and stutters less, but leaves less for other apps.</source>
+            <translation>Agressif garde plus de textures et saccade moins, mais en laisse moins aux autres applications.</translation>
+        </message>
+        <message>
+            <location line="+2" />
+            <location line="+36" />
+            <location line="+29" />
+            <location line="+19" />
+            <source>− stutters</source>
+            <translation>− saccades</translation>
+        </message>
+        <message>
+            <location line="-78" />
+            <source>Who decodes the game's videos.</source>
+            <translation>Qui décode les vidéos du jeu.</translation>
+        </message>
+        <message>
+            <location line="+1" />
+            <source>The graphics card is the fastest. None skips the videos (black screen).</source>
+            <translation>La carte graphique est la plus rapide. Aucun saute les vidéos (écran noir).</translation>
+        </message>
+        <message>
+            <location line="+7" />
+            <source>Keeps textures sharp on surfaces seen at an angle (floors, roads).</source>
+            <translation>Garde les textures nettes sur les surfaces vues de biais (sols, routes).</translation>
+        </message>
+        <message>
+            <location line="+1" />
+            <source>16x works on almost every card.</source>
+            <translation>16x passe sur presque toutes les cartes.</translation>
+        </message>
+        <message>
+            <location line="+3" />
+            <source>almost free</source>
+            <translation>presque gratuit</translation>
+        </message>
+        <message>
+            <location line="+2" />
+            <source>Recommended: 16x</source>
+            <translation>Recommandé : 16x</translation>
+        </message>
+        <message>
+            <location line="+4" />
+            <source>Who unpacks the console's textures: the graphics card or the processor.</source>
+            <translation>Qui décompresse les textures de la console : la carte graphique ou le processeur.</translation>
+        </message>
+        <message>
+            <location line="+1" />
+            <source>On the graphics card, the processor breathes and loading is faster.</source>
+            <translation>Sur la carte graphique, le processeur respire et les chargements vont plus vite.</translation>
+        </message>
+        <message>
+            <location line="+2" />
+            <source>+ FPS if the processor is the limit</source>
+            <translation>+ FPS si le processeur limite</translation>
+        </message>
+        <message>
+            <location line="+6" />
+            <source>How Cervin spaces out the pictures it shows.</source>
+            <translation>Comment Cervin espace les images qu'il affiche.</translation>
+        </message>
+        <message>
+            <location line="+1" />
+            <source>Even spacing feels smoother, even at the same FPS.</source>
+            <translation>Un espacement régulier paraît plus fluide, même à FPS égal.</translation>
+        </message>
+        <message>
+            <location line="+8" />
+            <source>Packs the textures into a lighter format for your card.</source>
+            <translation>Range les textures dans un format plus léger pour ta carte.</translation>
+        </message>
+        <message>
+            <location line="+1" />
+            <source>BC3 greatly reduces the video memory textures take, with a barely visible loss.</source>
+            <translation>BC3 réduit beaucoup la mémoire vidéo prise par les textures, avec une perte à peine visible.</translation>
+        </message>
+        <message>
+            <location line="+2" />
+            <source>− video memory</source>
+            <translation>− mémoire vidéo</translation>
+        </message>
+        <message>
+            <location line="+1" />
+            <source>slightly less fine textures</source>
+            <translation>textures un peu moins fines</translation>
+        </message>
+        <message>
+            <location line="+2" />
+            <source>For MKW: BC3</source>
+            <translation>Pour MKW : BC3</translation>
+        </message>
+        <message>
+            <location line="+4" />
+            <source>Keeps memory consistent between the graphics and the calculations.</source>
+            <translation>Garde la mémoire cohérente entre les graphismes et les calculs.</translation>
+        </message>
+        <message>
+            <location line="+1" />
+            <source>Fixes some games (often Unreal Engine 4) but costs FPS.</source>
+            <translation>Répare certains jeux (souvent Unreal Engine 4) mais coûte des FPS.</translation>
+        </message>
+        <message>
+            <location line="+9" />
+            <source>Keeps the prepared shaders from one session to the next.</source>
+            <translation>Garde les shaders préparés d'une partie à l'autre.</translation>
+        </message>
+        <message>
+            <location line="+1" />
+            <source>The preparation stutters don't come back at every start.</source>
+            <translation>Les saccades de préparation ne reviennent pas à chaque lancement.</translation>
+        </message>
+        <message>
+            <location line="+3" />
+            <source>a few hundred MB</source>
+            <translation>quelques centaines de Mo</translation>
+        </message>
+        <message>
+            <location line="+6" />
+            <source>Lets the graphics driver keep its own copy of the shaders.</source>
+            <translation>Laisse le pilote graphique garder sa propre copie des shaders.</translation>
+        </message>
+        <message>
+            <location line="+1" />
+            <source>Shaders load faster at the next start.</source>
+            <translation>Les shaders se chargent plus vite au lancement suivant.</translation>
+        </message>
+        <message>
+            <location line="+2" />
+            <source>− loading</source>
+            <translation>− chargement</translation>
+        </message>
+        <message>
+            <location line="+6" />
+            <source>Builds each part of a shader once and reuses it.</source>
+            <translation>Construit chaque morceau de shader une fois et le réutilise.</translation>
+        </message>
+        <message>
+            <location line="+1" />
+            <source>New effects cause shorter stutters.</source>
+            <translation>Les nouveaux effets causent des saccades plus courtes.</translation>
+        </message>
+        <message>
+            <location line="+8" />
+            <source>Processor threads that prepare shaders ahead of time.</source>
+            <translation>Fils du processeur qui préparent les shaders à l'avance.</translation>
+        </message>
+        <message>
+            <location line="+1" />
+            <source>More threads finish sooner. It only runs while the game is paused.</source>
+            <translation>Plus de fils finissent plus tôt. Ça ne tourne que quand le jeu est en pause.</translation>
+        </message>
+        <message>
+            <location line="+2" />
+            <source>only while paused</source>
+            <translation>seulement en pause</translation>
+        </message>
+        <message>
+            <location line="+6" />
+            <source>Keeps videos at normal speed when the FPS are unlocked.</source>
+            <translation>Garde les vidéos à vitesse normale quand les FPS sont débloqués.</translation>
+        </message>
+        <message>
+            <location line="+1" />
+            <source>Cutscene videos no longer run too fast.</source>
+            <translation>Les vidéos des cinématiques ne vont plus trop vite.</translation>
+        </message>
+        <message>
+            <location line="+7" />
+            <source>Caps Ocarina of Time at 30 FPS, at its normal speed.</source>
+            <translation>Bloque Ocarina of Time à 30 FPS, à sa vitesse normale.</translation>
+        </message>
+        <message>
+            <location line="+1" />
+            <source>Steadier on modest PCs. The status bar's 60/30 button switches it too.</source>
+            <translation>Plus régulier sur les PC modestes. Le bouton 60/30 de la barre d'état le change aussi.</translation>
+        </message>
+        <message>
+            <location line="+2" />
+            <location line="+27" />
+            <source>for modest PCs</source>
+            <translation>pour les PC modestes</translation>
+        </message>
+        <message>
+            <location line="-21" />
+            <source>Lets OoT run above 60 FPS, up to the chosen cap.</source>
+            <translation>Laisse OoT dépasser 60 FPS, jusqu'à la limite choisie.</translation>
+        </message>
+        <message>
+            <location line="+1" />
+            <source>Smoother on high refresh rate screens, but timers, cutscenes or minigames may run off.</source>
+            <translation>Plus fluide sur les écrans à haute fréquence, mais minuteurs, cinématiques ou mini-jeux peuvent se dérégler.</translation>
+        </message>
+        <message>
+            <location line="+2" />
+            <location line="+27" />
+            <source>experimental</source>
+            <translation>expérimental</translation>
+        </message>
+        <message>
+            <location line="-21" />
+            <source>Lets OoT skip slow checks for hidden objects.</source>
+            <translation>Laisse OoT sauter les vérifications lentes des objets cachés.</translation>
+        </message>
+        <message>
+            <location line="+1" />
+            <source>Full skips more and can give more FPS on AMD cards. Applies when the game starts.</source>
+            <translation>Complet en saute plus et peut donner plus de FPS sur les cartes AMD. S'applique au lancement du jeu.</translation>
+        </message>
+        <message>
+            <location line="+8" />
+            <source>Runs Mario Kart World in its own 30 FPS mode.</source>
+            <translation>Fait tourner Mario Kart World dans son propre mode 30 FPS.</translation>
+        </message>
+        <message>
+            <location line="+1" />
+            <source>Steadier on modest PCs. Applies after restarting the game.</source>
+            <translation>Plus régulier sur les PC modestes. S'applique après avoir relancé le jeu.</translation>
+        </message>
+        <message>
+            <location line="+8" />
+            <source>Lets Mario Kart World switch between 30 and 60 FPS by itself.</source>
+            <translation>Laisse Mario Kart World passer de 30 à 60 FPS tout seul.</translation>
+        </message>
+        <message>
+            <location line="+1" />
+            <source>60 when your PC can, 30 otherwise, at normal speed. Applies after restarting the game.</source>
+            <translation>60 quand ton PC le peut, 30 sinon, à vitesse normale. S'applique après avoir relancé le jeu.</translation>
+        </message>
+        <message>
+            <location line="+8" />
+            <source>Syncs memory with the graphics card only when the game needs it.</source>
+            <translation>Synchronise la mémoire avec la carte graphique seulement quand le jeu en a besoin.</translation>
+        </message>
+        <message>
+            <location line="+1" />
+            <source>More accurate in some games, sometimes slower.</source>
+            <translation>Plus précis dans certains jeux, parfois plus lent.</translation>
+        </message>
+        <message>
+            <location line="+7" />
+            <source>Fixes transparency effects in a few games.</source>
+            <translation>Répare les effets de transparence dans quelques jeux.</translation>
+        </message>
+        <message>
+            <location line="+1" />
+            <source>Only change it if a game shows broken see-through surfaces.</source>
+            <translation>À changer seulement si un jeu affiche des surfaces transparentes cassées.</translation>
+        </message>
+        <message>
+            <location line="+7" />
+            <source>Keeps earlier states of the game's buffers.</source>
+            <translation>Garde les états précédents des tampons du jeu.</translation>
+        </message>
+        <message>
+            <location line="+1" />
+            <source>Can make some games look better and run more evenly.</source>
+            <translation>Peut améliorer le rendu de certains jeux et les rendre plus réguliers.</translation>
+        </message>
+    </context>
+    <context>
         <name>ShaderWarmDialog</name>
         <message>
             <location filename="../../src/yuzu/shader_warm_dialog.cpp" line="+45" />
             <source>Tip for NVIDIA GPUs: the compiled shaders are kept in the driver's shader cache. In the NVIDIA Control Panel, Manage 3D settings, set Shader Cache Size to 10 GB or Unlimited; a full cache throws them away and the warm-up has to run again.</source>
-            <translation>Astuce pour les GPU NVIDIA : les shaders compilés sont gardés dans le cache de shaders du pilote. Dans le Panneau de configuration NVIDIA, Gérer les paramètres 3D, réglez Taille du cache des shaders sur 10 Go ou Illimitée ; un cache plein les supprime et la préparation doit être refaite.</translation>
+            <translation>Astuce pour les GPU NVIDIA : les shaders compilés sont gardés dans le cache de shaders du pilote. Dans le Panneau de configuration NVIDIA, Gérer les paramètres 3D, règle Taille du cache des shaders sur 10 Go ou Illimitée ; un cache plein les supprime et la préparation doit être refaite.</translation>
         </message>
         <message>
             <location line="+11" />
@@ -15745,7 +16892,7 @@ Programmes de fragments : %L3</translation>
         <message>
             <location line="+4" />
             <source>Next, start the game: the shaders are compiled for your GPU while the game is paused, or right away with Emulation &gt; Prepare Shaders Now (a title screen is a good place). It never slows the game down on its own, and it is done once per driver version.</source>
-            <translation>Ensuite, lancez le jeu : les shaders sont compilés pour votre GPU pendant que le jeu est en pause, ou tout de suite avec Émulation &gt; Préparer les shaders maintenant (un écran titre est un bon endroit). Cela ne ralentit jamais le jeu de soi-même, et ne se fait qu'une fois par version de pilote.</translation>
+            <translation>Ensuite, lance le jeu : les shaders sont compilés pour ton GPU pendant que le jeu est en pause, ou tout de suite avec Émulation &gt; Préparer les shaders maintenant (un écran titre est un bon endroit). Cela ne ralentit jamais le jeu de soi-même, et ne se fait qu'une fois par version de pilote.</translation>
         </message>
         <message>
             <location line="+8" />
@@ -15789,7 +16936,7 @@ Programmes de fragments : %L3</translation>
             <location line="+13" />
             <location filename="../../src/yuzu/updater/update_dialog.cpp" line="+167" />
             <source>Would you like to download this update?</source>
-            <translation>Voulez-vous télécharger cette mise à jour ?</translation>
+            <translation>Veux-tu télécharger cette mise à jour ?</translation>
         </message>
         <message>
             <location line="+17" />
@@ -15868,7 +17015,7 @@ Programmes de fragments : %L3</translation>
         <message>
             <location line="+1" />
             <source>%1 is available. You have Cervin v%2.</source>
-            <translation>%1 est disponible. Vous avez Cervin v%2.</translation>
+            <translation>%1 est disponible. Tu as Cervin v%2.</translation>
         </message>
         <message>
             <location line="+6" />
@@ -15888,7 +17035,7 @@ Programmes de fragments : %L3</translation>
         <message>
             <location line="+2" />
             <source>Cervin will download the update, install it and restart. Your settings, saves and keys are not changed.</source>
-            <translation>Cervin va télécharger la mise à jour, l'installer et redémarrer. Vos paramètres, sauvegardes et clés ne sont pas modifiés.</translation>
+            <translation>Cervin va télécharger la mise à jour, l'installer et redémarrer. Tes paramètres, sauvegardes et clés ne sont pas modifiés.</translation>
         </message>
         <message>
             <location line="+23" />
@@ -15903,12 +17050,12 @@ Programmes de fragments : %L3</translation>
         <message>
             <location line="+1" />
             <source>Cervin can't write to its folder (%1), so it can't update itself there. The update will be downloaded instead: unzip it and copy its contents over your Cervin folder, or move Cervin to a folder you can write to, such as Documents.</source>
-            <translation>Cervin ne peut pas écrire dans son dossier (%1), il ne peut donc pas s'y mettre à jour. La mise à jour sera téléchargée à la place : décompressez-la et copiez son contenu par-dessus votre dossier Cervin, ou déplacez Cervin dans un dossier accessible en écriture, comme Documents.</translation>
+            <translation>Cervin ne peut pas écrire dans son dossier (%1), il ne peut donc pas s'y mettre à jour. La mise à jour sera téléchargée à la place : décompresse-la et copie son contenu par-dessus ton dossier Cervin, ou déplace Cervin dans un dossier accessible en écriture, comme Documents.</translation>
         </message>
         <message>
             <location line="+27" />
             <source>Successfully downloaded %1. Would you like to open its folder?</source>
-            <translation>%1 a été téléchargé. Voulez-vous ouvrir son dossier ?</translation>
+            <translation>%1 a été téléchargé. Veux-tu ouvrir son dossier ?</translation>
         </message>
         <message>
             <location line="+15" />
@@ -15926,7 +17073,7 @@ Programmes de fragments : %L3</translation>
         <message>
             <location line="+5" />
             <source>An earlier update is unfinished. Start Cervin again to finish it first.</source>
-            <translation>Une mise à jour précédente est inachevée. Relancez d'abord Cervin pour la terminer.</translation>
+            <translation>Une mise à jour précédente est inachevée. Relance d'abord Cervin pour la terminer.</translation>
         </message>
         <message>
             <location line="+17" />
@@ -15948,9 +17095,9 @@ Programmes de fragments : %L3</translation>
             <source>Your antivirus probably removed fritchii.exe from the update right after it was unpacked.
 
 Allow it in your antivirus and try again, or download %1 from the release page and unzip it over your Cervin folder. Your saves and settings are kept either way.</source>
-            <translation>Votre antivirus a probablement supprimé fritchii.exe de la mise à jour juste après sa décompression.
+            <translation>Ton antivirus a probablement supprimé fritchii.exe de la mise à jour juste après sa décompression.
 
-Autorisez-le dans votre antivirus et réessayez, ou téléchargez %1 depuis la page de la version et décompressez-le par-dessus votre dossier Cervin. Vos sauvegardes et paramètres sont conservés dans les deux cas.</translation>
+Autorise-le dans ton antivirus et réessaie, ou télécharge %1 depuis la page de la version et décompresse-le par-dessus ton dossier Cervin. Tes sauvegardes et paramètres sont conservés dans les deux cas.</translation>
         </message>
         <message>
             <location line="+5" />
@@ -15974,7 +17121,7 @@ La version précédente est conservée : Aide &gt; Revenir à la version précé
         <message>
             <location line="+7" />
             <source>The update failed (%1) and some files could not be put back. Close Cervin and start it again to restore the previous version. If it does not start, download the release again and unzip it over your Cervin folder; your user data is not affected.</source>
-            <translation>La mise à jour a échoué (%1) et certains fichiers n'ont pas pu être remis en place. Fermez Cervin et relancez-le pour restaurer la version précédente. S'il ne démarre pas, téléchargez à nouveau la version et décompressez-la par-dessus votre dossier Cervin ; vos données utilisateur ne sont pas affectées.</translation>
+            <translation>La mise à jour a échoué (%1) et certains fichiers n'ont pas pu être remis en place. Ferme Cervin et relance-le pour restaurer la version précédente. S'il ne démarre pas, télécharge à nouveau la version et décompresse-la par-dessus ton dossier Cervin ; tes données utilisateur ne sont pas affectées.</translation>
         </message>
         <message>
             <location line="+66" />
@@ -15989,7 +17136,7 @@ La version précédente est conservée : Aide &gt; Revenir à la version précé
         <message>
             <location line="+25" />
             <source>Could not download the update. Check your internet connection and try again.</source>
-            <translation>Impossible de télécharger la mise à jour. Vérifiez votre connexion Internet et réessayez.</translation>
+            <translation>Impossible de télécharger la mise à jour. Vérifie ta connexion Internet et réessaie.</translation>
         </message>
         <message>
             <location line="+29" />
@@ -15999,7 +17146,7 @@ La version précédente est conservée : Aide &gt; Revenir à la version précé
         <message>
             <location line="+1" />
             <source>The downloaded file does not match the checksum GitHub published for it, so it was discarded. Try again later.</source>
-            <translation>Le fichier téléchargé ne correspond pas à la somme de contrôle publiée par GitHub, il a donc été supprimé. Réessayez plus tard.</translation>
+            <translation>Le fichier téléchargé ne correspond pas à la somme de contrôle publiée par GitHub, il a donc été supprimé. Réessaie plus tard.</translation>
         </message>
         <message>
             <location line="+8" />
@@ -16040,7 +17187,7 @@ Code d'erreur : %3</translation>
         <message>
             <location line="+1" />
             <source>An update was interrupted and could not be undone (%1). Close every Cervin window and start Cervin again. If it keeps failing, download the release again and unzip it over your Cervin folder; your user data is not affected.</source>
-            <translation>Une mise à jour a été interrompue et n'a pas pu être annulée (%1). Fermez toutes les fenêtres de Cervin et relancez-le. Si l'échec persiste, téléchargez à nouveau la version et décompressez-la par-dessus votre dossier Cervin ; vos données utilisateur ne sont pas affectées.</translation>
+            <translation>Une mise à jour a été interrompue et n'a pas pu être annulée (%1). Ferme toutes les fenêtres de Cervin et relance-le. Si l'échec persiste, télécharge à nouveau la version et décompresse-la par-dessus ton dossier Cervin ; tes données utilisateur ne sont pas affectées.</translation>
         </message>
         <message>
             <location line="+24" />
@@ -16055,7 +17202,7 @@ Code d'erreur : %3</translation>
         <message>
             <location line="+6" />
             <source>Go back to %1? Cervin will restart. Your settings, saves and keys are not changed, and you can switch back to this version the same way.</source>
-            <translation>Revenir à %1 ? Cervin va redémarrer. Vos paramètres, sauvegardes et clés ne sont pas modifiés, et vous pourrez revenir à cette version de la même façon.</translation>
+            <translation>Revenir à %1 ? Cervin va redémarrer. Tes paramètres, sauvegardes et clés ne sont pas modifiés, et tu pourras revenir à cette version de la même façon.</translation>
         </message>
         <message>
             <location line="+13" />
@@ -16075,7 +17222,7 @@ Code d'erreur : %3</translation>
         <message>
             <location line="+7" />
             <source>Rolling back failed (%1) and some files could not be put back. Close Cervin and start it again to restore this version.</source>
-            <translation>Le retour en arrière a échoué (%1) et certains fichiers n'ont pas pu être remis en place. Fermez Cervin et relancez-le pour restaurer cette version.</translation>
+            <translation>Le retour en arrière a échoué (%1) et certains fichiers n'ont pas pu être remis en place. Ferme Cervin et relance-le pour restaurer cette version.</translation>
         </message>
         <message>
             <location line="+16" />
@@ -16087,7 +17234,7 @@ Code d'erreur : %3</translation>
             <location line="-29" />
             <location line="+30" />
             <source>Please start Cervin again yourself.</source>
-            <translation>Relancez Cervin vous-même.</translation>
+            <translation>Relance Cervin toi-même.</translation>
         </message>
     </context>
     <context>
@@ -16102,9 +17249,9 @@ Code d'erreur : %3</translation>
             <source>Could not find a valid Ryujinx installation. This may typically occur if you are using Ryujinx in portable mode.
 
 Would you like to manually select a portable folder to use?</source>
-            <translation>Aucune installation valide de Ryujinx n'a été trouvée. Cela arrive généralement si vous utilisez Ryujinx en mode portable.
+            <translation>Aucune installation valide de Ryujinx n'a été trouvée. Cela arrive généralement si tu utilises Ryujinx en mode portable.
 
-Voulez-vous choisir manuellement un dossier portable ?</translation>
+Veux-tu choisir manuellement un dossier portable ?</translation>
         </message>
         <message>
             <location line="+7" />
