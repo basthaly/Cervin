@@ -2827,6 +2827,33 @@ bool WrittenAheadOfRender(u64 address, u64 size) noexcept {
     return false;
 }
 
+std::vector<std::pair<u64, u64>> WrittenAheadRanges(u64 address, u64 size, size_t max_runs) {
+    std::vector<std::pair<u64, u64>> runs;
+    if (!Detail::t_render || size == 0 || !g.stamps_on.load(std::memory_order_acquire)) {
+        return runs;
+    }
+    std::atomic_thread_fence(std::memory_order_seq_cst);
+    const u32 place = t_play_number;
+    const u64 end = address + size;
+    for (u64 page = address >> 12; page <= (end - 1) >> 12; ++page) {
+        const u32 stamp = g.stamps[page & (StampSlots - 1)].load(std::memory_order_relaxed);
+        if (stamp == 0 || static_cast<s32>(stamp - place) <= 0) {
+            continue;
+        }
+        const u64 begin = (std::max)(page << 12, address);
+        const u64 stop = (std::min)((page + 1) << 12, end);
+        if (!runs.empty() && runs.back().first + runs.back().second == begin) {
+            runs.back().second += stop - begin;
+            continue;
+        }
+        if (runs.size() >= max_runs) {
+            return {{address, size}};
+        }
+        runs.emplace_back(begin, stop - begin);
+    }
+    return runs;
+}
+
 bool QueryOpsOnBufferPages() noexcept {
     return QueryOps() && (Posted() || VideoCore::Nx2Debug::SwitchValue(
                                           VideoCore::Nx2Debug::g_onef_query_ops,

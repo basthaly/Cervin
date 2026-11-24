@@ -10,6 +10,9 @@
 #include <array>
 #include <atomic>
 
+#include <utility>
+#include <vector>
+
 #include "common/common_types.h"
 
 namespace VideoCommon::OneFollower {
@@ -162,6 +165,11 @@ inline void RenderOwned(const char* where) noexcept {
 /// (must be 0) and the caller makes the image upload again at its next use. Off (no stamps
 /// yet, or not R): false at once.
 [[nodiscard]] bool WrittenAheadOfRender(u64 address, u64 size) noexcept;
+
+/// Cervin, R: the page runs of [address, address + size) that E wrote after the packet R plays
+/// now (as WrittenAheadOfRender, without the check note). Past `max_runs` runs, the whole range.
+[[nodiscard]] std::vector<std::pair<u64, u64>> WrittenAheadRanges(u64 address, u64 size,
+                                                                  size_t max_runs = 4096);
 
 /// fable_b 13.0, with FRITCHII_ONEF_POST_FENCE: a posted fence may run the reports queued
 /// before it at R's place (a folded fence runs their landings at once), while E is ahead. E's

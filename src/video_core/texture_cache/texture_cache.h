@@ -5325,9 +5325,22 @@ void TextureCache<P>::RefreshContents(Image& image, ImageId image_id) {
     const size_t onef_size = image.guest_size_bytes;
     const bool onef_ahead =
         VideoCommon::OneFollower::WrittenAheadOfRender(onef_addr, onef_size);
+    // Cervin: images uploaded in parts take only the pages E wrote ahead. Taking the whole image
+    // made Mario Kart World's 5.8 GiB terrain array (68 layers) upload every layer again after
+    // each refresh, as the game streams a few pages of it ahead of R every frame: 1-2 FPS.
+    const bool onef_by_parts =
+        UploadsByLayer(image) || True(image.flags & ImageFlagBits::SparseTiles);
     SCOPE_EXIT {
-        if (onef_ahead) {
+        if (!onef_ahead) {
+            return;
+        }
+        if (!onef_by_parts) {
             WriteMemory(onef_addr, onef_size);
+            return;
+        }
+        for (const auto& [run_addr, run_size] :
+             VideoCommon::OneFollower::WrittenAheadRanges(onef_addr, onef_size)) {
+            WriteMemory(run_addr, run_size);
         }
     };
     VideoCommon::Nx2Profile::Scope profile_scope{VideoCommon::Nx2Profile::Zone::TextureUpload};
