@@ -1,18 +1,19 @@
-## Cervin v1.0.1 — Mario Kart World reste fluide après un autre jeu
+## Cervin v1.0.2 — Mario Kart World sans gros gels en course
 
-### Correction
+### Mario Kart World
 
-- **Mario Kart World retombait à 1-2 images par seconde quand on le lançait après un autre jeu**
-  (par exemple Ocarina of Time) sans fermer Cervin. Des informations laissées par la partie
-  précédente lui faisaient recharger sans fin son tableau d'éclairage. Elles sont maintenant
-  effacées au début de chaque partie. Vérifié : OoT puis MKW dans le même Cervin, MKW à 40-55
-  images par seconde.
-
-Avec la v1.0, fermer et rouvrir Cervin avant de lancer MKW suffisait à éviter le problème.
+- **Fini les gels de 4 à 6 secondes en pleine course.** Ils arrivaient quand le jeu chargeait
+  l'éclairage d'une nouvelle partie du circuit : Cervin vérifiait alors 1,4 million de pages de
+  mémoire à chaque petit rafraîchissement. Il ne vérifie plus que les zones concernées. Sur une
+  course Survie de 10 minutes, il ne reste que quelques baisses d'environ une seconde.
+- **Les tuiles de décor sont converties sur plusieurs cœurs** : l'éclairage d'une zone se
+  charge plus vite (par exemple 426 Mo en 150 ms au premier chargement).
 
 ### Le reste
 
-- Toutes les nouveautés de la [v1.0](https://github.com/basthaly/Cervin/releases/tag/cervin-v1.0).
+- Toutes les nouveautés de la [v1.0](https://github.com/basthaly/Cervin/releases/tag/cervin-v1.0)
+  et le correctif de la [v1.0.1](https://github.com/basthaly/Cervin/releases/tag/cervin-v1.0.1).
+- Ocarina of Time n'est pas touché (toujours 60 images par seconde).
 
 ### Un problème ?
 
