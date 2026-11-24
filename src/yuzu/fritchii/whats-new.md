@@ -1,48 +1,27 @@
-## Cervin v0.3 — des réglages lisibles, et MKW démarre à nouveau
+## Cervin v0.3.1 — Mario Kart World devient jouable
 
-Les pages de réglages sont refaites en cartes, comme sur la maquette, et le lancement de
-Mario Kart World, qui plantait avec la v0.2, est réparé.
+Mario Kart World passe de 1-2 images par seconde à **35-50 images par seconde** (mesuré sur
+une RTX 4070).
 
-### Réglages en cartes
+### Mario Kart World
 
-- **Chaque réglage a sa carte** (onglets Vidéo et Avancée) : ce qu'il fait, son effet « En jeu »,
-  des pastilles d'impact (**+ FPS**, **− image**, **info**) et la valeur recommandée.
-- **« Explications visibles / Liste compacte »** en haut de page : la liste compacte ne garde que
-  les noms et les choix. Ton choix est retenu.
-- **Les Paramètres s'ouvrent en grand**, à la taille de la fenêtre principale.
+- **Fini les 1-2 images par seconde.** Le jeu met à jour en continu quelques pages de son
+  grand tableau d'éclairage (68 couches, 5,8 Go). Cervin redéclarait alors tout le tableau comme
+  modifié et le rechargeait sans fin. Seules les pages vraiment écrites sont rechargées
+  maintenant.
+- Au premier lancement d'une partie, compte environ **15 à 20 secondes** à très faible fluidité,
+  le temps de charger ce tableau une première fois. Ensuite le jeu reste fluide.
 
-### Image et DLSS
+### Le reste
 
-- **Agrandissement, taille de sortie, priorité, Résolution max. et modèle DLSS se choisissent
-  en cliquant sur des cartes**, chacune avec son explication.
-- Chaque carte de priorité indique la base qu'elle donne (par exemple « Base 720p »). Les
-  priorités qui donneraient la même base ne sont pas proposées deux fois.
-- **Une carte « Résultat »** dessine la base dans l'image de sortie et indique combien de pixels
-  la carte graphique s'épargne.
-- Les modèles DLSS indiquent leur netteté et leur stabilité.
-- Sous le filtre d'écran, une seule note au lieu de trois.
-
-### Français
-
-- **Tout en français** : la bibliothèque, les contrôles en jeu et les panneaux de
-  téléchargement DLSS et FSR 4 restaient en partie en anglais.
-- **Cervin te tutoie partout** (il mélangeait « tu » et « vous »).
-
-### Corrections
-
-- **Mario Kart World plantait au lancement avec la v0.2.** Une partie du moteur graphique
-  avait été compilée avec une ancienne version des réglages et les lisait au mauvais endroit.
+- Toutes les nouveautés de la [v0.3](https://github.com/basthaly/Cervin/releases/tag/cervin-v0.3) :
+  réglages en cartes, Paramètres en grand, tout en français.
+- Ocarina of Time n'est pas touché (toujours 60 images par seconde).
 
 ### Problèmes connus
 
-- **Mario Kart World tourne encore très lentement** (1 à 2 images par seconde après l'écran
-  titre) : le jeu fait recharger en continu ses grandes textures d'éclairage. C'est le prochain
-  chantier.
-
-### À savoir
-
-- Les données sont partagées avec Fritchii (`%APPDATA%\fritchii`) : jeux, clés et sauvegardes sont retrouvés.
-- La mise à jour automatique est désactivée : reviens sur cette page pour les nouvelles versions.
+- Mesuré sur l'écran titre et les menus de Mario Kart World : si tu vois des ralentissements
+  ou un éclairage bizarre en course, envoie le journal.
 
 ### Un problème ?
 
