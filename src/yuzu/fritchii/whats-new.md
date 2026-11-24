@@ -1,43 +1,18 @@
-## Cervin v1.0 — Mario Kart World fluide, réglages clairs
+## Cervin v1.0.1 — Mario Kart World reste fluide après un autre jeu
 
-Première version stable de Cervin, émulateur Switch 2 expérimental pour Windows, basé sur
-**Fritchii v6.5**, avec le travail de performance de **Trudy** (RTX / Ryzen) et les correctifs
-**Mario Kart World** d'**Eglantine**.
+### Correction
 
-### Mario Kart World
+- **Mario Kart World retombait à 1-2 images par seconde quand on le lançait après un autre jeu**
+  (par exemple Ocarina of Time) sans fermer Cervin. Des informations laissées par la partie
+  précédente lui faisaient recharger sans fin son tableau d'éclairage. Elles sont maintenant
+  effacées au début de chaque partie. Vérifié : OoT puis MKW dans le même Cervin, MKW à 40-55
+  images par seconde.
 
-- **Fluide : 50 à 60 images par seconde** (mesuré sur une RTX 4070), contre 1 à 2 avant la v0.3.1.
-  Cervin rechargeait sans fin le grand tableau d'éclairage du jeu (5,8 Go) : seules les pages
-  vraiment écrites sont rechargées maintenant.
-- **Chargement de l'éclairage en 2 secondes environ** au lieu d'une vingtaine : seules les tuiles
-  que le jeu utilise sont envoyées à la carte graphique (méthode d'Eglantine), et les grosses
-  textures restantes sont converties sur plusieurs cœurs.
-- Les réglages recommandés pour MKW se choisissent dans les réglages du jeu, plus à chaque lancement.
+Avec la v1.0, fermer et rouvrir Cervin avant de lancer MKW suffisait à éviter le problème.
 
-### Réglages
+### Le reste
 
-- **Chaque réglage a sa carte** : ce qu'il fait, son effet en jeu, des pastilles d'impact
-  (**+ FPS**, **− image**, **info**) et la valeur recommandée. « Liste compacte » ne garde que les choix.
-- **DLSS simplifié** : tu choisis la taille de sortie et une priorité, Cervin calcule la base et
-  montre le résultat ; les modèles DLSS sont expliqués.
-- **Les Paramètres s'ouvrent en grand**, à la taille de la fenêtre principale.
-
-### Bibliothèque et interface
-
-- **Les jeux en cartes**, avec Jouer, les réglages du jeu et des réglages rapides par jeu.
-- **Tout en français**, et Cervin te tutoie partout.
-- Copie des sauvegardes depuis un autre émulateur (Aide > Sauvegardes).
-
-### Ocarina of Time
-
-- Toujours à 60 images par seconde, avec les optimisations de Fritchii.
-
-### À savoir
-
-- Les données sont partagées avec Fritchii (`%APPDATA%\fritchii`) : jeux, clés et sauvegardes sont retrouvés.
-- La mise à jour automatique est désactivée : reviens sur cette page pour les nouvelles versions.
-- En cas de souci avec l'éclairage de MKW, la variable d'environnement `CERVIN_MKW_HDR_TILES=0`
-  revient à l'ancienne méthode de chargement.
+- Toutes les nouveautés de la [v1.0](https://github.com/basthaly/Cervin/releases/tag/cervin-v1.0).
 
 ### Un problème ?
 
