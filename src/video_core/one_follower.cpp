@@ -1776,6 +1776,16 @@ void Start(Core::System& system) {
         g.positions = std::make_unique<u64[]>(PositionSlots);
         g.push_ns = std::make_unique<u64[]>(PositionSlots);
     }
+    // Cervin: the page write stamps are packet numbers, and those start again from 0 with each
+    // session. Left over from the last game (OoT for an hour), they read as written ahead of R all
+    // over the next one, and Mario Kart World's 5.8 GiB terrain array was uploaded again after
+    // each refresh: 1-2 FPS, but only in a game started after another one in the same process.
+    // E and R are not running here.
+    if (g.stamps) {
+        for (u64 slot = 0; slot < StampSlots; ++slot) {
+            g.stamps[slot].store(0, std::memory_order_relaxed);
+        }
+    }
     // A session starts with empty positions (GpuSplit's ring starts at 0 again).
     g.write = 0;
     g.pushed = 0;
