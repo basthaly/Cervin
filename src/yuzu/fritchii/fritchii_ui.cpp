@@ -194,7 +194,9 @@ QIcon Glyph(const QString& name, unsigned rgb, int px) {
 }
 
 void RestructureMenus(Ui::MainWindow& ui, QMainWindow& window, const MenuHooks& hooks) {
-    const auto tr = [](const char* text) { return QObject::tr(text); };
+    // Cervin: the "FritchiiUi" context lupdate files these under (QObject::tr looked in
+    // "QObject" and left "Game" and "Advanced" in English).
+    const auto tr = [](const char* text) { return QCoreApplication::translate("FritchiiUi", text); };
 
     // File: open, install, folders, settings, exit.
     ui.menuOpen_Eden_Folders->removeAction(ui.action_Log_Folder);
@@ -255,7 +257,6 @@ void RestructureMenus(Ui::MainWindow& ui, QMainWindow& window, const MenuHooks& 
     QMenu* advanced = new QMenu(tr("Ad&vanced"), tools);
     advanced->addMenu(ui.menu_Applets);
     advanced->addMenu(ui.menuTAS);
-    advanced->addMenu(ui.menu_Multiplayer);
     advanced->addSeparator();
     advanced->addAction(ui.action_Enable_Overlay_Applet);
     tools->addMenu(advanced);

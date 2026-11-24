@@ -44,7 +44,19 @@ QString CleanReleaseNotes(const QString& markdown) {
             break;
         }
     }
-    return lines.join(QLatin1Char('\n')).trimmed();
+    // Cervin: its notes start with a "which file to download" section; the app downloads it
+    // itself. That section goes, up to the next heading.
+    QStringList kept;
+    bool skipping = false;
+    for (const QString& line : lines) {
+        if (line.startsWith(QStringLiteral("### "))) {
+            skipping = line.contains(QStringLiteral("Quel fichier"));
+        }
+        if (!skipping) {
+            kept.push_back(line);
+        }
+    }
+    return kept.join(QLatin1Char('\n')).trimmed();
 }
 
 QString BundledNotes() {

@@ -1,19 +1,27 @@
-## Cervin v1.0.2 — Mario Kart World sans gros gels en course
+## Cervin v1.0.3 — mises à jour automatiques
 
-### Mario Kart World
+### Mises à jour automatiques
 
-- **Fini les gels de 4 à 6 secondes en pleine course.** Ils arrivaient quand le jeu chargeait
-  l'éclairage d'une nouvelle partie du circuit : Cervin vérifiait alors 1,4 million de pages de
-  mémoire à chaque petit rafraîchissement. Il ne vérifie plus que les zones concernées. Sur une
-  course Survie de 10 minutes, il ne reste que quelques baisses d'environ une seconde.
-- **Les tuiles de décor sont converties sur plusieurs cœurs** : l'éclairage d'une zone se
-  charge plus vite (par exemple 426 Mo en 150 ms au premier chargement).
+- **Cervin se met à jour tout seul depuis cette page GitHub.** Au démarrage, s'il trouve une
+  version plus récente, il affiche ses nouveautés et propose de l'installer : il télécharge le zip,
+  vérifie son empreinte, remplace ses fichiers et redémarre. Tes sauvegardes, clés et paramètres ne
+  sont pas touchés, et **Aide > Revenir à la version précédente** ramène l'ancienne.
+- C'est la dernière version à installer à la main : les suivantes arriveront toutes seules.
+- Pour désactiver la vérification : Paramètres > Général > « Rechercher des mises à jour ».
 
-### Le reste
+### Interface
 
-- Toutes les nouveautés de la [v1.0](https://github.com/basthaly/Cervin/releases/tag/cervin-v1.0)
-  et le correctif de la [v1.0.1](https://github.com/basthaly/Cervin/releases/tag/cervin-v1.0.1).
-- Ocarina of Time n'est pas touché (toujours 60 images par seconde).
+- **Plus de fenêtres à l'ouverture après une mise à jour** (« Très important » et « Nouveautés ») :
+  elles restent dans le menu Aide.
+- **Le menu Multijoueur est directement dans le menu ☰** (en bas à gauche) au lieu d'être caché
+  sous Outils > Avancé. Raccourcis : Ctrl+N crée un salon, Ctrl+C rejoint un salon, Ctrl+B
+  parcourt les salons publics.
+- Les menus « Jeu » et « Avancé » sont traduits (ils restaient en anglais).
+
+### Problèmes connus
+
+- **Mario Kart World en ligne, mode Survie :** la fluidité peut beaucoup baisser (15 à 20 images
+  par seconde) avec beaucoup de joueurs. Les courses VS en ligne restent fluides.
 
 ### Un problème ?
 
