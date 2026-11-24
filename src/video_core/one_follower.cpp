@@ -151,6 +151,13 @@ struct Impl {
     // direct, higher pages share slots: a shared slot only answers "ahead" more often).
     std::unique_ptr<std::atomic<u32>[]> stamps;
     std::atomic<bool> stamps_on{};
+    /// Cervin: the newest stamp E wrote (stored before its pages). When it isn't ahead of R's
+    /// place, no page is, and R skips the walk: a 5.8 GiB image is 1.4 million pages to look at
+    /// on each of its refreshes (Mario Kart World's terrain array, several a frame in a race).
+    std::atomic<u32> latest_stamp{};
+    /// Cervin: the newest stamp of each 2 MiB block (512 pages, same wrap as `stamps`), stored
+    /// before its pages: R walks only the pages of the blocks that have a stamp ahead of it.
+    std::unique_ptr<std::atomic<u32>[]> block_stamps;
     std::atomic<bool> inval_refused_logged{};
     std::array<std::atomic<u64>, static_cast<size_t>(InvalKind::Count)> inval_count{};
     std::array<u64, static_cast<size_t>(InvalKind::Count)> inval_logged{};
@@ -374,6 +381,9 @@ u64 g_lend_sites_log_ns{};
 /// R: the number of the packet it plays (or played last): its place for the page write stamps.
 thread_local u32 t_play_number{};
 constexpr u64 StampSlots = u64{1} << 22;
+/// Cervin: pages per block of `block_stamps`, and the blocks (the page table's wrap, in blocks).
+constexpr u64 StampBlockShift = 9;
+constexpr u64 StampBlockSlots = StampSlots >> StampBlockShift;
 /// The most a packet's spans can take (every register word, the flags, the draw, the programs,
 /// the pools, the engine values and every binding), and an op packet's payload after them.
 constexpr std::size_t MaxSpanBytes = sizeof(RegPair) * Maxwell3D::Regs::NUM_REGS +
@@ -1786,6 +1796,12 @@ void Start(Core::System& system) {
             g.stamps[slot].store(0, std::memory_order_relaxed);
         }
     }
+    g.latest_stamp.store(0, std::memory_order_relaxed);
+    if (g.block_stamps) {
+        for (u64 block = 0; block < StampBlockSlots; ++block) {
+            g.block_stamps[block].store(0, std::memory_order_relaxed);
+        }
+    }
     // A session starts with empty positions (GpuSplit's ring starts at 0 again).
     g.write = 0;
     g.pushed = 0;
@@ -2225,6 +2241,7 @@ bool InvalOnEngine() noexcept {
         static std::once_flag once;
         std::call_once(once, [] {
             g.stamps = std::make_unique<std::atomic<u32>[]>(StampSlots);
+            g.block_stamps = std::make_unique<std::atomic<u32>[]>(StampBlockSlots);
             g.stamps_on.store(true, std::memory_order_release);
             LOG_INFO(HW_GPU,
                      "One follower: page write stamps on (FRITCHII_ONEF_INVAL_E=1, {} MiB)",
@@ -2801,6 +2818,12 @@ void StampPageWrites(u64 address, u64 size) noexcept {
         return;
     }
     const u32 stamp = static_cast<u32>(g.pushed + 1);
+    // Before the pages: R reads it first, and the fence pair that orders the pages orders it too.
+    g.latest_stamp.store(stamp, std::memory_order_relaxed);
+    for (u64 block = address >> (12 + StampBlockShift);
+         block <= (address + size - 1) >> (12 + StampBlockShift); ++block) {
+        g.block_stamps[block & (StampBlockSlots - 1)].store(stamp, std::memory_order_relaxed);
+    }
     for (u64 page = address >> 12; page <= (address + size - 1) >> 12; ++page) {
         g.stamps[page & (StampSlots - 1)].store(stamp, std::memory_order_relaxed);
     }
@@ -2823,7 +2846,23 @@ bool WrittenAheadOfRender(u64 address, u64 size) noexcept {
     std::atomic_thread_fence(std::memory_order_seq_cst);
     g.ahead_checks.fetch_add(1, std::memory_order_relaxed);
     const u32 place = t_play_number;
-    for (u64 page = address >> 12; page <= (address + size - 1) >> 12; ++page) {
+    if (static_cast<s32>(g.latest_stamp.load(std::memory_order_relaxed) - place) <= 0) {
+        return false; // no stamp is ahead of R
+    }
+    const u64 first_page = address >> 12;
+    const u64 last_page = (address + size - 1) >> 12;
+    for (u64 page = first_page; page <= last_page; ++page) {
+        if ((page == first_page || (page & ((u64{1} << StampBlockShift) - 1)) == 0)) {
+            const u32 block_stamp =
+                g.block_stamps[(page >> StampBlockShift) & (StampBlockSlots - 1)].load(
+                    std::memory_order_relaxed);
+            if (block_stamp == 0 || static_cast<s32>(block_stamp - place) <= 0) {
+                // Nothing in this block is ahead: on to the next block.
+                page = ((page >> StampBlockShift) + 1) << StampBlockShift;
+                --page;
+                continue;
+            }
+        }
         const u32 stamp = g.stamps[page & (StampSlots - 1)].load(std::memory_order_relaxed);
         if (stamp != 0 && static_cast<s32>(stamp - place) > 0) {
             thread_local std::string note;
@@ -2844,8 +2883,22 @@ std::vector<std::pair<u64, u64>> WrittenAheadRanges(u64 address, u64 size, size_
     }
     std::atomic_thread_fence(std::memory_order_seq_cst);
     const u32 place = t_play_number;
+    if (static_cast<s32>(g.latest_stamp.load(std::memory_order_relaxed) - place) <= 0) {
+        return runs; // no stamp is ahead of R
+    }
     const u64 end = address + size;
-    for (u64 page = address >> 12; page <= (end - 1) >> 12; ++page) {
+    const u64 first_page = address >> 12;
+    for (u64 page = first_page; page <= (end - 1) >> 12; ++page) {
+        if (page == first_page || (page & ((u64{1} << StampBlockShift) - 1)) == 0) {
+            const u32 block_stamp =
+                g.block_stamps[(page >> StampBlockShift) & (StampBlockSlots - 1)].load(
+                    std::memory_order_relaxed);
+            if (block_stamp == 0 || static_cast<s32>(block_stamp - place) <= 0) {
+                page = ((page >> StampBlockShift) + 1) << StampBlockShift;
+                --page;
+                continue;
+            }
+        }
         const u32 stamp = g.stamps[page & (StampSlots - 1)].load(std::memory_order_relaxed);
         if (stamp == 0 || static_cast<s32>(stamp - place) <= 0) {
             continue;

@@ -5350,9 +5350,28 @@ void TextureCache<P>::RefreshContents(Image& image, ImageId image_id) {
     const auto refresh_start = std::chrono::steady_clock::now();
     const u64 refresh_uploaded = uploaded_bytes;
     SCOPE_EXIT {
-        const auto ms = std::chrono::duration<double, std::milli>(
-                            std::chrono::steady_clock::now() - refresh_start)
-                            .count();
+        const auto refresh_end = std::chrono::steady_clock::now();
+        const auto ms =
+            std::chrono::duration<double, std::milli>(refresh_end - refresh_start).count();
+        // Every 5 s: how many refreshes and how long in all, when over 200 ms (many small ones
+        // add up where no single one is slow).
+        static u64 window_count = 0;
+        static double window_ms = 0.0;
+        static u64 window_bytes = 0;
+        static auto window_start = refresh_end;
+        ++window_count;
+        window_ms += ms;
+        window_bytes += uploaded_bytes - refresh_uploaded;
+        if (refresh_end - window_start >= std::chrono::seconds(5)) {
+            if (window_ms >= 200.0) {
+                LOG_INFO(HW_GPU, "Texture refreshes (5 s): {} in {:.0f} ms, {} MiB uploaded",
+                         window_count, window_ms, window_bytes >> 20);
+            }
+            window_count = 0;
+            window_ms = 0.0;
+            window_bytes = 0;
+            window_start = refresh_end;
+        }
         static u32 slow_reports = 0;
         if (ms < 30.0 || slow_reports >= 400) {
             return;
