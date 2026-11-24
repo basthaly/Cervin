@@ -128,28 +128,28 @@ ConfigureDialog::ConfigureDialog(QWidget* parent, HotkeyRegistry& registry_,
         ui->selectorList->setFixedWidth(180);
         layout()->setSizeConstraint(QLayout::SetNoConstraint);
         setMinimumSize(640, 460);
-        // Wide enough for the Controls page's button columns and controller preview, but never
-        // bigger than the screen it opens on (2026-11-16: it opened taller than a 1080p screen):
-        // after the first layout pass, fit it into 90% x 85% of that screen and center it on
-        // the main window.
+        // Cervin: Settings open over the whole main window, at its size (maximized with it), not
+        // as a small window in its middle (owner 2026-11-24: the cards need the room).
         resize(1080, 700);
         QTimer::singleShot(0, this, [this] {
-            QScreen* const screen = parentWidget() != nullptr && parentWidget()->screen() != nullptr
-                                        ? parentWidget()->screen()
-                                        : this->screen();
+            QWidget* const owner = parentWidget() != nullptr ? parentWidget()->window() : nullptr;
+            if (owner != nullptr && owner->isMaximized()) {
+                setWindowState(windowState() | Qt::WindowMaximized);
+                return;
+            }
+            QScreen* const screen = owner != nullptr && owner->screen() != nullptr ? owner->screen()
+                                                                                 : this->screen();
             if (screen == nullptr) {
                 return;
             }
             const QRect area = screen->availableGeometry();
-            const int w = std::min({1080, area.width() * 9 / 10, std::max(this->width(), 640)});
-            const int h = std::min({760, area.height() * 85 / 100, std::max(this->height(), 460)});
-            resize(w, h);
-            const QRect anchor =
-                parentWidget() != nullptr ? parentWidget()->frameGeometry() : area;
-            QPoint top_left = anchor.center() - QPoint(w / 2, h / 2);
-            top_left.setX(std::clamp(top_left.x(), area.left(), area.right() - w));
-            top_left.setY(std::clamp(top_left.y(), area.top(), area.bottom() - h));
-            move(top_left);
+            QRect target = owner != nullptr ? owner->geometry() : area;
+            target = target.intersected(area);
+            if (target.width() < 640 || target.height() < 460) {
+                target = QRect(area.topLeft(), QSize(area.width() * 9 / 10, area.height() * 88 / 100));
+                target.moveCenter(area.center());
+            }
+            setGeometry(target);
         });
 
         // OoT's own values (Configure Game) beat these, the usual "my settings didn't apply".

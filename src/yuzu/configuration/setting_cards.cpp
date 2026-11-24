@@ -8,6 +8,7 @@
 #include <QAbstractItemModel>
 #include <QBoxLayout>
 #include <QButtonGroup>
+#include <QCheckBox>
 #include <QComboBox>
 #include <QEvent>
 #include <QFont>

@@ -298,7 +298,6 @@ QFrame#CervinCard {
     border-radius: 12px;
 }
 QFrame#CervinCard[result="true"] { background: #1c1930; border-color: #3b3360; }
-QFrame#CervinCard QLabel { background: transparent; }
 QLabel#CervinIntro { color: #9a9aa8; }
 QLabel#CervinWhat { color: #c9c9d3; }
 QLabel#CervinEffect { color: #9a9aa8; font-size: 12px; }
@@ -310,9 +309,9 @@ QLabel#CervinChipPlus, QLabel#CervinChipMinus, QLabel#CervinChipInfo {
     font-size: 12px;
     font-weight: 600;
 }
-QLabel#CervinChipPlus { background: #1d2c45; color: #b4ccff; }
-QLabel#CervinChipMinus { background: #3a2a12; color: #f6d7a6; }
-QLabel#CervinChipInfo { background: #26262c; color: #c9c9d3; }
+QLabel#CervinChipPlus, QFrame#CervinCard QLabel#CervinChipPlus { background: #1d2c45; color: #b4ccff; }
+QLabel#CervinChipMinus, QFrame#CervinCard QLabel#CervinChipMinus { background: #3a2a12; color: #f6d7a6; }
+QLabel#CervinChipInfo, QFrame#CervinCard QLabel#CervinChipInfo { background: #26262c; color: #c9c9d3; }
 QPushButton#CervinSegment { padding: 7px 14px; border: 1px solid #2a2a30; background: #18181b; }
 QPushButton#CervinSegment:checked { background: #221d36; border-color: #a78bfa; color: #ececf1; }
 QPushButton#CervinChoice {

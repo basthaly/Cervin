@@ -1843,6 +1843,18 @@ void ConfigureGraphics::UpdatePictureMenu() {
     if (priority_combobox != nullptr) {
         const QSignalBlocker block_priority(priority_combobox);
         priority_combobox->setCurrentIndex(PriorityFromSizes());
+        // Cervin: a priority whose base an earlier one already gives is left out (at 1080p DLSS
+        // takes only a 720p base: Picture, Balanced, FPS and Max FPS were the same card).
+        if (auto* const view = qobject_cast<QListView*>(priority_combobox->view())) {
+            std::vector<u32> bases;
+            for (int row = 0; row < priority_combobox->count(); ++row) {
+                const u32 base =
+                    row >= PriorityEdgesOnly ? output : SceneHeight(PriorityInput(output, row));
+                const bool repeated = std::ranges::find(bases, base) != bases.end();
+                view->setRowHidden(row, repeated && row != priority_combobox->currentIndex());
+                bases.push_back(base);
+            }
+        }
         priority_combobox->setEnabled(!running);
         if (running) {
             priority_row->setToolTip(tr("Close the game to change it."));
