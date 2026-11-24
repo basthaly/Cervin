@@ -1,51 +1,51 @@
-## Cervin v0.2 — une interface plus claire
+## Cervin v0.3 — des réglages lisibles, et MKW démarre à nouveau
 
-Cette version revoit l'interface : réglages expliqués, DLSS plus simple, nouvelle bibliothèque de
-jeux. Rien ne change dans l'émulation elle-même par rapport à la v0.1.
+Les pages de réglages sont refaites en cartes, comme sur la maquette, et le lancement de
+Mario Kart World, qui plantait avec la v0.2, est réparé.
 
-### Bibliothèque
+### Réglages en cartes
 
-- **Les jeux s'affichent en cartes** : jaquette, nom, bouton **Jouer** et bouton ⚙ des réglages du jeu.
-  La grille s'adapte à la largeur de la fenêtre. La liste classique reste accessible avec « Tous les jeux ».
-- **Réglages rapides** à côté de la grille, pour le jeu sélectionné : priorité DLSS, modèle DLSS,
-  mode console (TV ou portable) et limite de vitesse. Ils sont enregistrés dans les réglages de ce
-  jeu seulement. « Comme dans les Paramètres » reprend le réglage général.
+- **Chaque réglage a sa carte** (onglets Vidéo et Avancée) : ce qu'il fait, son effet « En jeu »,
+  des pastilles d'impact (**+ FPS**, **− image**, **info**) et la valeur recommandée.
+- **« Explications visibles / Liste compacte »** en haut de page : la liste compacte ne garde que
+  les noms et les choix. Ton choix est retenu.
+- **Les Paramètres s'ouvrent en grand**, à la taille de la fenêtre principale.
 
-### DLSS
+### Image et DLSS
 
-- **Choisissez seulement la résolution de sortie** et une priorité : Image, Équilibre, FPS, FPS max
-  ou Lissage seul (DLAA). Cervin calcule la résolution de base qui donne vraiment un gain, et
-  indique combien de pixels la carte graphique s'épargne.
-- **Les modèles DLSS ont un nom clair** (K : polyvalent, M : petite base pour les FPS, L : 4K depuis
-  une très petite base, J : un peu plus net que K). Une explication s'affiche sous le choix.
+- **Agrandissement, taille de sortie, priorité, Résolution max. et modèle DLSS se choisissent
+  en cliquant sur des cartes**, chacune avec son explication.
+- Chaque carte de priorité indique la base qu'elle donne (par exemple « Base 720p »). Les
+  priorités qui donneraient la même base ne sont pas proposées deux fois.
+- **Une carte « Résultat »** dessine la base dans l'image de sortie et indique combien de pixels
+  la carte graphique s'épargne.
+- Les modèles DLSS indiquent leur netteté et leur stabilité.
+- Sous le filtre d'écran, une seule note au lieu de trois.
 
-### Réglages expliqués
+### Français
 
-- **Une ligne d'explication sous chaque réglage** des onglets Graphismes et Graphismes avancés :
-  ce qu'il fait et son effet sur l'image ou les FPS.
-- **Le filtre d'écran est rangé par usage** : Réduire, Agrandir, Pixel art, Simple, Avancé.
-- **Les effets d'image** (menu « Ajouter un effet ») sont rangés par famille : netteté, couleurs,
-  ambiance, rétro.
+- **Tout en français** : la bibliothèque, les contrôles en jeu et les panneaux de
+  téléchargement DLSS et FSR 4 restaient en partie en anglais.
+- **Cervin te tutoie partout** (il mélangeait « tu » et « vous »).
 
-### Mario Kart World
+### Corrections
 
-- **Plus de question à chaque lancement.** Les réglages recommandés pour MKW sont proposés dans
-  les réglages du jeu (bouton ⚙ de sa carte, ou clic droit > Configurer le jeu), avec un tableau
-  « le tien / recommandé / pourquoi ». « Les utiliser » les applique à chaque lancement,
-  « Les désactiver » revient à vos réglages.
+- **Mario Kart World plantait au lancement avec la v0.2.** Une partie du moteur graphique
+  avait été compilée avec une ancienne version des réglages et les lisait au mauvais endroit.
 
 ### Problèmes connus
 
-- **Mario Kart World** peut encore planter ou se figer en course sur certaines machines : les
-  correctifs mémoire de la v0.1 sont toujours en cours de test. Envoyez le journal si ça arrive.
+- **Mario Kart World tourne encore très lentement** (1 à 2 images par seconde après l'écran
+  titre) : le jeu fait recharger en continu ses grandes textures d'éclairage. C'est le prochain
+  chantier.
 
 ### À savoir
 
 - Les données sont partagées avec Fritchii (`%APPDATA%\fritchii`) : jeux, clés et sauvegardes sont retrouvés.
-- La mise à jour automatique est désactivée : revenez sur cette page pour les nouvelles versions.
+- La mise à jour automatique est désactivée : reviens sur cette page pour les nouvelles versions.
 
 ### Un problème ?
 
-**Aide > Exporter le journal**, puis ouvrez une [issue](https://github.com/basthaly/Cervin/issues/new/choose) avec le zip.
+**Aide > Exporter le journal**, puis ouvre une [issue](https://github.com/basthaly/Cervin/issues/new/choose) avec le zip.
 
 Logiciel libre sous licence GPL-3.0. Shader precompile system by Frizti (Fritchii).
