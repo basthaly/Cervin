@@ -15,6 +15,7 @@
 #include <map>
 #include <vector>
 #include <optional>
+#include <thread>
 #include <bit>
 #include <type_traits>
 #include <unordered_map>
@@ -5977,6 +5978,61 @@ std::vector<u32> TextureCache<P>::BindSparseLayers(Image& image, std::span<const
 }
 
 template <class P>
+void TextureCache<P>::UploadLayersInParallel(Image& image, std::span<const u32> layers) {
+    if constexpr (requires { &Runtime::AccelerateImageUploadLayers; }) {
+        ImageInfo layer_info = image.info;
+        layer_info.resources.layers = 1;
+        const size_t layer_size = CalculateUnswizzledSizeBytes(layer_info);
+        using Staging = decltype(runtime.UploadStagingBuffer(size_t{}));
+        // Staging is taken on this thread (the runtime isn't thread-safe); an out of memory
+        // exception reaches RefreshSparseLayers, which puts the layers off.
+        std::vector<std::optional<Staging>> stagings(layers.size());
+        for (std::optional<Staging>& staging : stagings) {
+            staging.emplace(runtime.UploadStagingBuffer(layer_size));
+        }
+        std::vector<std::vector<BufferImageCopy>> copies(layers.size());
+        const auto unswizzle = [&](size_t index) {
+            const GPUVAddr layer_addr =
+                image.gpu_addr + u64{layers[index]} * image.info.layer_stride;
+            Common::ScratchBuffer<u8> guest_copy;
+            Tegra::Memory::GpuGuestMemory<u8, Tegra::Memory::GuestMemoryFlags::UnsafeRead>
+                swizzle_data(*gpu_memory, layer_addr, image.info.layer_stride, &guest_copy);
+            const auto layer_copies =
+                UnswizzleImage(*gpu_memory, layer_addr, layer_info, swizzle_data,
+                               stagings[index]->mapped_span.subspan(0, layer_size));
+            for (BufferImageCopy copy : layer_copies) {
+                copy.image_subresource.base_layer = static_cast<s32>(layers[index]);
+                copies[index].push_back(copy);
+            }
+        };
+        const size_t threads_wanted = (std::min<size_t>)(
+            layers.size(), (std::max<size_t>)(1, std::thread::hardware_concurrency() / 2));
+        std::atomic<size_t> next{0};
+        const auto work = [&] {
+            for (size_t index = next.fetch_add(1); index < layers.size();
+                 index = next.fetch_add(1)) {
+                unswizzle(index);
+            }
+        };
+        std::vector<std::thread> helpers;
+        helpers.reserve(threads_wanted - 1);
+        for (size_t helper = 1; helper < threads_wanted; ++helper) {
+            helpers.emplace_back(work);
+        }
+        work();
+        for (std::thread& helper : helpers) {
+            helper.join();
+        }
+        for (size_t index = 0; index < layers.size(); ++index) {
+            image.UploadMemory(*stagings[index], copies[index]);
+        }
+        ++images_uploaded;
+        uploaded_bytes += u64{image.info.layer_stride} * layers.size();
+        ++layer_uploads;
+    }
+}
+
+template <class P>
 void TextureCache<P>::UploadLayers(Image& image, std::span<const u32> layers) {
     if constexpr (requires { &Runtime::AccelerateImageUploadLayers; }) {
         // At most 32 MiB of layers per staging buffer, as UploadInChunks: all of a sparse array's
@@ -5984,6 +6040,14 @@ void TextureCache<P>::UploadLayers(Image& image, std::span<const u32> layers) {
         constexpr u64 ChunkBytes = 32_MiB;
         const size_t chunk_layers = static_cast<size_t>(
             (std::max<u64>)(1, ChunkBytes / (std::max<u64>)(image.info.layer_stride, 1)));
+        // Cervin: big plain layers (Mario Kart World's terrain array: 68 layers of 85 MiB, BC6H)
+        // are read from guest memory and unswizzled on several threads at once, a staging buffer
+        // each. One after the other on the GPU thread they took about 17 s at the first load.
+        if (False(image.flags & ImageFlagBits::AcceleratedUpload) && layers.size() > 1 &&
+            image.info.layer_stride >= ChunkBytes) {
+            UploadLayersInParallel(image, layers);
+            return;
+        }
         if (layers.size() > chunk_layers) {
             for (size_t first = 0; first < layers.size(); first += chunk_layers) {
                 UploadLayers(image, layers.subspan(first, (std::min)(chunk_layers,

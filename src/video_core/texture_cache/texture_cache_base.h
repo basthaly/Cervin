@@ -288,6 +288,8 @@ class TextureCache : public VideoCommon::ChannelSetupCaches<TextureCacheChannelI
 
     /// Uploads `layers` of the image from guest memory.
     void UploadLayers(Image& image, std::span<const u32> layers);
+    /// Cervin: UploadLayers for big plain layers, unswizzled on several threads.
+    void UploadLayersInParallel(Image& image, std::span<const u32> layers);
 
     struct PendingUnswizzle {
         ImageId image_id;
