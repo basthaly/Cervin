@@ -83,7 +83,17 @@ Set-Content -Path (Join-Path $stage 'LISEZMOI.txt') -Value $readme -Encoding UTF
 $zip = Join-Path $dest "$name.zip"
 $symbols = Join-Path $dest "$name-symbols.zip"
 Remove-Item $zip, $symbols -ErrorAction SilentlyContinue
-Compress-Archive -Path $stage -DestinationPath $zip -CompressionLevel Optimal
+# Pas Compress-Archive : sous Windows PowerShell 5.1 il écrit des chemins avec « \ » et une entrée
+# vide par dossier, que la mise à jour intégrée (QuaZip) ne sait pas décompresser (v1.0.4).
+Add-Type -AssemblyName System.IO.Compression, System.IO.Compression.FileSystem
+$archive = [IO.Compression.ZipFile]::Open($zip, 'Create')
+try {
+    $root = Split-Path -Parent $stage
+    foreach ($file in Get-ChildItem $stage -Recurse -File) {
+        $entry = $file.FullName.Substring($root.Length + 1).Replace('\', '/')
+        [void][IO.Compression.ZipFileExtensions]::CreateEntryFromFile($archive, $file.FullName, $entry, 'Optimal')
+    }
+} finally { $archive.Dispose() }
 $pdbs = Get-ChildItem $bin -Filter 'Cervin.pdb' -File
 if ($pdbs) { Compress-Archive -Path $pdbs.FullName -DestinationPath $symbols -CompressionLevel Optimal }
 
