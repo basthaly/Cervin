@@ -12,6 +12,7 @@
 #include "common/logging.h"
 #include "common/settings.h"
 #include "video_core/renderer_base.h"
+#include "video_core/nx2_debug_control.h"
 
 #if defined(__APPLE__)
 #include <TargetConditionals.h>
@@ -144,6 +145,17 @@ static bool OverrideIfUntouched(Settings::SwitchableSetting<T, ranged>& setting,
 // recommended settings) are left alone.
 void ApplySwitch2Defaults(std::uint64_t program_id, bool is_switch2) {
     constexpr std::uint64_t OcarinaOfTime = 0x0400486024DEC000ULL;
+    // Cervin (2026-11-25): Mario Kart World online on a 6-core Ryzen 5 5600X ran ~21 FPS with the
+    // CPU saturated while the timer thread spun 370 ms/s before guest timers (EXP75 = 600, tuned
+    // for OoT). For MKW those spins come from a 20% budget (FRITCHII_HOSTTIMING_SPIN_BUDGET, the
+    // Lichii #1733 value), freeing about a third of a core. OoT keeps the unlimited spin. The
+    // variable still wins when set.
+    if (program_id == Settings::MarioKartWorldProgramId &&
+        std::getenv("FRITCHII_HOSTTIMING_SPIN_BUDGET") == nullptr) {
+        VideoCore::Nx2Debug::g_hosttiming_spin_budget.store(20, std::memory_order_relaxed);
+        LOG_INFO(Core, "Mario Kart World: timer thread spin budget 20% "
+                       "(FRITCHII_HOSTTIMING_SPIN_BUDGET to change it)");
+    }
     if (!is_switch2 || program_id == Settings::MarioKartWorldProgramId ||
         program_id == OcarinaOfTime) {
         return;
