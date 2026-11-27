@@ -132,6 +132,9 @@ ConfigureDialog::ConfigureDialog(QWidget* parent, HotkeyRegistry& registry_,
         // as a small window in its middle (owner 2026-11-24: the cards need the room).
         resize(1080, 700);
         QTimer::singleShot(0, this, [this] {
+            if (!isWindow()) {
+                return; // a page of the main window (FritchiiUi::EmbedInMainWindow)
+            }
             QWidget* const owner = parentWidget() != nullptr ? parentWidget()->window() : nullptr;
             if (owner != nullptr && owner->isMaximized()) {
                 setWindowState(windowState() | Qt::WindowMaximized);

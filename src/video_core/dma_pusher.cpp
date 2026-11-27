@@ -575,7 +575,25 @@ void DmaPusher::DispatchCalls() {
     if (auto& split = VideoCommon::GpuSplit::Get(); split.Active()) {
         // Submits and releases signaled fences: their writes belong to the entries that queued them.
         split.Defer(
-            [gpu = &system.GPU()] {
+            [gpu = &system.GPU(), rasterizer = rasterizer] {
+                // Cervin EXP125 (live, us, 0 = off; Mario Kart World 2000 by default,
+                // core/game_settings.cpp): at a command list end, at most once per this many us,
+                // a reference fence (the RefCnt method's) commits the downloads of the
+                // Preflushable pages the GPU wrote since the last fence. MKW's CPU reads compute
+                // results ~140 times a second, ~11 submissions after the dispatch that wrote
+                // them, and almost always before any guest fence downloaded them: each read then
+                // asked the GPU thread for a copy and waited for it (~1.7 ms, ~15 ms a frame on a
+                // Ryzen 5 5600X). With the copy sent soon after the write, the read finds it
+                // landed or on its way (EXP72). A fence with nothing to download is skipped.
+                if (const int early_us = VideoCore::Nx2Debug::Experiment(125);
+                    early_us > 0 && rasterizer != nullptr) {
+                    thread_local std::chrono::steady_clock::time_point last{};
+                    const auto now = std::chrono::steady_clock::now();
+                    if (now - last >= std::chrono::microseconds{early_us}) {
+                        last = now;
+                        rasterizer->SignalReference();
+                    }
+                }
                 gpu->FlushCommands();
                 gpu->OnCommandListEnd();
             },

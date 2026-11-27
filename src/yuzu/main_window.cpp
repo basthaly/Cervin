@@ -4276,7 +4276,19 @@ void MainWindow::ToggleShowGameName() {
     game_list->RefreshGameDirectory();
 }
 
+namespace {
+/// Cervin: one settings page at a time (the rail's Settings button closes an open one).
+bool g_settings_page_open = false;
+} // namespace
+
 void MainWindow::OnConfigure() {
+    if (g_settings_page_open) {
+        return;
+    }
+    g_settings_page_open = true;
+    SCOPE_EXIT {
+        g_settings_page_open = false;
+    };
     const auto old_theme = UISettings::values.theme;
     const bool old_discord_presence = UISettings::values.enable_discord_presence.GetValue();
     const auto old_language_index = Settings::values.language_index.GetValue();
@@ -4294,6 +4306,7 @@ void MainWindow::OnConfigure() {
     connect(&configure_dialog, &ConfigureDialog::ExternalContentDirsChanged, this,
             &MainWindow::OnGameListRefresh);
 
+    FritchiiUi::EmbedInMainWindow(&configure_dialog);
     const auto result = configure_dialog.exec();
     if (result != QDialog::Accepted && !UISettings::values.configuration_applied &&
         !UISettings::values.reset_to_defaults) {
@@ -4608,10 +4621,18 @@ void MainWindow::OnConfigurePerGame() {
 }
 
 void MainWindow::OpenPerGameConfiguration(u64 title_id, const std::string& file_name) {
+    if (g_settings_page_open) {
+        return;
+    }
+    g_settings_page_open = true;
+    SCOPE_EXIT {
+        g_settings_page_open = false;
+    };
     Settings::SetConfiguringGlobal(false);
     ConfigurePerGame dialog(this, title_id, file_name, vk_device_records, *QtCommon::system);
     dialog.LoadFromFile(Core::GetGameFileFromPath(QtCommon::vfs, file_name));
 
+    FritchiiUi::EmbedInMainWindow(&dialog);
     const auto result = dialog.exec();
 
     if (result != QDialog::Accepted && !UISettings::values.configuration_applied) {

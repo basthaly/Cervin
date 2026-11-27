@@ -1056,7 +1056,7 @@ Prend effet après le redémarrage du jeu.</translation>
             <location line="+1" />
             <source>CPU threads the shader warm-up uses (low priority). More threads finish the warm-up sooner. It builds only while the game is paused, or from Emulation, Prepare Shaders Now, when it shares the CPU with the game.
 Takes effect at the next game start.</source>
-            <translation>Threads CPU utilisés par la préparation des shaders (priorité basse). Plus de threads la terminent plus vite. Elle ne compile que pendant que le jeu est en pause, ou depuis Émulation, Préparer les shaders maintenant, où elle partage le CPU avec le jeu.
+            <translation>Threads CPU utilisés par la préparation des shaders (priorité basse). Plus de threads la terminent plus vite. Elle ne compile que pendant que Cervin est en pause (Émulation &gt; Pause, pas le menu pause du jeu), ou depuis Émulation, Préparer les shaders maintenant, où elle partage le CPU avec le jeu.
 Prend effet au prochain lancement du jeu.</translation>
         </message>
         <message>
@@ -10044,7 +10044,7 @@ Change à tout moment avec le bouton 60 FPS / 30 FPS en bas de la fenêtre.</tra
             <source>Shaders prepared ahead of time so the game stutters less when it first uses them.
 It builds while the game is paused. Emulation &gt; Prepare Shaders Now builds right away, and the game can slow down until it's done.</source>
             <translation>Shaders préparés à l'avance pour que le jeu saccade moins quand il les utilise la première fois.
-La préparation se fait pendant que le jeu est en pause. Émulation &gt; Préparer les shaders maintenant la lance tout de suite, et le jeu peut ralentir jusqu'à ce qu'elle soit terminée.</translation>
+La préparation se fait pendant que Cervin est en pause (Émulation &gt; Pause, pas le menu pause du jeu). Émulation &gt; Préparer les shaders maintenant la lance tout de suite, et le jeu peut ralentir jusqu'à ce qu'elle soit terminée.</translation>
         </message>
         <message>
             <location line="+4" />
@@ -10857,7 +10857,7 @@ Pour en créer, ferme le jeu, fais un clic droit dessus dans la liste des jeux e
         <message>
             <location line="+13" />
             <source>The game keeps running and can stutter or slow down until this is done; pausing it makes this faster. Stop keeps what is built: the rest builds while the game is paused, or the next time you start this.</source>
-            <translation>Le jeu continue de tourner et peut saccader ou ralentir jusqu'à la fin ; le mettre en pause accélère l'opération. Arrêter conserve ce qui a été compilé : le reste se compile pendant que le jeu est en pause, ou au prochain lancement.</translation>
+            <translation>Le jeu continue de tourner et peut saccader ou ralentir jusqu'à la fin ; le mettre en pause accélère l'opération. Arrêter conserve ce qui a été compilé : le reste se compile pendant que Cervin est en pause (Émulation &gt; Pause), ou au prochain lancement.</translation>
         </message>
         <message>
             <location line="+25" />
@@ -16526,7 +16526,7 @@ En choisissant « Depuis Cervin », les sauvegardes précédentes stockées dans
         <message>
             <location line="+1" />
             <source>More threads finish sooner. It only runs while the game is paused.</source>
-            <translation>Plus de fils finissent plus tôt. Ça ne tourne que quand le jeu est en pause.</translation>
+            <translation>Plus de fils finissent plus tôt. Ça ne tourne que quand Cervin est en pause (Émulation &gt; Pause).</translation>
         </message>
         <message>
             <location line="+2" />
@@ -16720,7 +16720,7 @@ Programmes de fragments : %L3</translation>
         <message>
             <location line="+4" />
             <source>Next, start the game: the shaders are compiled for your GPU while the game is paused, or right away with Emulation &gt; Prepare Shaders Now (a title screen is a good place). It never slows the game down on its own, and it is done once per driver version.</source>
-            <translation>Ensuite, lance le jeu : les shaders sont compilés pour ton GPU pendant que le jeu est en pause, ou tout de suite avec Émulation &gt; Préparer les shaders maintenant (un écran titre est un bon endroit). Cela ne ralentit jamais le jeu de soi-même, et ne se fait qu'une fois par version de pilote.</translation>
+            <translation>Ensuite, lance le jeu : les shaders sont compilés pour ton GPU pendant que Cervin est en pause (Émulation &gt; Pause, pas le menu pause du jeu), ou tout de suite avec Émulation &gt; Préparer les shaders maintenant (un écran titre est un bon endroit). Cela ne ralentit jamais le jeu de soi-même, et ne se fait qu'une fois par version de pilote.</translation>
         </message>
         <message>
             <location line="+8" />

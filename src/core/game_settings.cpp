@@ -156,6 +156,15 @@ void ApplySwitch2Defaults(std::uint64_t program_id, bool is_switch2) {
         LOG_INFO(Core, "Mario Kart World: timer thread spin budget 20% "
                        "(FRITCHII_HOSTTIMING_SPIN_BUDGET to change it)");
     }
+    // Cervin (2026-11-27): early reference fences at command list ends (EXP125, dma_pusher.cpp)
+    // so MKW's CPU reads of compute results find their downloads already sent.
+    if (program_id == Settings::MarioKartWorldProgramId &&
+        std::getenv("EDEN_NX2_EXP125") == nullptr) {
+        VideoCore::Nx2Debug::LoadExperiments();
+        VideoCore::Nx2Debug::g_experiments[125].store(2000, std::memory_order_relaxed);
+        LOG_INFO(Core, "Mario Kart World: early read-back fences every 2 ms (EDEN_NX2_EXP125=0 "
+                       "turns them off)");
+    }
     if (!is_switch2 || program_id == Settings::MarioKartWorldProgramId ||
         program_id == OcarinaOfTime) {
         return;

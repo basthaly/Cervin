@@ -6643,8 +6643,19 @@ std::array<std::filesystem::path, 2> RunningMarkerPaths(const std::filesystem::p
     return {marker, title_file.parent_path() / marker.filename()};
 }
 
-/// True when a warm-up of this file died on this driver: it stays skipped until the warm file
-/// is rebuilt or the driver changes. A marker of another file or driver is removed.
+/// Cervin: the marker of a warm-up that died once (".died" beside ".running").
+std::filesystem::path DiedMarkerPath(const std::filesystem::path& marker) {
+    std::filesystem::path died = marker;
+    died.replace_extension(".died");
+    return died;
+}
+
+/// True when a warm-up of this file died twice in a row on this driver: it stays skipped until
+/// the warm file is rebuilt or the driver changes. A marker of another file or driver is removed.
+/// Cervin (2026-11-27): one death only notes it and runs again. A game closed by force (Task
+/// Manager, a crash elsewhere, a test killing the process) during the warm-up otherwise stopped
+/// it for good: the owner's OoT warm-up never ran again and Link's age switch built 161
+/// pipelines in play.
 bool WarmDiedBefore(const std::filesystem::path& file, const std::filesystem::path& title_file,
                     const Device& device) {
     const auto stamp = CurrentStamp(file, device, 0);
@@ -6653,10 +6664,19 @@ bool WarmDiedBefore(const std::filesystem::path& file, const std::filesystem::pa
         if (!std::filesystem::exists(marker, ec)) {
             continue;
         }
+        const auto died = DiedMarkerPath(marker);
         if (stamp && StampMatches(marker, *stamp)) {
-            return true;
+            if (std::filesystem::exists(died, ec)) {
+                return true;
+            }
+            std::filesystem::rename(marker, died, ec);
+            if (ec) {
+                std::filesystem::remove(marker, ec);
+            }
+            continue;
         }
         std::filesystem::remove(marker, ec);
+        std::filesystem::remove(died, ec);
     }
     return false;
 }
@@ -6679,6 +6699,8 @@ void RemoveRunningMarkers(const std::filesystem::path& file,
     for (const auto& marker : RunningMarkerPaths(file, title_file)) {
         std::error_code ec;
         std::filesystem::remove(marker, ec);
+        // Ended cleanly: an earlier death no longer counts.
+        std::filesystem::remove(DiedMarkerPath(marker), ec);
     }
 }
 
@@ -7073,8 +7095,54 @@ void PipelineCache::StartGraphicsWarm(u64 title_id) {
     }
 }
 
+namespace {
+/// Cervin (2026-11-27): warm-up threads that may build while the game runs. The warm-up built only
+/// while emulation was paused; players paused the game's own menu instead, so it never ran: an
+/// OoT session of 46 minutes built 228 of 3,799 compute programs and no graphics pipeline, and
+/// switching Link's age then built 161 pipelines in play (20-330 ms each, stutters up to 4.5 s).
+/// With 16 or more host threads, two of the low-priority, idle-placed warm-up threads build
+/// beside the game; the others still wait for a pause or Prepare Shaders Now. Smaller CPUs keep
+/// the old rule (a 6-core runs Mario Kart World with the CPU full). CERVIN_WARM_WHILE_PLAYING=N
+/// sets the count (0 = the old rule).
+size_t PlayingWarmThreads() {
+    static const size_t count = [] {
+        if (const char* value = std::getenv("CERVIN_WARM_WHILE_PLAYING")) {
+            return static_cast<size_t>((std::max)(0, std::atoi(value)));
+        }
+        return std::thread::hardware_concurrency() >= 16 ? size_t{2} : size_t{0};
+    }();
+    return count;
+}
+std::atomic<size_t> g_playing_warm_builders{0};
+/// The calling warm-up thread's slot among PlayingWarmThreads(), given back when it ends.
+struct PlayingWarmSlot {
+    bool held = false;
+    ~PlayingWarmSlot() {
+        if (held) {
+            g_playing_warm_builders.fetch_sub(1, std::memory_order_relaxed);
+        }
+    }
+    bool Take() {
+        if (held) {
+            return true;
+        }
+        size_t current = g_playing_warm_builders.load(std::memory_order_relaxed);
+        while (current < PlayingWarmThreads()) {
+            if (g_playing_warm_builders.compare_exchange_weak(current, current + 1,
+                                                              std::memory_order_relaxed)) {
+                held = true;
+                return true;
+            }
+        }
+        return false;
+    }
+};
+thread_local PlayingWarmSlot t_playing_warm_slot;
+} // namespace
+
 bool PipelineCache::WaitForWarmTurn(std::stop_token stop) {
-    while (!stop.stop_requested() && !warm_cancel && !shader_notify.WarmMayBuild()) {
+    while (!stop.stop_requested() && !warm_cancel && !shader_notify.WarmMayBuild() &&
+           !t_playing_warm_slot.Take()) {
         std::this_thread::sleep_for(std::chrono::milliseconds{100});
     }
     // Idle priority and off the cores pinned to the GPU threads, like the quiet prebuild.

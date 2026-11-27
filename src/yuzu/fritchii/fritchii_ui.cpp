@@ -20,7 +20,11 @@
 #include <QIcon>
 #include <QImageReader>
 #include <QLocale>
+#include <QDialog>
+#include <QEvent>
 #include <QMainWindow>
+#include <QToolButton>
+#include <functional>
 #include <QMenu>
 #include <QMenuBar>
 #include <QMessageBox>
@@ -124,6 +128,54 @@ void Rename(QAction* action, const QString& text) {
 }
 
 } // namespace
+
+namespace {
+/// Calls `follow` whenever the watched widget changes size.
+class ResizeFollower final : public QObject {
+public:
+    ResizeFollower(QObject* owner, std::function<void()> follow_)
+        : QObject(owner), follow(std::move(follow_)) {}
+    bool eventFilter(QObject* watched, QEvent* event) override {
+        if (event->type() == QEvent::Resize || event->type() == QEvent::Show) {
+            follow();
+        }
+        return QObject::eventFilter(watched, event);
+    }
+
+private:
+    std::function<void()> follow;
+};
+} // namespace
+
+bool EmbedInMainWindow(QDialog* dialog) {
+    if (!Enabled() || dialog == nullptr || dialog->parentWidget() == nullptr) {
+        return false;
+    }
+    auto* const main = qobject_cast<QMainWindow*>(dialog->parentWidget()->window());
+    QWidget* const area = main != nullptr ? main->centralWidget() : nullptr;
+    if (area == nullptr) {
+        return false;
+    }
+    QWidget* const rail = area->findChild<QWidget*>(QStringLiteral("FritchiiRail"));
+    dialog->setParent(area, Qt::Widget);
+    dialog->setAttribute(Qt::WA_StyledBackground);
+    dialog->setAutoFillBackground(true);
+    dialog->setMinimumSize(0, 0);
+    const auto place = [dialog, area, rail] {
+        const int left = rail != nullptr && rail->isVisible() ? rail->geometry().right() + 1 : 0;
+        dialog->setGeometry(left, 0, (std::max)(0, area->width() - left), area->height());
+        dialog->raise();
+    };
+    place();
+    area->installEventFilter(new ResizeFollower(dialog, place));
+    if (rail != nullptr) {
+        // Library, Help, Menu (and Settings again): back to the library, as Cancel.
+        for (QToolButton* const button : rail->findChildren<QToolButton*>()) {
+            QObject::connect(button, &QToolButton::clicked, dialog, &QDialog::reject);
+        }
+    }
+    return true;
+}
 
 bool Enabled() {
     static const bool enabled = [] {

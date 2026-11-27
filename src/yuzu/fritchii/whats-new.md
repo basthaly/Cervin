@@ -1,16 +1,26 @@
-## Cervin v1.0.4 — version optimisée pour les processeurs plus modestes
+## Cervin v1.0.5 — Paramètres dans la fenêtre, shaders d'OoT préparés en jouant
 
-### Performances
+### Interface
 
-- **Cervin est maintenant compilé avec clang et optimisé par profil (PGO)**, comme Fritchii,
-  au lieu de MSVC : tout l'émulateur va plus vite, surtout sur les processeurs à 6 cœurs.
-- **Mario Kart World :** le minuteur interne attend sans occuper un cœur en permanence, ce qui
-  libère environ un tiers de cœur pour le jeu (utile en ligne). Ocarina of Time n'est pas touché.
+- **Les Paramètres et les Paramètres du jeu s'ouvrent dans la fenêtre principale**, à la place de
+  la Bibliothèque, au lieu d'une fenêtre à part : les boutons OK et Annuler sont toujours visibles.
+  Une icône de la barre de gauche referme la page (comme Annuler).
+- Les textes sur la préparation des shaders précisent qu'il faut mettre **Cervin** en pause
+  (Émulation > Pause), pas le menu pause du jeu.
 
-### Problèmes connus
+### Ocarina of Time
 
-- **Mario Kart World en ligne, mode Survie :** la fluidité peut encore baisser avec beaucoup de
-  joueurs, surtout sur les processeurs à 6 cœurs.
+- **Moins de saccades au passage de Link adulte à Link enfant** (et aux autres changements de
+  modèles) : la préparation des shaders avance aussi pendant que tu joues, sur 2 threads en
+  priorité basse, sur les processeurs à 16 threads ou plus. Mettre Cervin en pause l'accélère.
+- La préparation reprend après une fermeture brutale de Cervin (elle restait bloquée pour toujours).
+
+### Mario Kart World
+
+- **Mode 30 FPS et FPS dynamique :** une seule valeur, celle des Paramètres de Cervin. Un réglage
+  propre au jeu passait avant sans le dire. Relance MKW après les avoir changés.
+- Les copies des résultats que le jeu relit sur le GPU partent plus tôt, pour moins d'attente
+  en course sur les processeurs à 6 cœurs.
 
 ### Un problème ?
 

@@ -11,6 +11,7 @@
 #include <QString>
 #include <QStringList>
 
+class QDialog;
 class QIcon;
 class QMainWindow;
 class QPushButton;
@@ -27,6 +28,12 @@ namespace FritchiiUi {
 
 /// Fritchii builds (g_build_name "Cervin"). FRITCHII_CLASSIC_UI=1 shows the original UI.
 [[nodiscard]] bool Enabled();
+
+/// Cervin (owner 2026-11-27): a settings dialog opens as a page of the main window, right of the
+/// rail, in place of the library (it follows the window's size), not as a window of its own.
+/// The rail's buttons close it (Cancel). Call before exec(); false (nothing done) without the
+/// Fritchii UI or a main window.
+bool EmbedInMainWindow(QDialog* dialog);
 
 /// Fusion style, the Graphite palette, Inter and the stylesheet. Does nothing (and returns false)
 /// when the Fritchii UI is off.
