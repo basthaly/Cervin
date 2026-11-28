@@ -2423,6 +2423,11 @@ void Device::RemoveUnsuitableExtensions() {
     RemoveExtensionFeatureIfUnsuitable(extensions.depth_clip_control, features.depth_clip_control,
                                        VK_EXT_DEPTH_CLIP_CONTROL_EXTENSION_NAME);
 
+    // VK_EXT_image_view_min_lod (Cervin: half-resolution sparse lightmaps never read level 0)
+    extensions.image_view_min_lod = features.image_view_min_lod.minLod;
+    RemoveExtensionFeatureIfUnsuitable(extensions.image_view_min_lod, features.image_view_min_lod,
+                                       VK_EXT_IMAGE_VIEW_MIN_LOD_EXTENSION_NAME);
+
     // VK_EXT_descriptor_buffer
     extensions.descriptor_buffer = features.descriptor_buffer.descriptorBuffer;
     RemoveExtensionFeatureIfUnsuitable(extensions.descriptor_buffer, features.descriptor_buffer,

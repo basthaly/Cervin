@@ -5844,9 +5844,16 @@ void TextureCache<P>::RefreshSparseTiles(Image& image) {
         if (ranges.empty()) {
             ranges = Tegra::Nx2SparseDataRanges(image.gpu_addr, image.guest_size_bytes);
         }
-        const std::vector<LevelRect> rects =
+        std::vector<LevelRect> rects =
             SparseTileRects(image.info, ranges, image.SparseTileWidth(), image.SparseTileHeight(),
                             image.SparseTailLevel());
+        // Cervin: levels kept out of video memory (half-resolution lightmaps) get neither memory
+        // nor uploads; their views never read them.
+        if constexpr (requires { image.SparseSkipLevels(); }) {
+            if (const s32 skip = static_cast<s32>(image.SparseSkipLevels()); skip != 0) {
+                std::erase_if(rects, [skip](const LevelRect& rect) { return rect.level < skip; });
+            }
+        }
         if (rects.empty() || !BindSparseTiles(image, rects)) {
             runtime.TransitionImageLayout(image);
             return;

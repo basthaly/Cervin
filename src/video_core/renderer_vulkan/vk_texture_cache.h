@@ -866,6 +866,12 @@ public:
         return static_cast<s32>(sparse_layers.tail_level);
     }
 
+    /// Cervin, SparseTiles images: the first levels kept out of video memory (never bound,
+    /// never uploaded; views clamp past them). 0 for most images.
+    u32 SparseSkipLevels() const noexcept {
+        return sparse_skip_levels;
+    }
+
     /// SparseTiles images whose blocks without memory of their own share one zeroed block.
     bool SparseTilesShareZeroBlock() const noexcept {
         return sparse_layers.zero_block != VK_NULL_HANDLE;
@@ -980,6 +986,7 @@ private:
         bool warned{};
     };
     SparseLayerMemory sparse_layers;
+    u32 sparse_skip_levels{}; ///< See SparseSkipLevels
 
     /// Reads the image's sparse requirements; false when it can't be bound by layer.
     bool InitSparseLayers();

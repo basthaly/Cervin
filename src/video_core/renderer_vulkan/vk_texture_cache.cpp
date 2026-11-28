@@ -327,6 +327,22 @@ enum class SparseTilesMode {
            Tegra::Nx2InSparseRegion(gpu_addr, size);
 }
 
+// Cervin: the HDR lightmap arrays by sparse tile keep their level 0 out of video memory. Mario
+// Kart World keeps up to ~5.4 GB of their tiles mapped by the end of a race (the Switch 2 has
+// 12 GB for everything) and each mapped tile took as much VRAM: 4 -> 10.7 GB of an 11 GB budget
+// in 10 min of Survival, over budget on 8 GB cards (FPS 50 -> 20). Level 0 is 3/4 of an array; its
+// views clamp to level 1 (VK_EXT_image_view_min_lod), so the baked light, smooth already, is
+// sampled at half resolution. CERVIN_LIGHTMAP_HALF=0 keeps level 0.
+[[nodiscard]] bool HalvesSparseLightmap(const Device& device, const ImageInfo& info) {
+    static const bool enabled = [] {
+        const char* value = std::getenv("CERVIN_LIGHTMAP_HALF");
+        return value == nullptr || value[0] != '0';
+    }();
+    return enabled && device.IsExtImageViewMinLodSupported() && info.resources.levels > 1 &&
+           info.resources.layers > 1 &&
+           (info.format == PixelFormat::BC6H_UFLOAT || info.format == PixelFormat::BC6H_SFLOAT);
+}
+
 // Vulkan's standard sparse block shape for single-sampled 2D images (64 KiB blocks), in texel
 // blocks, for a texel block of `block_bytes`. Only valid when the device reports
 // residencyStandard2DBlockShape.
@@ -3871,6 +3887,14 @@ Image::Image(TextureCacheRuntime& runtime_, const ImageInfo& info_, GPUVAddr gpu
         // layered atlas (Mario Kart World's HDR lightmaps, BC6H arrays) binds and uploads by tile.
         if (UsesSparseTiles(runtime_.device, info, gpu_addr_) && InitSparseTiles()) {
             flags |= VideoCommon::ImageFlagBits::SparseTiles;
+            if (HalvesSparseLightmap(runtime_.device, info) &&
+                sparse_layers.zero_block == VK_NULL_HANDLE) {
+                sparse_skip_levels = 1;
+                LOG_INFO(Render_Vulkan,
+                         "Sparse tiled image {:#x}: level 0 kept out of video memory, sampled "
+                         "from level 1 (CERVIN_LIGHTMAP_HALF=0 keeps it)",
+                         gpu_addr);
+            }
         } else if (UsesSparseLayers(runtime_.device, info, gpu_addr_) && InitSparseLayers()) {
             flags |= VideoCommon::ImageFlagBits::SparseLayers;
         } else if (!IsTooLargeToBack(texels, bytes)) {
@@ -5406,6 +5430,19 @@ ImageView::ImageView(TextureCacheRuntime& runtime, const VideoCommon::ImageViewI
     if (device->IsExtAstcDecodeModeSupported() && IsLdrAstcFormat(format_info.format)) {
         view_next = &astc_decode_mode;
     }
+    // Cervin: images without their first levels in video memory (HalvesSparseLightmap) are never
+    // read there: the view clamps to the first level they keep.
+    const SubresourceRange host_range = HostRange(image, info.range);
+    const u32 skip_levels = image.SparseSkipLevels();
+    const VkImageViewMinLodCreateInfoEXT min_lod{
+        .sType = VK_STRUCTURE_TYPE_IMAGE_VIEW_MIN_LOD_CREATE_INFO_EXT,
+        .pNext = view_next,
+        .minLod = static_cast<float>(skip_levels),
+    };
+    if (skip_levels != 0 && host_range.base.level < static_cast<s32>(skip_levels) &&
+        host_range.base.level + host_range.extent.levels > static_cast<s32>(skip_levels)) {
+        view_next = &min_lod;
+    }
     const VkImageViewCreateInfo create_info{
         .sType = VK_STRUCTURE_TYPE_IMAGE_VIEW_CREATE_INFO,
         .pNext = view_next,
@@ -5414,7 +5451,7 @@ ImageView::ImageView(TextureCacheRuntime& runtime, const VideoCommon::ImageViewI
         .viewType = VkImageViewType{},
         .format = format_info.format,
         .components = swizzle_mapping,
-        .subresourceRange = MakeSubresourceRange(aspect_mask, HostRange(image, info.range)),
+        .subresourceRange = MakeSubresourceRange(aspect_mask, host_range),
     };
     const auto create = [&](TextureType tex_type, std::optional<u32> num_layers) {
         VkImageViewCreateInfo ci{create_info};
