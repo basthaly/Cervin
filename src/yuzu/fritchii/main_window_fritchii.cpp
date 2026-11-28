@@ -3,6 +3,8 @@
 // MainWindow's Fritchii setup, kept out of main_window.cpp so merges stay clean. It runs
 // once at the end of the constructor and does nothing in a build without the Fritchii look.
 
+#include <cstdlib>
+
 #include <QApplication>
 #include <QMessageBox>
 #include <QPushButton>
@@ -203,4 +205,15 @@ void MainWindow::SetUpFritchiiUi() {
             FritchiiUi::OfferNvidiaShaderCache(this);
         }
     });
+    // Cervin test hook: CERVIN_TEST_SETTINGS=N opens Settings N times (each closes itself, see
+    // OnConfigure) and quits, to time them without anyone at the screen.
+    if (const char* runs = std::getenv("CERVIN_TEST_SETTINGS"); runs && std::atoi(runs) > 0) {
+        const int count = std::atoi(runs);
+        QTimer::singleShot(5000, this, [this, count] {
+            for (int i = 0; i < count; ++i) {
+                OnConfigure();
+            }
+            close();
+        });
+    }
 }

@@ -50,9 +50,9 @@ class ConfigureDialog : public QDialog {
 
 public:
     explicit ConfigureDialog(QWidget* parent, HotkeyRegistry& registry_,
-                             InputCommon::InputSubsystem* input_subsystem,
-                             std::vector<VkDeviceInfo::Record>& vk_device_records,
-                             Core::System& system_, bool enable_web_config = true);
+                             InputCommon::InputSubsystem* input_subsystem_,
+                             std::vector<VkDeviceInfo::Record>& vk_device_records_,
+                             Core::System& system_, bool enable_web_config_ = true);
     ~ConfigureDialog() override;
 
     void ApplyConfiguration();
@@ -74,12 +74,44 @@ private:
     void UpdateVisibleTabs();
     void PopulateSelectionList();
 
+    enum class TabId {
+        Applets,
+        Audio,
+        Cpu,
+        Debug,
+        Filesystem,
+        General,
+        GraphicsAdvanced,
+        GraphicsExtensions,
+        Ui,
+        Graphics,
+        Hotkeys,
+        Input,
+        Network,
+        Profile,
+        System,
+        Web,
+        TabCount
+    };
+    static constexpr int TabCount = static_cast<int>(TabId::TabCount);
+    /// Builds the tab the first time (Cervin: tabs are built on demand) and returns it.
+    QWidget* Tab(TabId id);
+    [[nodiscard]] bool IsBuilt(TabId id) const;
+    /// The pages of the list's group `group`, built if needed.
+    QList<QWidget*> GroupTabs(int group);
+    /// Builds the next tab not built yet, then comes back on the next turn of the event loop.
+    void BuildNextTab();
+
     std::unique_ptr<Ui::ConfigureDialog> ui;
     HotkeyRegistry& registry;
 
     Core::System& system;
     std::unique_ptr<ConfigurationShared::Builder> builder;
     std::vector<ConfigurationShared::Tab*> tab_group;
+    InputCommon::InputSubsystem* input_subsystem;
+    std::vector<VkDeviceInfo::Record>& vk_device_records;
+    bool enable_web_config;
+    std::vector<std::vector<TabId>> groups; ///< the tabs of each row of the list
 
     std::unique_ptr<ConfigureApplets> applets_tab;
     std::unique_ptr<ConfigureAudio> audio_tab;

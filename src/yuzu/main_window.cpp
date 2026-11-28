@@ -9,6 +9,7 @@
 #endif
 
 #include <chrono>
+#include <cstdlib>
 #include <filesystem>
 #include <fstream>
 #include <optional>
@@ -4319,6 +4320,15 @@ void MainWindow::OnConfigure() {
                      std::chrono::steady_clock::now() - settings_begin)
                      .count());
     });
+    if (const char* test = std::getenv("CERVIN_TEST_SETTINGS"); test && test[0] != 0) {
+        // see SetUpFritchiiUi; CERVIN_TEST_SETTINGS_ACCEPT=<ms> presses OK after that long.
+        const char* accept_ms = std::getenv("CERVIN_TEST_SETTINGS_ACCEPT");
+        if (accept_ms != nullptr && std::atoi(accept_ms) > 0) {
+            QTimer::singleShot(std::atoi(accept_ms), &configure_dialog, &QDialog::accept);
+        } else {
+            QTimer::singleShot(1500, &configure_dialog, &QDialog::reject);
+        }
+    }
     const auto result = FritchiiUi::ExecInMainWindow(&configure_dialog, "settings");
     if (result != QDialog::Accepted && !UISettings::values.configuration_applied &&
         !UISettings::values.reset_to_defaults) {
