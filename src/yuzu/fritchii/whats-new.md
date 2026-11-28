@@ -1,19 +1,22 @@
-## Cervin v1.0.6 — Paramètres réparés, mises à jour automatiques de retour
+## Cervin v1.0.7 — Moins de saccades sur NVIDIA, Paramètres plus rapides et mieux rangés
 
-### Corrections
+### Moins de saccades
 
-- **Ouvrir les Paramètres ne bloque plus Cervin** (v1.0.5 : plus rien ne répondait, il fallait le
-  fermer de force). Pareil pour les Paramètres du jeu.
-- **Les mises à jour automatiques fonctionnent de nouveau** (désactivées par erreur dans la
-  v1.0.4 et la v1.0.5).
-- Pendant que les Paramètres sont ouverts, leur icône s'allume dans la barre de gauche.
+- **Cartes NVIDIA : cache de shaders du pilote à 8 Go.** Au premier lancement, Cervin te propose
+  d'agrandir ce cache, pour Cervin seulement (le pilote le limite souvent à 1 Go, trop petit pour
+  les ~120 000 shaders d'OoT). Plus besoin de passer par l'application NVIDIA.
+- **Préparation des shaders plus maligne.** Cervin retient les shaders que tu croises en jouant :
+  la préparation en arrière-plan commence par les plus fréquents, et pendant la partie il prépare
+  en avance ceux qui viennent d'habitude juste après. Ça s'améliore à chaque session.
 
-### Conseil pour Ocarina of Time (cartes NVIDIA)
+### Paramètres
 
-Si des saccades reviennent alors que les shaders sont déjà préparés : dans l'application NVIDIA
-(ou le Panneau de configuration NVIDIA > Gérer les paramètres 3D), règle **Taille du cache de
-shaders** sur **Illimitée**, puis relance une fois **Émulation > Préparer les shaders maintenant**.
-Le cache du pilote est souvent limité à 1 Go, trop petit pour les ~120 000 shaders d'OoT.
+- **Ils s'ouvrent quasi instantanément** (environ 25 ms au lieu d'une demi-seconde) : chaque
+  onglet est préparé seulement quand tu en as besoin.
+- **Vidéo et Vidéo › Avancée sont rangés en sections** (Résolution et upscaling, Netteté et
+  filtres, Image, Écran, Performance ; Fréquence d'images, Shaders et saccades, Vitesse, Textures,
+  Précision et compatibilité). Clique sur un titre pour replier ou déplier la section.
+- Deux réglages internes qui n'avaient rien à faire là sont cachés.
 
 ### Un problème ?
 
