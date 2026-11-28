@@ -194,6 +194,68 @@ bool EmbedInMainWindow(QDialog* dialog, const char* rail_item) {
     return true;
 }
 
+bool ShowAsPage(QDialog* dialog, const char* rail_item) {
+    if (!Enabled() || dialog == nullptr) {
+        return false;
+    }
+    if (!dialog->property("cervinPage").toBool()) {
+        if (!EmbedInMainWindow(dialog, nullptr)) {
+            return false;
+        }
+        dialog->setProperty("cervinPage", true);
+        dialog->setWindowModality(Qt::NonModal);
+        // The game draws into a native child window, which covers plain widgets whatever their
+        // order: native too, the page goes over the game when opened from the in-game strip.
+        dialog->setAttribute(Qt::WA_NativeWindow);
+        // No title bar any more: a close button of its own, kept in the top right corner.
+        auto* close = new QToolButton(dialog);
+        close->setObjectName(QStringLiteral("CervinPageClose"));
+        close->setText(QStringLiteral("✕"));
+        close->setToolTip(QObject::tr("Close"));
+        close->setCursor(Qt::PointingHandCursor);
+        close->setFocusPolicy(Qt::NoFocus);
+        close->setAutoRaise(true);
+        close->setFixedSize(32, 32);
+        QObject::connect(close, &QToolButton::clicked, dialog, &QDialog::reject);
+        const auto corner = [dialog, close] {
+            close->move(dialog->width() - close->width() - 8, 8);
+            close->raise();
+        };
+        corner();
+        dialog->installEventFilter(new ResizeFollower(close, corner));
+    }
+    // Light the rail's button (and darken the library's) each time the page comes up.
+    QWidget* const area = dialog->parentWidget();
+    QWidget* const rail =
+        area != nullptr ? area->findChild<QWidget*>(QStringLiteral("FritchiiRail")) : nullptr;
+    if (rail != nullptr && !dialog->isVisible()) {
+        for (QToolButton* const button : rail->findChildren<QToolButton*>()) {
+            const QString item = button->property("cervinRailItem").toString();
+            if (item == QStringLiteral("library") && button->isChecked()) {
+                button->setChecked(false);
+                QObject::connect(
+                    dialog, &QDialog::finished, button, [button] { button->setChecked(true); },
+                    Qt::SingleShotConnection);
+            } else if (rail_item != nullptr && item == QLatin1String(rail_item)) {
+                const bool was_checkable = button->isCheckable();
+                button->setCheckable(true);
+                button->setChecked(true);
+                QObject::connect(
+                    dialog, &QDialog::finished, button,
+                    [button, was_checkable] {
+                        button->setChecked(false);
+                        button->setCheckable(was_checkable);
+                    },
+                    Qt::SingleShotConnection);
+            }
+        }
+    }
+    dialog->show();
+    dialog->raise();
+    dialog->setFocus();
+    return true;
+}
+
 int ExecInMainWindow(QDialog* dialog, const char* rail_item) {
     if (!EmbedInMainWindow(dialog, rail_item)) {
         return dialog->exec();

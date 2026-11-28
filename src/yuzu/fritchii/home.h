@@ -37,6 +37,7 @@ struct HomeHooks {
     std::function<bool()> emulation_running;
     QStandardItemModel* model = nullptr;
     QMenu* help_menu = nullptr;
+    QMenu* network_menu = nullptr; ///< Cervin: Multiplayer, behind its own rail button
     QList<QMenu*> classic_menus;  ///< File, Game, View, Tools, Help behind the rail's menu button
     /// Cervin: runs `change` with the game's own settings (its per-game config) loaded into
     /// Settings::values, and saves them when it returns true. Does nothing while a game runs.

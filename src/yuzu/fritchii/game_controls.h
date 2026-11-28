@@ -23,6 +23,7 @@ struct GameControlHooks {
     QAction* stop = nullptr;
     QAction* fullscreen = nullptr;      ///< checkable
     QList<QMenu*> menus;                ///< the classic menus, behind the last button
+    QMenu* network = nullptr;           ///< Cervin: Multiplayer, behind a button of its own
 };
 
 /// The in-game control strip: a small Graphite bar at the top centre of the game that shows when

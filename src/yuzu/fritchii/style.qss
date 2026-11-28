@@ -303,6 +303,11 @@ QPushButton#CervinSectionTitle {
     background: transparent; border: none; padding: 4px 2px;
 }
 QPushButton#CervinSectionTitle:hover { color: #a78bfa; }
+/* Cervin: close button of a page shown in place of the library (multiplayer rooms). */
+QToolButton#CervinPageClose {
+    font-size: 16px; color: #9a9aa8; background: transparent; border: none; border-radius: 6px;
+}
+QToolButton#CervinPageClose:hover { color: #ececf1; background: #2a2a33; }
 QLabel#CervinSectionText { color: #9a9aa8; padding: 0 2px 4px 2px; }
 QLabel#CervinIntro { color: #9a9aa8; }
 QLabel#CervinWhat { color: #c9c9d3; }

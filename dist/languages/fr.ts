@@ -8027,7 +8027,7 @@ Fais glisser les points pour modifier la position ou double-clique sur les cellu
     <context>
         <name>FritchiiUi</name>
         <message>
-            <location filename="../../src/yuzu/fritchii/fritchii_ui.cpp" line="+306" />
+            <location filename="../../src/yuzu/fritchii/fritchii_ui.cpp" line="+365" />
             <source>&amp;Game</source>
             <translation>&amp;Jeu</translation>
         </message>
@@ -8246,12 +8246,12 @@ Fais glisser les points pour modifier la position ou double-clique sur les cellu
         <name>FritchiiUi::GameControls</name>
         <message>
             <location filename="../../src/yuzu/fritchii/game_controls.cpp" line="+40" />
-            <location line="+82" />
+            <location line="+91" />
             <source>Pause</source>
             <translation>Pause</translation>
         </message>
         <message>
-            <location line="-80" />
+            <location line="-89" />
             <source>Restart</source>
             <translation>Redémarrer</translation>
         </message>
@@ -8262,12 +8262,17 @@ Fais glisser les points pour modifier la position ou double-clique sur les cellu
         </message>
         <message>
             <location line="+1" />
-            <location line="+86" />
+            <location line="+95" />
             <source>Fullscreen</source>
             <translation>Plein écran</translation>
         </message>
         <message>
-            <location line="-79" />
+            <location line="-86" />
+            <source>Multiplayer</source>
+            <translation>Multijoueur</translation>
+        </message>
+        <message>
+            <location line="+7" />
             <source>Menu</source>
             <translation>Menu</translation>
         </message>
@@ -8286,17 +8291,22 @@ Fais glisser les points pour modifier la position ou double-clique sur les cellu
         <name>FritchiiUi::Home</name>
         <message>
             <location filename="../../src/yuzu/fritchii/home.cpp" line="+258" />
-            <location line="+85" />
+            <location line="+99" />
             <source>Library</source>
             <translation>Bibliothèque</translation>
         </message>
         <message>
-            <location line="-80" />
+            <location line="-94" />
             <source>Settings</source>
             <translation>Paramètres</translation>
         </message>
         <message>
-            <location line="+4" />
+            <location line="+5" />
+            <source>Multiplayer</source>
+            <translation>Multijoueur</translation>
+        </message>
+        <message>
+            <location line="+8" />
             <source>Help</source>
             <translation>Aide</translation>
         </message>
@@ -8306,7 +8316,7 @@ Fais glisser les points pour modifier la position ou double-clique sur les cellu
             <translation>Menu</translation>
         </message>
         <message>
-            <location line="+30" />
+            <location line="+35" />
             <source>Game Settings...</source>
             <translation>Paramètres du jeu...</translation>
         </message>
@@ -11661,7 +11671,7 @@ Veux-tu passer outre et quitter quand même ?</translation>
             <translation>Supprimer</translation>
         </message>
         <message>
-            <location line="+141" />
+            <location line="+143" />
             <source>the game</source>
             <translation>le jeu</translation>
         </message>
@@ -11775,7 +11785,7 @@ Le profil %1 d'origine n'a pas été modifié. Garde-le jusqu'à ce que tu aies 
     <context>
         <name>MultiplayerState</name>
         <message>
-            <location filename="../../src/yuzu/multiplayer/state.cpp" line="+92" />
+            <location filename="../../src/yuzu/multiplayer/state.cpp" line="+93" />
             <source>Current connection status</source>
             <translation>État actuel de la connexion</translation>
         </message>
@@ -11800,7 +11810,7 @@ Le profil %1 d'origine n'a pas été modifié. Garde-le jusqu'à ce que tu aies 
             <translation>Nouveaux messages reçus</translation>
         </message>
         <message>
-            <location line="+71" />
+            <location line="+75" />
             <source>Error</source>
             <translation>Erreur</translation>
         </message>
@@ -14431,7 +14441,8 @@ Les sauvegardes présentes sont d'abord mises de côté dans :
             <translation>Déplacer les sauvegardes qui n'apparaissent pas dans ton profil Cervin ?</translation>
         </message>
         <message>
-            <location line="-379" />
+            <location filename="../../src/yuzu/fritchii/fritchii_ui.cpp" line="-505" />
+            <location filename="../../src/yuzu/fritchii/saves_window.cpp" line="-379" />
             <location line="+416" />
             <source>Close</source>
             <translation>Fermer</translation>

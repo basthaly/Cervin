@@ -48,6 +48,15 @@ GameControls::GameControls(QWidget* owner, GameControlHooks hooks_)
     for (QMenu* menu : hooks.menus) {
         classic->addMenu(menu);
     }
+    // Cervin: the multiplayer room (or lobby) while a game runs, as a page over the game.
+    if (hooks.network) {
+        auto* network_button = Button(QStringLiteral("network"), tr("Multiplayer"), nullptr);
+        connect(network_button, &QToolButton::clicked, this, [this, network_button] {
+            hooks.network->exec(
+                network_button->mapToGlobal(QPoint(0, network_button->height() + 6)));
+        });
+        layout->addWidget(network_button);
+    }
     auto* menu_button = Button(QStringLiteral("menu"), tr("Menu"), nullptr);
     connect(menu_button, &QToolButton::clicked, this, [this, menu_button] {
         classic->exec(menu_button->mapToGlobal(QPoint(0, menu_button->height() + 6)));

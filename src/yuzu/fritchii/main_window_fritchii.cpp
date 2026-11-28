@@ -139,6 +139,7 @@ void MainWindow::SetUpFritchiiUi() {
         .emulation_running = [this] { return emulation_running; },
         .model = game_list->GetModel(),
         .help_menu = ui->menu_Help,
+        .network_menu = ui->menu_Multiplayer,
         // Cervin: Multiplayer at the top, not three levels down under Tools > Advanced.
         .classic_menus = {ui->menu_File, ui->menu_Emulation, ui->menu_View, ui->menu_Tools,
                           ui->menu_Multiplayer, ui->menu_Help},
@@ -175,7 +176,8 @@ void MainWindow::SetUpFritchiiUi() {
                .stop = ui->action_Stop,
                .fullscreen = ui->action_Fullscreen,
                .menus = {ui->menu_File, ui->menu_Emulation, ui->menu_View, ui->menu_Tools,
-                         ui->menu_Multiplayer, ui->menu_Help}});
+                         ui->menu_Multiplayer, ui->menu_Help},
+               .network = ui->menu_Multiplayer});
     connect(this, &MainWindow::EmulationStarting, controls, &FritchiiUi::GameControls::Start);
     connect(this, &MainWindow::EmulationStopping, controls, &FritchiiUi::GameControls::Stop);
 

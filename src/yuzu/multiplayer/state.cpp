@@ -12,6 +12,7 @@
 #include "common/logging.h"
 #include "core/core.h"
 #include "qt_common/config/uisettings.h"
+#include "yuzu/fritchii/fritchii_ui.h"
 #include "yuzu/game/game_list.h"
 #include "yuzu/multiplayer/client_room.h"
 #include "yuzu/multiplayer/direct_connect.h"
@@ -152,7 +153,11 @@ void MultiplayerState::OnNetworkStateChanged(const Network::RoomMember::State& s
     if (state == Network::RoomMember::State::Joined ||
         state == Network::RoomMember::State::Moderator) {
 
-        OnOpenNetworkRoom();
+        // Cervin: not over a running game (a reconnect brought the room up mid-race); the room
+        // stays a click away (status bar, rail or the in-game strip's Multiplayer button).
+        if (!(FritchiiUi::Enabled() && system.IsPoweredOn())) {
+            OnOpenNetworkRoom();
+        }
         SetNotificationStatus(NotificationStatus::Connected);
     } else {
         SetNotificationStatus(NotificationStatus::Disconnected);
@@ -232,7 +237,11 @@ void MultiplayerState::UpdateThemedIcons() {
         client_room->UpdateIconDisplay();
 }
 
-static void BringWidgetToFront(QWidget* widget) {
+static void BringWidgetToFront(QDialog* widget) {
+    // Cervin: a page of the main window, not a window that stays above the game.
+    if (FritchiiUi::ShowAsPage(widget, "network")) {
+        return;
+    }
     widget->show();
     widget->activateWindow();
     widget->raise();

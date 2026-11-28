@@ -264,6 +264,15 @@ QWidget* Home::MakeRail() {
     settings->setProperty("cervinRailItem", QStringLiteral("settings"));
     connect(settings, &QToolButton::clicked, this, [this] { hooks.open_settings(); });
 
+    // Cervin: the multiplayer rooms one click away; they open as pages (FritchiiUi::ShowAsPage).
+    QToolButton* network = RailButton(QStringLiteral("network"), tr("Multiplayer"));
+    network->setProperty("cervinRailItem", QStringLiteral("network"));
+    connect(network, &QToolButton::clicked, this, [this, network] {
+        if (hooks.network_menu) {
+            hooks.network_menu->exec(network->mapToGlobal(QPoint(network->width() + 8, 0)));
+        }
+    });
+
     QToolButton* help = RailButton(QStringLiteral("help"), tr("Help"));
     connect(help, &QToolButton::clicked, this, [this, help] {
         if (hooks.help_menu) {
@@ -285,6 +294,11 @@ QWidget* Home::MakeRail() {
     // Discord and Donate are on the home page itself (MakePage), with their names.
     layout->addWidget(library_button);
     layout->addWidget(settings);
+    if (hooks.network_menu) {
+        layout->addWidget(network);
+    } else {
+        network->hide();
+    }
     layout->addWidget(help);
     layout->addStretch(1);
     layout->addWidget(menu_button);

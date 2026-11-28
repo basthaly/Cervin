@@ -40,6 +40,11 @@ bool EmbedInMainWindow(QDialog* dialog, const char* rail_item = nullptr);
 /// embedded page is shown without modality: exec() on a child widget made it application modal
 /// and blocked the whole window, the page included (v1.0.5 froze on Settings). Not embedded: exec().
 int ExecInMainWindow(QDialog* dialog, const char* rail_item = nullptr);
+/// Cervin (owner 2026-11-28): a window that lives on (the multiplayer room, lobby...) shown as a
+/// page of the main window, embedded the first time, with a close button in its top right corner.
+/// As a window of its own it stayed above the game. False (nothing done) without the Fritchii UI:
+/// the caller shows it as before.
+bool ShowAsPage(QDialog* dialog, const char* rail_item = nullptr);
 
 /// Fusion style, the Graphite palette, Inter and the stylesheet. Does nothing (and returns false)
 /// when the Fritchii UI is off.
