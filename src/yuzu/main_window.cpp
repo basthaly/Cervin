@@ -4323,7 +4323,13 @@ void MainWindow::OnConfigure() {
     if (const char* test = std::getenv("CERVIN_TEST_SETTINGS"); test && test[0] != 0) {
         // see SetUpFritchiiUi; CERVIN_TEST_SETTINGS_ACCEPT=<ms> presses OK after that long.
         const char* accept_ms = std::getenv("CERVIN_TEST_SETTINGS_ACCEPT");
-        if (accept_ms != nullptr && std::atoi(accept_ms) > 0) {
+        const char* shot = std::getenv("CERVIN_TEST_SETTINGS_SHOT");
+        if (shot != nullptr && shot[0] != 0) {
+            QTimer::singleShot(1500, &configure_dialog, [&configure_dialog, shot] {
+                configure_dialog.SaveScreenshots(QString::fromLocal8Bit(shot));
+                configure_dialog.reject();
+            });
+        } else if (accept_ms != nullptr && std::atoi(accept_ms) > 0) {
             QTimer::singleShot(std::atoi(accept_ms), &configure_dialog, &QDialog::accept);
         } else {
             QTimer::singleShot(1500, &configure_dialog, &QDialog::reject);

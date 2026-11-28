@@ -2674,7 +2674,7 @@ Prend effet au lancement du jeu.</translation>
     <context>
         <name>ConfigurationShared::CardsState</name>
         <message>
-            <location filename="../../src/yuzu/configuration/setting_cards.cpp" line="+98" />
+            <location filename="../../src/yuzu/configuration/setting_cards.cpp" line="+99" />
             <source>&lt;b&gt;In game:&lt;/b&gt; %1</source>
             <translation>&lt;b&gt;En jeu :&lt;/b&gt; %1</translation>
         </message>
@@ -2719,7 +2719,7 @@ Prend effet au lancement du jeu.</translation>
             <translation>à savoir</translation>
         </message>
         <message>
-            <location line="+177" />
+            <location line="+327" />
             <source>output %1</source>
             <translation>sortie %1</translation>
         </message>
@@ -3444,25 +3444,25 @@ Prend effet au lancement du jeu.</translation>
             <translation>Certains paramètres ne sont disponibles que lorsqu'un jeu n'est pas en cours d'exécution.</translation>
         </message>
         <message>
-            <location filename="../../src/yuzu/configuration/configure_dialog.cpp" line="+83" />
+            <location filename="../../src/yuzu/configuration/configure_dialog.cpp" line="+86" />
             <source>Applets</source>
             <translation>Applets</translation>
         </message>
         <message>
             <location line="+1" />
-            <location line="+178" />
-            <location line="+10" />
+            <location line="+413" />
+            <location line="+8" />
             <source>Audio</source>
             <translation>Son</translation>
         </message>
         <message>
-            <location line="-187" />
-            <location line="+174" />
+            <location line="-420" />
+            <location line="+418" />
             <source>CPU</source>
             <translation>CPU</translation>
         </message>
         <message>
-            <location line="-173" />
+            <location line="-417" />
             <source>Debug</source>
             <translation>Débogage</translation>
         </message>
@@ -3473,20 +3473,20 @@ Prend effet au lancement du jeu.</translation>
         </message>
         <message>
             <location line="+1" />
-            <location line="+166" />
-            <location line="+14" />
+            <location line="+406" />
+            <location line="+7" />
             <source>General</source>
             <translation>Général</translation>
         </message>
         <message>
-            <location line="-179" />
-            <location line="+171" />
+            <location line="-412" />
+            <location line="+406" />
             <location line="+9" />
             <source>Graphics</source>
             <translation>Vidéo</translation>
         </message>
         <message>
-            <location line="-179" />
+            <location line="-414" />
             <source>GraphicsAdvanced</source>
             <translation>Graphismes avancés</translation>
         </message>
@@ -3502,13 +3502,13 @@ Prend effet au lancement du jeu.</translation>
         </message>
         <message>
             <location line="+1" />
-            <location line="+170" />
-            <location line="+8" />
+            <location line="+403" />
+            <location line="+10" />
             <source>Controls</source>
             <translation>Contrôles</translation>
         </message>
         <message>
-            <location line="-177" />
+            <location line="-412" />
             <source>Profiles</source>
             <translation>Profils</translation>
         </message>
@@ -3519,13 +3519,13 @@ Prend effet au lancement du jeu.</translation>
         </message>
         <message>
             <location line="+1" />
-            <location line="+160" />
-            <location line="+17" />
+            <location line="+402" />
+            <location line="+4" />
             <source>System</source>
             <translation>Système</translation>
         </message>
         <message>
-            <location line="-176" />
+            <location line="-405" />
             <source>Game List</source>
             <translation>Liste des jeux</translation>
         </message>
@@ -3535,7 +3535,7 @@ Prend effet au lancement du jeu.</translation>
             <translation>Web</translation>
         </message>
         <message>
-            <location line="+37" />
+            <location line="+32" />
             <source>Settings</source>
             <translation>Paramètres</translation>
         </message>
@@ -3558,22 +3558,22 @@ Prend effet au lancement du jeu.</translation>
             <translation>Les utiliser aussi pour OoT</translation>
         </message>
         <message>
-            <location line="+93" />
+            <location line="+323" />
             <source>Advanced</source>
             <translation>Avancé</translation>
         </message>
         <message>
-            <location line="+5" />
+            <location line="-229" />
             <source>Interface</source>
             <translation>Interface</translation>
         </message>
         <message>
-            <location line="+1" />
+            <location line="+28" />
             <source>Shortcuts</source>
             <translation>Raccourcis</translation>
         </message>
         <message>
-            <location line="+1" />
+            <location line="+17" />
             <source>Users</source>
             <translation>Utilisateurs</translation>
         </message>
@@ -3945,12 +3945,12 @@ Tes paramètres actuels sont d'abord enregistrés : Restaurer les paramètres pe
             <translation>%</translation>
         </message>
         <message>
-            <location line="+109" />
+            <location line="+110" />
             <source>Configure Effects...</source>
             <translation>Configurer les effets...</translation>
         </message>
         <message>
-            <location line="+170" />
+            <location line="+189" />
             <location line="+16" />
             <location line="+416" />
             <source>Off</source>
@@ -3992,7 +3992,7 @@ Tes paramètres actuels sont d'abord enregistrés : Restaurer les paramètres pe
             <translation>VSync Activée</translation>
         </message>
         <message>
-            <location line="-419" />
+            <location line="-439" />
             <source>Cervin picks: K on most cards, the lighter E on cards with little video memory. The safe choice.</source>
             <translation>Cervin choisit : K sur la plupart des cartes, E plus léger sur les cartes avec peu de mémoire vidéo. Le choix sûr.</translation>
         </message>
@@ -4077,12 +4077,12 @@ Pour : petites cartes avec peu de mémoire vidéo. Coût GPU : faible.</translat
             <translation>E · Le plus léger</translation>
         </message>
         <message>
-            <location line="+273" />
+            <location line="+274" />
             <source>Each setting says what it does and what you gain or lose in game.</source>
             <translation>Chaque réglage dit ce qu'il fait et ce que tu gagnes ou perds en jeu.</translation>
         </message>
         <message>
-            <location line="+424" />
+            <location line="+443" />
             <source>Result</source>
             <translation>Résultat</translation>
         </message>
@@ -4266,12 +4266,58 @@ Avec FSR ou DLSS activé, OoT ignore ce réglage : c'est l'upscaler qui choisit 
             <translation>Plus léger, agrandi à la taille de ton écran.</translation>
         </message>
         <message>
-            <location line="+10" />
+            <location line="-1107" />
+            <location line="+1117" />
             <source>Picture</source>
             <translation>Image</translation>
         </message>
         <message>
+            <location line="-1126" />
+            <source>Resolution and upscaling</source>
+            <translation>Résolution et upscaling</translation>
+        </message>
+        <message>
             <location line="+1" />
+            <source>How sharp the picture is, and what the game draws it from.</source>
+            <translation>La netteté de l'image, et la taille d'où le jeu la dessine.</translation>
+        </message>
+        <message>
+            <location line="+4" />
+            <source>Sharpness and filters</source>
+            <translation>Netteté et filtres</translation>
+        </message>
+        <message>
+            <location line="+1" />
+            <source>How the picture is fitted to the window, and how crisp it looks.</source>
+            <translation>Comment l'image s'ajuste à la fenêtre, et à quel point elle est nette.</translation>
+        </message>
+        <message>
+            <location line="+3" />
+            <source>Edge smoothing, effects and colors.</source>
+            <translation>Lissage des bords, effets et couleurs.</translation>
+        </message>
+        <message>
+            <location line="+3" />
+            <source>Screen</source>
+            <translation>Écran</translation>
+        </message>
+        <message>
+            <location line="+0" />
+            <source>Full screen, picture shape and sync with the screen.</source>
+            <translation>Plein écran, format de l'image et synchro avec l'écran.</translation>
+        </message>
+        <message>
+            <location line="+2" />
+            <source>Performance</source>
+            <translation>Performance</translation>
+        </message>
+        <message>
+            <location line="+0" />
+            <source>How the graphics work is spread over the PC.</source>
+            <translation>Comment le travail graphique se répartit sur le PC.</translation>
+        </message>
+        <message>
+            <location line="+1113" />
             <source>The best trade.</source>
             <translation>Le meilleur compromis.</translation>
         </message>
@@ -4790,9 +4836,59 @@ Exclusif peut réduire un peu la latence.</translation>
             <translation>Paramètres Vidéo Avancés</translation>
         </message>
         <message>
-            <location filename="../../src/yuzu/configuration/configure_graphics_advanced.cpp" line="+78" />
+            <location filename="../../src/yuzu/configuration/configure_graphics_advanced.cpp" line="+83" />
             <source>Each setting says what it does and what you gain or lose in game.</source>
             <translation>Chaque réglage dit ce qu'il fait et ce que tu gagnes ou perds en jeu.</translation>
+        </message>
+        <message>
+            <location line="+5" />
+            <source>Frame rate</source>
+            <translation>Fréquence d'images</translation>
+        </message>
+        <message>
+            <location line="+0" />
+            <source>FPS limits and how frames are paced.</source>
+            <translation>Limites de FPS et régularité des images.</translation>
+        </message>
+        <message>
+            <location line="+3" />
+            <source>Shaders and stutters</source>
+            <translation>Shaders et saccades</translation>
+        </message>
+        <message>
+            <location line="+1" />
+            <source>What is prepared ahead so the game doesn't stutter.</source>
+            <translation>Ce qui est préparé à l'avance pour que le jeu ne saccade pas.</translation>
+        </message>
+        <message>
+            <location line="+4" />
+            <source>Speed</source>
+            <translation>Vitesse</translation>
+        </message>
+        <message>
+            <location line="+0" />
+            <source>Shortcuts that give FPS for a little accuracy.</source>
+            <translation>Des raccourcis qui donnent des FPS contre un peu de précision.</translation>
+        </message>
+        <message>
+            <location line="+3" />
+            <source>Textures</source>
+            <translation>Textures</translation>
+        </message>
+        <message>
+            <location line="+0" />
+            <source>Texture sharpness and how they are decoded.</source>
+            <translation>La netteté des textures et la façon dont elles sont décodées.</translation>
+        </message>
+        <message>
+            <location line="+2" />
+            <source>Accuracy and compatibility</source>
+            <translation>Précision et compatibilité</translation>
+        </message>
+        <message>
+            <location line="+1" />
+            <source>Leave these as they are unless a game shows glitches.</source>
+            <translation>À laisser tel quel, sauf si un jeu affiche des bugs graphiques.</translation>
         </message>
     </context>
     <context>
@@ -9613,7 +9709,7 @@ ou clique pour parcourir</translation>
         </message>
         <message>
             <location line="+8" />
-            <location filename="../../src/yuzu/main_window.cpp" line="+2291" />
+            <location filename="../../src/yuzu/main_window.cpp" line="+2292" />
             <source>&amp;Pause</source>
             <translation>&amp;Pause</translation>
         </message>
@@ -9769,7 +9865,7 @@ ou clique pour parcourir</translation>
         </message>
         <message>
             <location line="+11" />
-            <location filename="../../src/yuzu/main_window.cpp" line="+3540" />
+            <location filename="../../src/yuzu/main_window.cpp" line="+3555" />
             <source>&amp;Start</source>
             <translation>&amp;Démarrer</translation>
         </message>
@@ -9871,7 +9967,7 @@ ou clique pour parcourir</translation>
         </message>
         <message>
             <location line="+5" />
-            <location filename="../../src/yuzu/main_window.cpp" line="-5373" />
+            <location filename="../../src/yuzu/main_window.cpp" line="-5388" />
             <location filename="../../src/qt_common/config/shared_translation.h" line="+30" />
             <source>None</source>
             <translation>Aucun</translation>
@@ -10012,12 +10108,12 @@ Change à tout moment avec le bouton 60 FPS / 30 FPS en bas de la fenêtre.</tra
         </message>
         <message>
             <location line="+3" />
-            <location line="+4929" />
+            <location line="+4944" />
             <source>60 FPS</source>
             <translation>60 FPS</translation>
         </message>
         <message>
-            <location line="-4928" />
+            <location line="-4943" />
             <source>30 FPS (lower-end PCs)</source>
             <translation>30 FPS (PC modestes)</translation>
         </message>
@@ -10161,25 +10257,25 @@ La préparation se fait pendant que Cervin est en pause (Émulation &gt; Pause, 
         </message>
         <message>
             <location line="+278" />
-            <location line="+2980" />
+            <location line="+2995" />
             <source>(64-bit)</source>
             <translation>(64-bit)</translation>
         </message>
         <message>
-            <location line="-2980" />
-            <location line="+2980" />
+            <location line="-2995" />
+            <location line="+2995" />
             <source>(32-bit)</source>
             <translation>(32-bit)</translation>
         </message>
         <message>
-            <location line="-2979" />
-            <location line="+2981" />
+            <location line="-2994" />
+            <location line="+2996" />
             <source>%1 %2</source>
             <comment>%1 is the title name. %2 indicates if the title is 64-bit or 32-bit</comment>
             <translation>%1 %2</translation>
         </message>
         <message>
-            <location line="-2872" />
+            <location line="-2887" />
             <source>Closing software...</source>
             <translation>Fermeture du logiciel...</translation>
         </message>
@@ -10374,13 +10470,13 @@ La préparation se fait pendant que Cervin est en pause (Émulation &gt; Pause, 
         </message>
         <message>
             <location line="+53" />
-            <location line="+2446" />
+            <location line="+2461" />
             <location line="+26" />
             <source>NX Archive</source>
             <translation>Archive NX</translation>
         </message>
         <message>
-            <location line="-2471" />
+            <location line="-2486" />
             <source>Wait for the NX metadata edit to finish before starting a game.</source>
             <translation>Attends la fin de la modification des métadonnées NX avant de lancer un jeu.</translation>
         </message>
@@ -10591,7 +10687,7 @@ N'utilise cette fonction que pour installer des mises à jour et des DLC.</trans
             <translation>Impossible d'ouvrir l'URL « %1 ».</translation>
         </message>
         <message>
-            <location line="+322" />
+            <location line="+337" />
             <source>Restore Settings</source>
             <translation>Restaurer les paramètres</translation>
         </message>
@@ -11535,7 +11631,7 @@ Veux-tu passer outre et quitter quand même ?</translation>
             <translation>Null</translation>
         </message>
         <message>
-            <location filename="../../src/yuzu/fritchii/main_window_fritchii.cpp" line="+41" />
+            <location filename="../../src/yuzu/fritchii/main_window_fritchii.cpp" line="+43" />
             <source>Delete Shader Cache</source>
             <translation>Supprimer le cache des shaders</translation>
         </message>
@@ -14532,6 +14628,11 @@ Laisser Cervin agrandir ce cache à 8 Go, pour Cervin uniquement ? Tes autres je
             <location line="+8" />
             <source>Cervin could not change the setting (NVIDIA error %1; Windows may require administrator rights). You can do it yourself: in the NVIDIA app or NVIDIA Control Panel &gt; Manage 3D settings, set Shader Cache Size to 10 GB or Unlimited.</source>
             <translation>Cervin n'a pas pu changer le réglage (erreur NVIDIA %1 ; Windows demande peut-être les droits administrateur). Tu peux le faire toi-même : dans l'application NVIDIA ou le Panneau de configuration NVIDIA &gt; Gérer les paramètres 3D, règle la Taille du cache de shaders sur 10 Go ou Illimitée.</translation>
+        </message>
+        <message>
+            <location filename="../../src/yuzu/configuration/setting_cards.cpp" line="-108" />
+            <source>Other settings</source>
+            <translation>Autres réglages</translation>
         </message>
     </context>
     <context>

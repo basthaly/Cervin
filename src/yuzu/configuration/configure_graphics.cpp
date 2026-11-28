@@ -455,6 +455,7 @@ void ConfigureGraphics::Setup(const ConfigurationShared::Builder& builder) {
                 resolution_group_layout = group_layout;
                 // Cervin: its rows get cards of their own (MakeCards opens it).
                 group->setProperty("cervin_section", true);
+                group->setProperty("cervin_key", QStringLiteral("resolution_setup"));
                 group_layout->setContentsMargins(0, 0, 0, 0);
                 group_layout->setSpacing(2);
                 group_layout->addWidget(widget);
@@ -583,6 +584,25 @@ void ConfigureGraphics::Setup(const ConfigurationShared::Builder& builder) {
                    this, tr("Each setting says what it does and what you gain or lose in game.")));
         ConfigurationShared::MakeCards(api_grid_layout);
         ConfigurationShared::MakeCards(qobject_cast<QBoxLayout*>(&graphics_layout));
+        // Cervin (owner 2026-11-28: too many settings at once): the cards in sections.
+        ConfigurationShared::MakeSections(
+            qobject_cast<QBoxLayout*>(&graphics_layout),
+            {{tr("Resolution and upscaling"),
+              tr("How sharp the picture is, and what the game draws it from."),
+              {"resolution_setup", "nvidia_dlss", "nvidia_dlss_preset", "nvidia_dlss_quality",
+               "oot_dlss_jitter", "oot_upscale_output", "oot_render_height",
+               "oot_anti_aliasing", "oot_texture_sharpness", "oot_lod_bias_custom"}},
+             {tr("Sharpness and filters"),
+              tr("How the picture is fitted to the window, and how crisp it looks."),
+              {"scaling_filter", "fsr_sharpening_slider", "game_dlss_network",
+               "oot_movie_upscale"}},
+             {tr("Picture"), tr("Edge smoothing, effects and colors."),
+              {"anti_aliasing", "post_shader_enabled", "post_shader_preset",
+               "post_shader_chain"}},
+             {tr("Screen"), tr("Full screen, picture shape and sync with the screen."),
+              {"aspect_ratio", "fullscreen_mode", "use_vsync"}},
+             {tr("Performance"), tr("How the graphics work is spread over the PC."),
+              {"use_asynchronous_gpu_emulation", "mkw_recommended"}}});
     }
 
     // Background color is too specific to build into the new system, so we manage it here

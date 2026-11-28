@@ -77,6 +77,19 @@ QWidget* MakeCardsHeader(QWidget* parent, const QString& intro);
 /// one with "cervin_follows" set joins the card before it. A card shows while its row does.
 void MakeCards(QBoxLayout* layout);
 
+/// One section of a settings page: a title, a line on what it holds, and its settings (config
+/// names such as "use_vsync", or a row's "cervin_key" / "cervin_guide" property).
+struct CardSection {
+    QString title;
+    QString subtitle;
+    std::vector<std::string_view> keys;
+};
+
+/// Sorts the cards of `layout` (call after MakeCards) into sections, in the order given, each
+/// under a title that folds it on a click. Cards no section names go in a last "Other settings"
+/// section. A section with no card showing hides with its title.
+void MakeSections(QBoxLayout* layout, const std::vector<CardSection>& sections);
+
 /// One choice of a ChoiceCards: a bold title and a line or two under it.
 struct ChoiceText {
     QString title;

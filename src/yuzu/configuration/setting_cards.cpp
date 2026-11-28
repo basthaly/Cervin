@@ -3,6 +3,7 @@
 #include "yuzu/configuration/setting_cards.h"
 
 #include <algorithm>
+#include <set>
 #include <string>
 
 #include <QAbstractItemModel>
@@ -538,6 +539,156 @@ void MakeCards(QBoxLayout* layout) {
         QObject::connect(&CardsState::Instance(), &CardsState::CompactChanged, follower,
                          [follower](bool) { follower->Update(); });
         follower->Update();
+    }
+}
+
+namespace {
+
+/// The setting a card (or a section of cards) is about, "" when none is found.
+std::string UnitKey(QWidget* unit) {
+    if (const QVariant key = unit->property("cervin_key"); key.isValid()) {
+        return key.toString().toStdString();
+    }
+    QWidget* inner = unit;
+    if (unit->objectName() == QStringLiteral("CervinCard") && unit->layout() != nullptr &&
+        unit->layout()->count() > 0 && unit->layout()->itemAt(0)->widget() != nullptr) {
+        inner = unit->layout()->itemAt(0)->widget();
+    }
+    if (const QVariant key = inner->property("cervin_key"); key.isValid()) {
+        return key.toString().toStdString();
+    }
+    if (auto* const widget = qobject_cast<Widget*>(inner)) {
+        return widget->GetSetting().GetLabel();
+    }
+    if (const QVariant key = inner->property("cervin_guide"); key.isValid()) {
+        return key.toString().toStdString();
+    }
+    if (auto* const widget = inner->findChild<Widget*>()) {
+        return widget->GetSetting().GetLabel();
+    }
+    return {};
+}
+
+/// The sections folded by the player, kept while Cervin runs (by title).
+std::set<QString>& FoldedSections() {
+    static std::set<QString> folded;
+    return folded;
+}
+
+/// Shows a section's title while one of its cards shows, its cards while it is open.
+class SectionFollower final : public QObject {
+public:
+    SectionFollower(QWidget* head_, QPushButton* title_, QWidget* body_, QString name_,
+                    std::vector<QWidget*> cards_)
+        : QObject(head_), head{head_}, title{title_}, body{body_}, name{std::move(name_)},
+          cards{std::move(cards_)} {
+        for (QWidget* const card : cards) {
+            card->installEventFilter(this);
+        }
+        QObject::connect(title, &QPushButton::clicked, this, [this] {
+            auto& folded = FoldedSections();
+            if (!folded.erase(name)) {
+                folded.insert(name);
+            }
+            Update();
+        });
+        Update();
+    }
+
+    void Update() {
+        const bool any = std::ranges::any_of(
+            cards, [](const QWidget* card) { return !ExplicitlyHidden(card); });
+        const bool open = !FoldedSections().contains(name);
+        title->setText((open ? QStringLiteral("\u25BC  ") : QStringLiteral("\u25B6  ")) + name);
+        if (ExplicitlyHidden(head) == any) {
+            head->setVisible(any);
+        }
+        if (ExplicitlyHidden(body) == (any && open)) {
+            body->setVisible(any && open);
+        }
+    }
+
+protected:
+    bool eventFilter(QObject*, QEvent* event) override {
+        if (event->type() == QEvent::ShowToParent || event->type() == QEvent::HideToParent) {
+            Update();
+        }
+        return false;
+    }
+
+private:
+    QWidget* head;
+    QPushButton* title;
+    QWidget* body;
+    QString name;
+    std::vector<QWidget*> cards;
+};
+
+} // namespace
+
+void MakeSections(QBoxLayout* layout, const std::vector<CardSection>& sections) {
+    if (layout == nullptr) {
+        return;
+    }
+    QWidget* const page = layout->parentWidget();
+    int insert_at = -1;
+    std::vector<std::vector<QWidget*>> sorted(sections.size() + 1);
+    std::vector<QWidget*> units;
+    for (int i = 0; i < layout->count(); ++i) {
+        if (QWidget* const widget = layout->itemAt(i)->widget()) {
+            if (insert_at < 0) {
+                insert_at = i;
+            }
+            units.push_back(widget);
+        }
+    }
+    if (units.empty()) {
+        return;
+    }
+    for (QWidget* const unit : units) {
+        const std::string key = UnitKey(unit);
+        size_t index = sections.size();
+        for (size_t s = 0; s < sections.size() && index == sections.size(); ++s) {
+            if (std::ranges::find(sections[s].keys, key) != sections[s].keys.end()) {
+                index = s;
+            }
+        }
+        sorted[index].push_back(unit);
+        layout->removeWidget(unit);
+    }
+    const int spacing = layout->spacing() >= 0 ? layout->spacing() : 8;
+    for (size_t s = 0; s < sorted.size(); ++s) {
+        if (sorted[s].empty()) {
+            continue;
+        }
+        const QString name =
+            s < sections.size() ? sections[s].title : QObject::tr("Other settings");
+        auto* const head = new QWidget(page);
+        auto* const head_layout = new QVBoxLayout(head);
+        head_layout->setContentsMargins(0, s == 0 ? 2 : 14, 0, 2);
+        head_layout->setSpacing(0);
+        auto* const title = new QPushButton(name, head);
+        title->setObjectName(QStringLiteral("CervinSectionTitle"));
+        title->setFlat(true);
+        title->setCursor(Qt::PointingHandCursor);
+        title->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Fixed);
+        head_layout->addWidget(title);
+        if (s < sections.size() && !sections[s].subtitle.isEmpty()) {
+            auto* const subtitle = new QLabel(sections[s].subtitle, head);
+            subtitle->setObjectName(QStringLiteral("CervinSectionText"));
+            subtitle->setWordWrap(true);
+            head_layout->addWidget(subtitle);
+        }
+        auto* const body = new QWidget(page);
+        auto* const body_layout = new QVBoxLayout(body);
+        body_layout->setContentsMargins(0, 0, 0, 0);
+        body_layout->setSpacing(spacing);
+        for (QWidget* const unit : sorted[s]) {
+            body_layout->addWidget(unit);
+        }
+        layout->insertWidget(insert_at++, head);
+        layout->insertWidget(insert_at++, body);
+        new SectionFollower(head, title, body, name, sorted[s]);
     }
 }
 

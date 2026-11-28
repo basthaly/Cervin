@@ -8,6 +8,9 @@
 #include <chrono>
 #include <memory>
 #include <QBoxLayout>
+#include <QCoreApplication>
+#include <QDir>
+#include <QScrollArea>
 #include <QLabel>
 #include <QPushButton>
 #include <QScreen>
@@ -99,6 +102,10 @@ ConfigureDialog::ConfigureDialog(QWidget* parent, HotkeyRegistry& registry_,
     }
 
     SetConfiguration();
+    // The list's rows take their height from the style sheet (padding): polished first, or they
+    // pile up on each other (they were sized before the style applied).
+    ensurePolished();
+    ui->selectorList->ensurePolished();
     PopulateSelectionList();
 
     connect(ui->tabWidget, &QTabWidget::currentChanged, this, [this](int index) {
@@ -187,7 +194,29 @@ ConfigureDialog::ConfigureDialog(QWidget* parent, HotkeyRegistry& registry_,
     ui->buttonBox->setFocus();
     if (FritchiiUi::Enabled()) {
         QTimer::singleShot(250, this, &ConfigureDialog::BuildNextTab);
+        // Once the page sits in the main window (its style may change there): rows sized again.
+        QTimer::singleShot(0, this, [this] { ui->selectorList->doItemsLayout(); });
     }
+}
+
+void ConfigureDialog::SaveScreenshots(const QString& folder) {
+    QDir().mkpath(folder);
+    grab().save(folder + QStringLiteral("/dialog.png"));
+    for (int row = 0; row < ui->selectorList->count(); ++row) {
+        ui->selectorList->setCurrentRow(row);
+        QCoreApplication::processEvents();
+        for (int index = 0; index < ui->tabWidget->count(); ++index) {
+            ui->tabWidget->setCurrentIndex(index);
+            QCoreApplication::processEvents();
+            QWidget* page = ui->tabWidget->widget(index);
+            if (auto* const area = qobject_cast<QScrollArea*>(page); area && area->widget()) {
+                page = area->widget();
+            }
+            page->grab().save(
+                QStringLiteral("%1/%2-%3.png").arg(folder).arg(row).arg(index));
+        }
+    }
+    ui->selectorList->setCurrentRow(0);
 }
 
 QWidget* ConfigureDialog::Tab(TabId id) {

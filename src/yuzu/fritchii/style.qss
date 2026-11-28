@@ -298,6 +298,12 @@ QFrame#CervinCard {
     border-radius: 12px;
 }
 QFrame#CervinCard[result="true"] { background: #1c1930; border-color: #3b3360; }
+QPushButton#CervinSectionTitle {
+    font-size: 16px; font-weight: 600; color: #ececf1; text-align: left;
+    background: transparent; border: none; padding: 4px 2px;
+}
+QPushButton#CervinSectionTitle:hover { color: #a78bfa; }
+QLabel#CervinSectionText { color: #9a9aa8; padding: 0 2px 4px 2px; }
 QLabel#CervinIntro { color: #9a9aa8; }
 QLabel#CervinWhat { color: #c9c9d3; }
 QLabel#CervinEffect { color: #9a9aa8; font-size: 12px; }

@@ -44,6 +44,11 @@ void ConfigureGraphicsAdvanced::Setup(const ConfigurationShared::Builder& builde
 
     for (auto setting :
          Settings::values.linkage.by_category[Settings::Category::RendererAdvanced]) {
+        // Cervin: Cervin's own bookkeeping, not settings for the player.
+        if (setting->Id() == Settings::values.oot_fps_asked.Id() ||
+            setting->Id() == Settings::values.frizti_settings_revision.Id()) {
+            continue;
+        }
         ConfigurationShared::Widget* widget = builder.BuildWidget(setting, apply_funcs);
 
         if (widget == nullptr) {
@@ -77,6 +82,27 @@ void ConfigureGraphicsAdvanced::Setup(const ConfigurationShared::Builder& builde
             0, ConfigurationShared::MakeCardsHeader(
                    this, tr("Each setting says what it does and what you gain or lose in game.")));
         ConfigurationShared::MakeCards(qobject_cast<QBoxLayout*>(&normal_layout));
+        // Cervin (owner 2026-11-28: too many settings at once): the cards in sections.
+        ConfigurationShared::MakeSections(
+            qobject_cast<QBoxLayout*>(&normal_layout),
+            {{tr("Frame rate"), tr("FPS limits and how frames are paced."),
+              {"frame_pacing_mode", "use_video_framerate", "oot_30fps", "oot_high_refresh",
+               "oot_high_refresh_cap", "mkw_30fps", "mkw_dynamic_fps"}},
+             {tr("Shaders and stutters"),
+              tr("What is prepared ahead so the game doesn't stutter."),
+              {"use_disk_shader_cache", "use_vulkan_driver_pipeline_cache",
+               "use_graphics_pipeline_library", "shader_warm_threads",
+               "enable_compute_pipelines"}},
+             {tr("Speed"), tr("Shortcuts that give FPS for a little accuracy."),
+              {"force_max_clock", "occlusion_speedup", "use_optimized_vertex_buffers",
+               "use_reactive_flushing", "vram_usage_mode"}},
+             {tr("Textures"), tr("Texture sharpness and how they are decoded."),
+              {"max_anisotropy", "accelerate_astc", "astc_recompression"}},
+             {tr("Accuracy and compatibility"),
+              tr("Leave these as they are unless a game shows glitches."),
+              {"gpu_accuracy", "dma_accuracy", "gpu_fence_behavior", "native_compute_write_mark",
+               "sync_memory_operations", "barrier_feedback_loops", "enable_buffer_history",
+               "nvdec_emulation"}}});
     }
 }
 

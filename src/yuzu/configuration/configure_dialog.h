@@ -56,6 +56,8 @@ public:
     ~ConfigureDialog() override;
 
     void ApplyConfiguration();
+    /// Test aid (CERVIN_TEST_SETTINGS_SHOT): every page as a picture in `folder`.
+    void SaveScreenshots(const QString& folder);
 
 private slots:
     void OnLanguageChanged(const QString& locale);
