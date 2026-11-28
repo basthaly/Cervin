@@ -147,6 +147,30 @@ public:
 private:
     std::function<void()> follow;
 };
+
+/// A page right of the rail over the whole central area: in it, or over it on screen when the
+/// page is a window of its own (ShowAsPage over a game).
+void PlacePage(QWidget* page, QWidget* area) {
+    QWidget* const rail = area->findChild<QWidget*>(QStringLiteral("FritchiiRail"));
+    const int left = rail != nullptr && rail->isVisible() ? rail->geometry().right() + 1 : 0;
+    QRect rect(left, 0, (std::max)(0, area->width() - left), area->height());
+    if (page->isWindow()) {
+        rect.moveTopLeft(area->mapToGlobal(rect.topLeft()));
+    }
+    page->setGeometry(rect);
+    page->raise();
+}
+
+/// A native child window (the game's render surface) shows in `area`, other than `except`.
+bool NativeSurfaceShown(QWidget* area, const QWidget* except) {
+    for (QWidget* const child : area->findChildren<QWidget*>()) {
+        if (child != except && child->testAttribute(Qt::WA_NativeWindow) &&
+            child->isVisible() && !except->isAncestorOf(child)) {
+            return true;
+        }
+    }
+    return false;
+}
 } // namespace
 
 bool EmbedInMainWindow(QDialog* dialog, const char* rail_item) {
@@ -163,11 +187,7 @@ bool EmbedInMainWindow(QDialog* dialog, const char* rail_item) {
     dialog->setAttribute(Qt::WA_StyledBackground);
     dialog->setAutoFillBackground(true);
     dialog->setMinimumSize(0, 0);
-    const auto place = [dialog, area, rail] {
-        const int left = rail != nullptr && rail->isVisible() ? rail->geometry().right() + 1 : 0;
-        dialog->setGeometry(left, 0, (std::max)(0, area->width() - left), area->height());
-        dialog->raise();
-    };
+    const auto place = [dialog, area] { PlacePage(dialog, area); };
     place();
     area->installEventFilter(new ResizeFollower(dialog, place));
     if (rail != nullptr) {
@@ -199,14 +219,23 @@ bool ShowAsPage(QDialog* dialog, const char* rail_item) {
         return false;
     }
     if (!dialog->property("cervinPage").toBool()) {
-        if (!EmbedInMainWindow(dialog, nullptr)) {
+        auto* const main = dialog->parentWidget() != nullptr
+                               ? qobject_cast<QMainWindow*>(dialog->parentWidget()->window())
+                               : nullptr;
+        QWidget* const area = main != nullptr ? main->centralWidget() : nullptr;
+        if (area == nullptr || !EmbedInMainWindow(dialog, nullptr)) {
             return false;
         }
         dialog->setProperty("cervinPage", true);
+        dialog->setProperty("cervinPageArea", QVariant::fromValue<QObject*>(area));
         dialog->setWindowModality(Qt::NonModal);
-        // The game draws into a native child window, which covers plain widgets whatever their
-        // order: native too, the page goes over the game when opened from the in-game strip.
-        dialog->setAttribute(Qt::WA_NativeWindow);
+        // Over a game the page is a frameless window of its own (below): follow the main window
+        // when it moves, too.
+        main->installEventFilter(new ResizeFollower(dialog, [dialog, area] {
+            if (dialog->isWindow() && dialog->isVisible()) {
+                PlacePage(dialog, area);
+            }
+        }));
         // No title bar any more: a close button of its own, kept in the top right corner.
         auto* close = new QToolButton(dialog);
         close->setObjectName(QStringLiteral("CervinPageClose"));
@@ -224,8 +253,24 @@ bool ShowAsPage(QDialog* dialog, const char* rail_item) {
         corner();
         dialog->installEventFilter(new ResizeFollower(close, corner));
     }
+    auto* const area = qobject_cast<QWidget*>(dialog->property("cervinPageArea").value<QObject*>());
+    if (area == nullptr) {
+        return false;
+    }
+    if (!dialog->isVisible()) {
+        // The game draws into a native child window, which covers the plain widgets of the
+        // window whatever their order (and a native page was not repainted when shown again):
+        // while a game shows, the page is a frameless window over the game, closed by the player;
+        // otherwise a page in the main window.
+        const bool over_game = NativeSurfaceShown(area, dialog);
+        if (over_game != dialog->isWindow()) {
+            dialog->setParent(over_game ? area->window() : area,
+                              over_game ? (Qt::Tool | Qt::FramelessWindowHint) : Qt::Widget);
+            dialog->setWindowModality(Qt::NonModal);
+        }
+        PlacePage(dialog, area);
+    }
     // Light the rail's button (and darken the library's) each time the page comes up.
-    QWidget* const area = dialog->parentWidget();
     QWidget* const rail =
         area != nullptr ? area->findChild<QWidget*>(QStringLiteral("FritchiiRail")) : nullptr;
     if (rail != nullptr && !dialog->isVisible()) {
