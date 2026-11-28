@@ -257,9 +257,11 @@ QWidget* Home::MakeRail() {
 
     library_button = RailButton(QStringLiteral("library"), tr("Library"));
     library_button->setCheckable(true);
+    library_button->setProperty("cervinRailItem", QStringLiteral("library"));
     connect(library_button, &QToolButton::clicked, this, &Home::ShowHome);
 
     QToolButton* settings = RailButton(QStringLiteral("settings"), tr("Settings"));
+    settings->setProperty("cervinRailItem", QStringLiteral("settings"));
     connect(settings, &QToolButton::clicked, this, [this] { hooks.open_settings(); });
 
     QToolButton* help = RailButton(QStringLiteral("help"), tr("Help"));

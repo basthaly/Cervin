@@ -22,6 +22,8 @@
 #include <QLocale>
 #include <QDialog>
 #include <QEvent>
+#include <QEventLoop>
+#include <QPointer>
 #include <QMainWindow>
 #include <QToolButton>
 #include <functional>
@@ -147,7 +149,7 @@ private:
 };
 } // namespace
 
-bool EmbedInMainWindow(QDialog* dialog) {
+bool EmbedInMainWindow(QDialog* dialog, const char* rail_item) {
     if (!Enabled() || dialog == nullptr || dialog->parentWidget() == nullptr) {
         return false;
     }
@@ -172,9 +174,43 @@ bool EmbedInMainWindow(QDialog* dialog) {
         // Library, Help, Menu (and Settings again): back to the library, as Cancel.
         for (QToolButton* const button : rail->findChildren<QToolButton*>()) {
             QObject::connect(button, &QToolButton::clicked, dialog, &QDialog::reject);
+            const QString item = button->property("cervinRailItem").toString();
+            if (item == QStringLiteral("library") && button->isChecked()) {
+                // The page covers the library: its button goes dark until the page ends.
+                button->setChecked(false);
+                QObject::connect(dialog, &QDialog::finished, button,
+                                 [button] { button->setChecked(true); });
+            } else if (rail_item != nullptr && item == QLatin1String(rail_item)) {
+                const bool was_checkable = button->isCheckable();
+                button->setCheckable(true);
+                button->setChecked(true);
+                QObject::connect(dialog, &QDialog::finished, button, [button, was_checkable] {
+                    button->setChecked(false);
+                    button->setCheckable(was_checkable);
+                });
+            }
         }
     }
     return true;
+}
+
+int ExecInMainWindow(QDialog* dialog, const char* rail_item) {
+    if (!EmbedInMainWindow(dialog, rail_item)) {
+        return dialog->exec();
+    }
+    dialog->setWindowModality(Qt::NonModal);
+    dialog->setAttribute(Qt::WA_ShowModal, false);
+    QEventLoop loop;
+    int result = QDialog::Rejected;
+    QObject::connect(dialog, &QDialog::finished, &loop, [&result, &loop](int code) {
+        result = code;
+        loop.quit();
+    });
+    dialog->show();
+    dialog->raise();
+    dialog->setFocus();
+    loop.exec(QEventLoop::DialogExec);
+    return result;
 }
 
 bool Enabled() {

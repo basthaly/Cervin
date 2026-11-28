@@ -1,26 +1,19 @@
-## Cervin v1.0.5 — Paramètres dans la fenêtre, shaders d'OoT préparés en jouant
+## Cervin v1.0.6 — Paramètres réparés, mises à jour automatiques de retour
 
-### Interface
+### Corrections
 
-- **Les Paramètres et les Paramètres du jeu s'ouvrent dans la fenêtre principale**, à la place de
-  la Bibliothèque, au lieu d'une fenêtre à part : les boutons OK et Annuler sont toujours visibles.
-  Une icône de la barre de gauche referme la page (comme Annuler).
-- Les textes sur la préparation des shaders précisent qu'il faut mettre **Cervin** en pause
-  (Émulation > Pause), pas le menu pause du jeu.
+- **Ouvrir les Paramètres ne bloque plus Cervin** (v1.0.5 : plus rien ne répondait, il fallait le
+  fermer de force). Pareil pour les Paramètres du jeu.
+- **Les mises à jour automatiques fonctionnent de nouveau** (désactivées par erreur dans la
+  v1.0.4 et la v1.0.5).
+- Pendant que les Paramètres sont ouverts, leur icône s'allume dans la barre de gauche.
 
-### Ocarina of Time
+### Conseil pour Ocarina of Time (cartes NVIDIA)
 
-- **Moins de saccades au passage de Link adulte à Link enfant** (et aux autres changements de
-  modèles) : la préparation des shaders avance aussi pendant que tu joues, sur 2 threads en
-  priorité basse, sur les processeurs à 16 threads ou plus. Mettre Cervin en pause l'accélère.
-- La préparation reprend après une fermeture brutale de Cervin (elle restait bloquée pour toujours).
-
-### Mario Kart World
-
-- **Mode 30 FPS et FPS dynamique :** une seule valeur, celle des Paramètres de Cervin. Un réglage
-  propre au jeu passait avant sans le dire. Relance MKW après les avoir changés.
-- Les copies des résultats que le jeu relit sur le GPU partent plus tôt, pour moins d'attente
-  en course sur les processeurs à 6 cœurs.
+Si des saccades reviennent alors que les shaders sont déjà préparés : dans l'application NVIDIA
+(ou le Panneau de configuration NVIDIA > Gérer les paramètres 3D), règle **Taille du cache de
+shaders** sur **Illimitée**, puis relance une fois **Émulation > Préparer les shaders maintenant**.
+Le cache du pilote est souvent limité à 1 Go, trop petit pour les ~120 000 shaders d'OoT.
 
 ### Un problème ?
 

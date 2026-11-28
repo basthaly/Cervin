@@ -8,6 +8,7 @@
 #undef VMA_IMPLEMENTATION
 #endif
 
+#include <chrono>
 #include <filesystem>
 #include <fstream>
 #include <optional>
@@ -4298,6 +4299,7 @@ void MainWindow::OnConfigure() {
 #endif
 
     Settings::SetConfiguringGlobal(true);
+    const auto settings_begin = std::chrono::steady_clock::now();
     ConfigureDialog configure_dialog(this, hotkey_registry, input_subsystem.get(),
                                      vk_device_records, *QtCommon::system,
                                      !multiplayer_state->IsHostingPublicRoom());
@@ -4306,8 +4308,18 @@ void MainWindow::OnConfigure() {
     connect(&configure_dialog, &ConfigureDialog::ExternalContentDirsChanged, this,
             &MainWindow::OnGameListRefresh);
 
-    FritchiiUi::EmbedInMainWindow(&configure_dialog);
-    const auto result = configure_dialog.exec();
+    // Cervin: how long Settings take to appear (owner: ~1.5 s), built and first painted.
+    LOG_INFO(Frontend, "Settings page built in {} ms",
+             std::chrono::duration_cast<std::chrono::milliseconds>(
+                 std::chrono::steady_clock::now() - settings_begin)
+                 .count());
+    QTimer::singleShot(0, this, [settings_begin] {
+        LOG_INFO(Frontend, "Settings page shown {} ms after the click",
+                 std::chrono::duration_cast<std::chrono::milliseconds>(
+                     std::chrono::steady_clock::now() - settings_begin)
+                     .count());
+    });
+    const auto result = FritchiiUi::ExecInMainWindow(&configure_dialog, "settings");
     if (result != QDialog::Accepted && !UISettings::values.configuration_applied &&
         !UISettings::values.reset_to_defaults) {
         // Runs if the user hit Cancel or closed the window, and did not ever press the Apply button
@@ -4632,8 +4644,7 @@ void MainWindow::OpenPerGameConfiguration(u64 title_id, const std::string& file_
     ConfigurePerGame dialog(this, title_id, file_name, vk_device_records, *QtCommon::system);
     dialog.LoadFromFile(Core::GetGameFileFromPath(QtCommon::vfs, file_name));
 
-    FritchiiUi::EmbedInMainWindow(&dialog);
-    const auto result = dialog.exec();
+    const auto result = FritchiiUi::ExecInMainWindow(&dialog);
 
     if (result != QDialog::Accepted && !UISettings::values.configuration_applied) {
         Settings::RestoreGlobalState(QtCommon::system->IsPoweredOn());

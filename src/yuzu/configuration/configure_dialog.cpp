@@ -5,6 +5,7 @@
 // SPDX-License-Identifier: GPL-2.0-or-later
 
 #include <algorithm>
+#include <chrono>
 #include <memory>
 #include <QBoxLayout>
 #include <QLabel>
@@ -70,6 +71,12 @@ ConfigureDialog::ConfigureDialog(QWidget* parent, HotkeyRegistry& registry_,
       system_tab{std::make_unique<ConfigureSystem>(system_, nullptr, *builder, this)},
       web_tab{std::make_unique<ConfigureWeb>(this)} {
     Settings::SetConfiguringGlobal(true);
+    const auto timing_begin = std::chrono::steady_clock::now();
+    const auto since = [&timing_begin] {
+        return std::chrono::duration_cast<std::chrono::milliseconds>(
+                   std::chrono::steady_clock::now() - timing_begin)
+            .count();
+    };
 
     ui->setupUi(this);
 
@@ -93,7 +100,10 @@ ConfigureDialog::ConfigureDialog(QWidget* parent, HotkeyRegistry& registry_,
     web_tab->SetWebServiceConfigEnabled(enable_web_config);
     hotkeys_tab->Populate(registry);
 
+    const auto before_input = since();
     input_tab->Initialize(input_subsystem);
+    LOG_INFO(Frontend, "Settings: controls tab set up in {} ms (setupUi and tabs before it {} ms)",
+             since() - before_input, before_input);
 
     general_tab->SetResetCallback([&] { this->close(); });
 

@@ -33,7 +33,13 @@ namespace FritchiiUi {
 /// rail, in place of the library (it follows the window's size), not as a window of its own.
 /// The rail's buttons close it (Cancel). Call before exec(); false (nothing done) without the
 /// Fritchii UI or a main window.
-bool EmbedInMainWindow(QDialog* dialog);
+/// `rail_item` ("settings") lights that rail button while the page is open (the library's goes
+/// dark).
+bool EmbedInMainWindow(QDialog* dialog, const char* rail_item = nullptr);
+/// EmbedInMainWindow, then runs the dialog to its end and returns its result (as exec()). An
+/// embedded page is shown without modality: exec() on a child widget made it application modal
+/// and blocked the whole window, the page included (v1.0.5 froze on Settings). Not embedded: exec().
+int ExecInMainWindow(QDialog* dialog, const char* rail_item = nullptr);
 
 /// Fusion style, the Graphite palette, Inter and the stylesheet. Does nothing (and returns false)
 /// when the Fritchii UI is off.
