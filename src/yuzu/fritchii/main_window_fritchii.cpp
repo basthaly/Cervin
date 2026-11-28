@@ -21,6 +21,7 @@
 #include "yuzu/fritchii/game_controls.h"
 #include "yuzu/fritchii/home.h"
 #include "yuzu/fritchii/precompile_gate.h"
+#include "yuzu/fritchii/nvidia_cache.h"
 #include "yuzu/fritchii/whats_new.h"
 #include "yuzu/game/game_list.h"
 #include "yuzu/main_window.h"
@@ -195,4 +196,11 @@ void MainWindow::SetUpFritchiiUi() {
             &FritchiiUi::PrecompileGate::OnEmulationStarting);
     connect(this, &MainWindow::EmulationStopping, gate,
             &FritchiiUi::PrecompileGate::OnEmulationStopping);
+
+    // Cervin: NVIDIA's shader cache for Cervin.exe (asked once, at the home screen only).
+    QTimer::singleShot(3000, this, [this] {
+        if (!QtCommon::system->IsPoweredOn()) {
+            FritchiiUi::OfferNvidiaShaderCache(this);
+        }
+    });
 }

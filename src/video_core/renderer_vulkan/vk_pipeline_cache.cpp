@@ -22,6 +22,7 @@
 #include <sstream>
 #include <string_view>
 #include <thread>
+#include <unordered_map>
 #include <unordered_set>
 #include <vector>
 #include <bit>
@@ -81,6 +82,7 @@
 #include "video_core/renderer_vulkan/vk_descriptor_pool.h"
 #include "video_core/renderer_vulkan/vk_pipeline_binary.h"
 #include "video_core/renderer_vulkan/vk_pipeline_cache.h"
+#include "video_core/renderer_vulkan/vk_play_history.h"
 #include "video_core/texture_cache/formatter.h"
 #include "video_core/renderer_vulkan/vk_pipeline_translate_queue.h"
 #include "video_core/renderer_vulkan/vk_precompiled_kept.h"
@@ -2819,6 +2821,7 @@ void DestroyPipelinesWithProgress(Container& pipelines) {
 } // Anonymous namespace
 
 PipelineCache::~PipelineCache() {
+    PlayHistory::End(); // Cervin: this session's pipelines, for the next warm-up
     // The occlusion flag variants' queued work is given up first (occl_build_cancel): a compile
     // not started finishes as failed without running, on the lane, on the shared workers or in
     // a destructor below (which would otherwise build it right there, on this thread), and the
@@ -6470,6 +6473,9 @@ void PipelineCache::LoadDiskResources(u64 title_id, std::stop_token stop_loading
                 warm_cancel = true;
                 background_stop.store(true, std::memory_order_relaxed);
             }});
+        // Cervin: this game's play history, before the warm-up orders itself by it.
+        PlayHistory::Begin(VideoCommon::ShaderWarm::GraphicsWarmPath(title_id).parent_path() /
+                           "cervin_play_history.bin");
         StartComputeWarm(title_id);
         StartGraphicsWarm(title_id);
         StartPrecompiled(title_id, base_dir);
@@ -6885,6 +6891,63 @@ void PipelineCache::StartComputeWarm(u64 title_id) {
     }
 }
 
+namespace {
+/// Cervin: one pass over the graphics warm file, recording each entry's offset and key hash;
+/// the build order then puts the keys this player met most first (PlayHistory::Score), the
+/// file's order otherwise. Called once, under the reader's mutex.
+template <typename Reader>
+void IndexGraphicsWarm(Reader& reader) {
+    reader.indexed = true;
+    const auto begin = std::chrono::steady_clock::now();
+    std::vector<std::pair<std::streamoff, u64>> entries;
+    try {
+        reader.file.seekg(12); // magic and version
+        while (reader.file.tellg() < reader.end) {
+            const std::streamoff offset = reader.file.tellg();
+            u32 num_envs{};
+            reader.file.read(reinterpret_cast<char*>(&num_envs), sizeof(num_envs));
+            if (num_envs != 1 ||
+                !FileEnvironment::RecordFits(
+                    reader.file, static_cast<u64>(reader.end - reader.file.tellg()))) {
+                break;
+            }
+            FileEnvironment env;
+            env.Deserialize(reader.file);
+            GraphicsPipelineCacheKey key{};
+            reader.file.read(reinterpret_cast<char*>(&key), sizeof(key));
+            entries.emplace_back(offset, static_cast<u64>(key.Hash()));
+        }
+    } catch (const std::exception& e) {
+        LOG_WARNING(Render_Vulkan, "Nx2Perf graphics_warm: index stopped: {}", e.what());
+    }
+    reader.file.clear();
+    size_t met = 0;
+    std::vector<std::pair<double, size_t>> ranked;
+    ranked.reserve(entries.size());
+    for (size_t i = 0; i < entries.size(); ++i) {
+        const double score = PlayHistory::Score(entries[i].second);
+        met += score > 0.0 ? 1 : 0;
+        ranked.emplace_back(score, i);
+        reader.by_hash.emplace(entries[i].second, entries[i].first);
+    }
+    std::stable_sort(ranked.begin(), ranked.end(),
+                     [](const auto& a, const auto& b) { return a.first > b.first; });
+    reader.order.reserve(ranked.size());
+    for (const auto& [score, index] : ranked) {
+        reader.order.push_back(entries[index].first);
+    }
+    reader.known_total = entries.size();
+    LOG_INFO(Render_Vulkan,
+             "Nx2Perf graphics_warm: {} entries indexed in {} ms; {} met before by this player "
+             "go first, then what follows the pipelines met in play",
+             entries.size(),
+             std::chrono::duration_cast<std::chrono::milliseconds>(
+                 std::chrono::steady_clock::now() - begin)
+                 .count(),
+             met);
+}
+} // namespace
+
 void PipelineCache::StartGraphicsWarm(u64 title_id) {
     if (!graphics_warm_threads.empty() || !device.IsExtGraphicsPipelineLibrarySupported()) {
         return;
@@ -6926,6 +6989,14 @@ void PipelineCache::StartGraphicsWarm(u64 title_id) {
         std::streamoff position{};
         WarmProgressThrottle throttle;
         std::chrono::steady_clock::time_point begin{};
+        // Cervin (PlayHistory): the entries' offsets, in the order they are built (what this
+        // player met most first), the offset of each key, and the entries taken.
+        bool indexed{};
+        std::vector<std::streamoff> order;
+        size_t next_in_order{};
+        std::unordered_map<u64, std::streamoff> by_hash;
+        std::unordered_set<std::streamoff> taken;
+        size_t hot_taken{};
     };
     auto reader = std::make_shared<Reader>();
     try {
@@ -6984,10 +7055,36 @@ void PipelineCache::StartGraphicsWarm(u64 title_id) {
                 GraphicsPipelineCacheKey key{};
                 {
                     std::scoped_lock lock{reader->mutex};
-                    if (reader->failed || reader->file.tellg() == reader->end) {
+                    if (reader->failed) {
+                        break;
+                    }
+                    if (!reader->indexed) {
+                        IndexGraphicsWarm(*reader);
+                    }
+                    // What came after the pipelines the player just met, then the rest by play
+                    // history (PlayHistory).
+                    std::streamoff offset = -1;
+                    u64 hot{};
+                    while (PlayHistory::PopHot(hot)) {
+                        const auto found = reader->by_hash.find(hot);
+                        if (found != reader->by_hash.end() &&
+                            reader->taken.insert(found->second).second) {
+                            offset = found->second;
+                            ++reader->hot_taken;
+                            break;
+                        }
+                    }
+                    while (offset < 0 && reader->next_in_order < reader->order.size()) {
+                        const std::streamoff next = reader->order[reader->next_in_order++];
+                        if (reader->taken.insert(next).second) {
+                            offset = next;
+                        }
+                    }
+                    if (offset < 0) {
                         break;
                     }
                     try {
+                        reader->file.seekg(offset);
                         u32 num_envs{};
                         reader->file.read(reinterpret_cast<char*>(&num_envs), sizeof(num_envs));
                         if (num_envs != 1) {
@@ -9721,6 +9818,7 @@ GraphicsPipeline* PipelineCache::CurrentGraphicsPipelineSlowPath() {
     auto& pipeline{pair->second};
     if (is_new) {
         ReportNewPipelineKey(graphics_key);
+        PlayHistory::NoteUsed(static_cast<u64>(graphics_key.Hash()));
         // FRITCHII_RAM_PREBUILT_KEEP: a boot build destroyed unused is translated again here.
         if (!evicted_unused_prebuilt.empty() &&
             evicted_unused_prebuilt.erase(graphics_key.Hash()) != 0) {

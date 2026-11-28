@@ -3444,25 +3444,25 @@ Prend effet au lancement du jeu.</translation>
             <translation>Certains paramètres ne sont disponibles que lorsqu'un jeu n'est pas en cours d'exécution.</translation>
         </message>
         <message>
-            <location filename="../../src/yuzu/configuration/configure_dialog.cpp" line="+76" />
+            <location filename="../../src/yuzu/configuration/configure_dialog.cpp" line="+83" />
             <source>Applets</source>
             <translation>Applets</translation>
         </message>
         <message>
             <location line="+1" />
-            <location line="+172" />
+            <location line="+178" />
             <location line="+10" />
             <source>Audio</source>
             <translation>Son</translation>
         </message>
         <message>
-            <location line="-181" />
-            <location line="+168" />
+            <location line="-187" />
+            <location line="+174" />
             <source>CPU</source>
             <translation>CPU</translation>
         </message>
         <message>
-            <location line="-167" />
+            <location line="-173" />
             <source>Debug</source>
             <translation>Débogage</translation>
         </message>
@@ -3473,20 +3473,20 @@ Prend effet au lancement du jeu.</translation>
         </message>
         <message>
             <location line="+1" />
-            <location line="+160" />
+            <location line="+166" />
             <location line="+14" />
             <source>General</source>
             <translation>Général</translation>
         </message>
         <message>
-            <location line="-173" />
-            <location line="+165" />
+            <location line="-179" />
+            <location line="+171" />
             <location line="+9" />
             <source>Graphics</source>
             <translation>Vidéo</translation>
         </message>
         <message>
-            <location line="-173" />
+            <location line="-179" />
             <source>GraphicsAdvanced</source>
             <translation>Graphismes avancés</translation>
         </message>
@@ -3502,13 +3502,13 @@ Prend effet au lancement du jeu.</translation>
         </message>
         <message>
             <location line="+1" />
-            <location line="+164" />
+            <location line="+170" />
             <location line="+8" />
             <source>Controls</source>
             <translation>Contrôles</translation>
         </message>
         <message>
-            <location line="-171" />
+            <location line="-177" />
             <source>Profiles</source>
             <translation>Profils</translation>
         </message>
@@ -3519,13 +3519,13 @@ Prend effet au lancement du jeu.</translation>
         </message>
         <message>
             <location line="+1" />
-            <location line="+154" />
+            <location line="+160" />
             <location line="+17" />
             <source>System</source>
             <translation>Système</translation>
         </message>
         <message>
-            <location line="-170" />
+            <location line="-176" />
             <source>Game List</source>
             <translation>Liste des jeux</translation>
         </message>
@@ -3535,7 +3535,7 @@ Prend effet au lancement du jeu.</translation>
             <translation>Web</translation>
         </message>
         <message>
-            <location line="+34" />
+            <location line="+37" />
             <source>Settings</source>
             <translation>Paramètres</translation>
         </message>
@@ -3545,7 +3545,7 @@ Prend effet au lancement du jeu.</translation>
             <translation>Certains paramètres ne peuvent pas changer pendant qu'un jeu tourne.</translation>
         </message>
         <message numerus="yes">
-            <location line="+36" />
+            <location line="+39" />
             <source>Ocarina of Time keeps its own value for %n of these settings, so changes here don't reach it.</source>
             <translation>
                 <numerusform>Ocarina of Time garde sa propre valeur pour %n de ces paramètres, donc les changements ici ne s'y appliquent pas.</numerusform>
@@ -7931,7 +7931,7 @@ Fais glisser les points pour modifier la position ou double-clique sur les cellu
     <context>
         <name>FritchiiUi</name>
         <message>
-            <location filename="../../src/yuzu/fritchii/fritchii_ui.cpp" line="+216" />
+            <location filename="../../src/yuzu/fritchii/fritchii_ui.cpp" line="+306" />
             <source>&amp;Game</source>
             <translation>&amp;Jeu</translation>
         </message>
@@ -7941,7 +7941,7 @@ Fais glisser les points pour modifier la position ou double-clique sur les cellu
             <translation>A&amp;vancé</translation>
         </message>
         <message>
-            <location line="+10" />
+            <location line="+9" />
             <source>&amp;Export Log...</source>
             <translation>&amp;Exporter le journal...</translation>
         </message>
@@ -8190,17 +8190,17 @@ Fais glisser les points pour modifier la position ou double-clique sur les cellu
         <name>FritchiiUi::Home</name>
         <message>
             <location filename="../../src/yuzu/fritchii/home.cpp" line="+258" />
-            <location line="+83" />
+            <location line="+85" />
             <source>Library</source>
             <translation>Bibliothèque</translation>
         </message>
         <message>
-            <location line="-79" />
+            <location line="-80" />
             <source>Settings</source>
             <translation>Paramètres</translation>
         </message>
         <message>
-            <location line="+3" />
+            <location line="+4" />
             <source>Help</source>
             <translation>Aide</translation>
         </message>
@@ -9613,7 +9613,7 @@ ou clique pour parcourir</translation>
         </message>
         <message>
             <location line="+8" />
-            <location filename="../../src/yuzu/main_window.cpp" line="+2290" />
+            <location filename="../../src/yuzu/main_window.cpp" line="+2291" />
             <source>&amp;Pause</source>
             <translation>&amp;Pause</translation>
         </message>
@@ -9769,7 +9769,7 @@ ou clique pour parcourir</translation>
         </message>
         <message>
             <location line="+11" />
-            <location filename="../../src/yuzu/main_window.cpp" line="+3509" />
+            <location filename="../../src/yuzu/main_window.cpp" line="+3540" />
             <source>&amp;Start</source>
             <translation>&amp;Démarrer</translation>
         </message>
@@ -9871,7 +9871,7 @@ ou clique pour parcourir</translation>
         </message>
         <message>
             <location line="+5" />
-            <location filename="../../src/yuzu/main_window.cpp" line="-5342" />
+            <location filename="../../src/yuzu/main_window.cpp" line="-5373" />
             <location filename="../../src/qt_common/config/shared_translation.h" line="+30" />
             <source>None</source>
             <translation>Aucun</translation>
@@ -10012,12 +10012,12 @@ Change à tout moment avec le bouton 60 FPS / 30 FPS en bas de la fenêtre.</tra
         </message>
         <message>
             <location line="+3" />
-            <location line="+4898" />
+            <location line="+4929" />
             <source>60 FPS</source>
             <translation>60 FPS</translation>
         </message>
         <message>
-            <location line="-4897" />
+            <location line="-4928" />
             <source>30 FPS (lower-end PCs)</source>
             <translation>30 FPS (PC modestes)</translation>
         </message>
@@ -10161,25 +10161,25 @@ La préparation se fait pendant que Cervin est en pause (Émulation &gt; Pause, 
         </message>
         <message>
             <location line="+278" />
-            <location line="+2949" />
+            <location line="+2980" />
             <source>(64-bit)</source>
             <translation>(64-bit)</translation>
         </message>
         <message>
-            <location line="-2949" />
-            <location line="+2949" />
+            <location line="-2980" />
+            <location line="+2980" />
             <source>(32-bit)</source>
             <translation>(32-bit)</translation>
         </message>
         <message>
-            <location line="-2948" />
-            <location line="+2950" />
+            <location line="-2979" />
+            <location line="+2981" />
             <source>%1 %2</source>
             <comment>%1 is the title name. %2 indicates if the title is 64-bit or 32-bit</comment>
             <translation>%1 %2</translation>
         </message>
         <message>
-            <location line="-2841" />
+            <location line="-2872" />
             <source>Closing software...</source>
             <translation>Fermeture du logiciel...</translation>
         </message>
@@ -10374,13 +10374,13 @@ La préparation se fait pendant que Cervin est en pause (Émulation &gt; Pause, 
         </message>
         <message>
             <location line="+53" />
-            <location line="+2415" />
+            <location line="+2446" />
             <location line="+26" />
             <source>NX Archive</source>
             <translation>Archive NX</translation>
         </message>
         <message>
-            <location line="-2440" />
+            <location line="-2471" />
             <source>Wait for the NX metadata edit to finish before starting a game.</source>
             <translation>Attends la fin de la modification des métadonnées NX avant de lancer un jeu.</translation>
         </message>
@@ -10591,7 +10591,7 @@ N'utilise cette fonction que pour installer des mises à jour et des DLC.</trans
             <translation>Impossible d'ouvrir l'URL « %1 ».</translation>
         </message>
         <message>
-            <location line="+298" />
+            <location line="+322" />
             <source>Restore Settings</source>
             <translation>Restaurer les paramètres</translation>
         </message>
@@ -10621,7 +10621,7 @@ N'utilise cette fonction que pour installer des mises à jour et des DLC.</trans
             <translation>La manette portable ne peut pas être utilisée en mode TV. La manette Pro sera sélectionnée.</translation>
         </message>
         <message>
-            <location line="+149" />
+            <location line="+156" />
             <location line="+51" />
             <source>Amiibo</source>
             <translation>Amiibo</translation>
@@ -11535,7 +11535,7 @@ Veux-tu passer outre et quitter quand même ?</translation>
             <translation>Null</translation>
         </message>
         <message>
-            <location filename="../../src/yuzu/fritchii/main_window_fritchii.cpp" line="+40" />
+            <location filename="../../src/yuzu/fritchii/main_window_fritchii.cpp" line="+41" />
             <source>Delete Shader Cache</source>
             <translation>Supprimer le cache des shaders</translation>
         </message>
@@ -11565,7 +11565,7 @@ Veux-tu passer outre et quitter quand même ?</translation>
             <translation>Supprimer</translation>
         </message>
         <message>
-            <location line="+140" />
+            <location line="+141" />
             <source>the game</source>
             <translation>le jeu</translation>
         </message>
@@ -13904,7 +13904,7 @@ Ferme tout émulateur ou programme qui l'utilise, puis relance Cervin.</translat
         <message>
             <location line="+18" />
             <location line="+19" />
-            <location filename="../../src/yuzu/fritchii/whats_new.cpp" line="+142" />
+            <location filename="../../src/yuzu/fritchii/whats_new.cpp" line="+154" />
             <source>Got it</source>
             <translation>Compris</translation>
         </message>
@@ -14506,6 +14506,32 @@ Essaie un autre dossier.</translation>
             <location filename="../../src/qt_common/game_list/worker.cpp" line="-276" />
             <source>%1 (update)</source>
             <translation>%1 (mise à jour)</translation>
+        </message>
+        <message>
+            <location filename="../../src/yuzu/fritchii/nvidia_cache.cpp" line="+258" />
+            <location line="+21" />
+            <location line="+8" />
+            <source>NVIDIA shader cache</source>
+            <translation>Cache de shaders NVIDIA</translation>
+        </message>
+        <message>
+            <location line="-28" />
+            <source>Your NVIDIA driver keeps only about 1 GB of compiled shaders for Cervin, too little for Ocarina of Time: shaders already prepared get compiled again while you play, which makes it stutter.
+
+Let Cervin raise this cache to 8 GB, for Cervin only? Your other games and NVIDIA settings don't change; it only uses up to 8 GB of disk space.</source>
+            <translation>Ton pilote NVIDIA ne garde qu'environ 1 Go de shaders compilés pour Cervin, trop peu pour Ocarina of Time : des shaders déjà préparés sont recompilés pendant que tu joues, ce qui fait saccader le jeu.
+
+Laisser Cervin agrandir ce cache à 8 Go, pour Cervin uniquement ? Tes autres jeux et tes réglages NVIDIA ne changent pas ; ça utilise seulement jusqu'à 8 Go d'espace disque.</translation>
+        </message>
+        <message>
+            <location line="+21" />
+            <source>Done: Cervin's NVIDIA shader cache is now 8 GB. Run Emulation &gt; Prepare Shaders Now once in Ocarina of Time so the driver keeps them all.</source>
+            <translation>C'est fait : le cache de shaders NVIDIA de Cervin fait maintenant 8 Go. Lance une fois Émulation &gt; Préparer les shaders maintenant dans Ocarina of Time pour que le pilote les garde tous.</translation>
+        </message>
+        <message>
+            <location line="+8" />
+            <source>Cervin could not change the setting (NVIDIA error %1; Windows may require administrator rights). You can do it yourself: in the NVIDIA app or NVIDIA Control Panel &gt; Manage 3D settings, set Shader Cache Size to 10 GB or Unlimited.</source>
+            <translation>Cervin n'a pas pu changer le réglage (erreur NVIDIA %1 ; Windows demande peut-être les droits administrateur). Tu peux le faire toi-même : dans l'application NVIDIA ou le Panneau de configuration NVIDIA &gt; Gérer les paramètres 3D, règle la Taille du cache de shaders sur 10 Go ou Illimitée.</translation>
         </message>
     </context>
     <context>
